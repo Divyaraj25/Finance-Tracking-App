@@ -35,7 +35,30 @@ A comprehensive, production-ready expense tracking system with interactive dashb
 - **Data Validation** - Comprehensive input validation
 - **Error Handling** - Graceful error handling with user-friendly messages
 
-## 🚀 Quick Start
+## � Documentation
+
+Comprehensive documentation is available to help you get started and make the most of the Expense Tracker:
+
+### 📖 User Guides
+
+- [Quick Start Guide](docs/guides/quick-start.md) - Get up and running in minutes
+- [Installation Guide](docs/guides/installation.md) - Detailed installation instructions
+- [FAQ](docs/guides/faq.md) - Frequently asked questions
+
+### 🔧 API Documentation
+
+- [API Overview](docs/api/README.md) - Complete API reference
+- [Transactions API](docs/api/transactions.md) - Manage expense transactions
+- [Accounts API](docs/api/accounts.md) - Manage user accounts
+- [Authentication](docs/api/auth.md) - User authentication and authorization
+
+### 🚀 Deployment Guides
+
+- [Docker Deployment](docs/deployment/docker.md) - Container-based deployment
+- [Production Setup](docs/deployment/production.md) - Production deployment guide
+- [Deployment Overview](docs/deployment/README.md) - All deployment options
+
+## �🚀 Quick Start
 
 ### Prerequisites
 
