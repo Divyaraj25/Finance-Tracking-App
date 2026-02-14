@@ -1,0 +1,718 @@
+<!-- app/templates/profile/index.html -->
+{% extends "base.html" %} {% block title %}Profile - {{ super() }}{% endblock %} {% block content %}
+<div class="profile-page">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><i class="bi bi-person-circle text-primary"></i> Profile & Settings</h1>
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary" onclick="resetSession()">
+        <i class="bi bi-arrow-counterclockwise"></i> Reset Session
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Profile Summary -->
+    <div class="col-xl-4 mb-4">
+      <div class="card text-center h-100">
+        <div class="card-body">
+          <div class="position-relative d-inline-block mb-4">
+            <div class="avatar-circle bg-primary text-white" id="avatar">
+              <span class="avatar-initials">ET</span>
+            </div>
+            <div class="position-absolute bottom-0 end-0">
+              <span class="badge bg-success rounded-circle p-2">
+                <i class="bi bi-check-lg"></i>
+              </span>
+            </div>
+          </div>
+          <h4 class="mb-1">Expense Tracker User</h4>
+          <p class="text-muted mb-3">Active Session</p>
+
+          <div class="d-grid gap-2">
+            <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+              <span class="text-muted">Session ID</span>
+              <span class="fw-mono small" id="sessionId">-</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+              <span class="text-muted">Session Started</span>
+              <span id="sessionStart">-</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+              <span class="text-muted">Session Duration</span>
+              <span id="sessionDuration">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="col-xl-8 mb-4">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Your Statistics</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-sm-6">
+              <div class="border rounded p-3">
+                <h6 class="text-muted mb-2">Total Transactions</h6>
+                <h3 id="totalTransactions">0</h3>
+                <small class="text-success" id="transactionsToday">
+                  <i class="bi bi-arrow-up"></i> 0 today
+                </small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="border rounded p-3">
+                <h6 class="text-muted mb-2">Total Accounts</h6>
+                <h3 id="totalAccounts">0</h3>
+                <small class="text-muted">Active accounts</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="border rounded p-3">
+                <h6 class="text-muted mb-2">Total Categories</h6>
+                <h3 id="totalCategories">0</h3>
+                <small class="text-muted">Active categories</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="border rounded p-3">
+                <h6 class="text-muted mb-2">Active Budgets</h6>
+                <h3 id="totalBudgets">0</h3>
+                <small class="text-warning">Need attention</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="border rounded p-3">
+                <h6 class="text-muted mb-2">Net Worth</h6>
+                <h3 id="netWorth">$0.00</h3>
+                <small class="text-success">+12% this month</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="border rounded p-3">
+                <h6 class="text-muted mb-2">Total Budget</h6>
+                <h3 id="totalBudget">$0.00</h3>
+                <small id="budgetProgress">0% used</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Tabs -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="tab" href="#general-settings">
+                <i class="bi bi-gear"></i> General
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#appearance-settings">
+                <i class="bi bi-palette"></i> Appearance
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#currency-settings">
+                <i class="bi bi-currency-dollar"></i> Currency
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#export-settings">
+                <i class="bi bi-download"></i> Export
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#defaults-settings">
+                <i class="bi bi-tags"></i> Defaults
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <!-- General Settings -->
+            <div class="tab-pane fade show active" id="general-settings">
+              <form id="generalSettingsForm">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Items Per Page</label>
+                    <select class="form-select" name="items_per_page">
+                      <option value="10">10 items</option>
+                      <option value="20">20 items</option>
+                      <option value="50">50 items</option>
+                      <option value="100">100 items</option>
+                    </select>
+                    <small class="text-muted"> Number of items to display in tables </small>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Date Format</label>
+                    <select class="form-select" name="date_format">
+                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Time Format</label>
+                    <select class="form-select" name="time_format">
+                      <option value="24h">24-hour format</option>
+                      <option value="12h">12-hour format</option>
+                    </select>
+                  </div>
+                  <!-- General Settings - Add after Time Format (around line 90) -->
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Timezone</label>
+                    <select class="form-select" name="timezone">
+                      <option value="local">Local Time (Browser)</option>
+                      <option value="UTC">UTC</option>
+                      <option value="America/New_York">Eastern Time (ET)</option>
+                      <option value="America/Chicago">Central Time (CT)</option>
+                      <option value="America/Denver">Mountain Time (MT)</option>
+                      <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                      <option value="Europe/London">London (GMT)</option>
+                      <option value="Europe/Paris">Paris (CET)</option>
+                      <option value="Asia/Tokyo">Tokyo (JST)</option>
+                      <option value="Asia/Shanghai">Shanghai (CST)</option>
+                      <option value="Asia/Kolkata">India (IST)</option>
+                      <option value="Australia/Sydney">Sydney (AEDT)</option>
+                    </select>
+                    <small class="text-muted"
+                      >Select your timezone for accurate date/time display</small
+                    >
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Week Starts On</label>
+                    <select class="form-select" name="week_start">
+                      <option value="monday">Monday</option>
+                      <option value="sunday">Sunday</option>
+                      <option value="saturday">Saturday</option>
+                    </select>
+                    <small class="text-muted"
+                      >First day of the week for calendars and weekly budgets</small
+                    >
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Number Format</label>
+                    <select class="form-select" name="number_format">
+                      <option value="1,234.56">1,234.56 (US, UK)</option>
+                      <option value="1.234,56">1.234,56 (Europe)</option>
+                      <option value="1 234,56">1 234,56 (France, Canada)</option>
+                      <option value="1'234.56">1'234.56 (Switzerland)</option>
+                    </select>
+                    <small class="text-muted"
+                      >How numbers should be displayed (thousands/decimal separators)</small
+                    >
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Notifications</label>
+                    <div class="form-check form-switch mt-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="notifications_enabled"
+                        id="notificationsEnabled"
+                      />
+                      <label class="form-check-label" for="notificationsEnabled">
+                        Enable notifications
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                  Save General Settings
+                </button>
+              </form>
+            </div>
+
+            <!-- Appearance Settings -->
+            <div class="tab-pane fade" id="appearance-settings">
+              <form id="appearanceSettingsForm">
+                <div class="mb-4">
+                  <label class="form-label">Theme</label>
+                  <div class="d-flex gap-4">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="theme"
+                        id="themeLight"
+                        value="light"
+                      />
+                      <label class="form-check-label" for="themeLight">
+                        <i class="bi bi-sun"></i> Light
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="theme"
+                        id="themeDark"
+                        value="dark"
+                      />
+                      <label class="form-check-label" for="themeDark">
+                        <i class="bi bi-moon"></i> Dark
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="form-label">Dashboard Layout</label>
+                  <select class="form-select" name="dashboard_layout">
+                    <option value="compact">Compact</option>
+                    <option value="comfortable">Comfortable</option>
+                    <option value="spacious">Spacious</option>
+                  </select>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                  Save Appearance Settings
+                </button>
+              </form>
+            </div>
+
+            <!-- Currency Settings -->
+            <div class="tab-pane fade" id="currency-settings">
+              <form id="currencySettingsForm">
+                <div class="mb-3">
+                  <label class="form-label">Default Currency</label>
+                  <select class="form-select" name="currency">
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                    <option value="JPY">JPY - Japanese Yen</option>
+                    <option value="INR">INR - Indian Rupee</option>
+                    <option value="CAD">CAD - Canadian Dollar</option>
+                    <option value="AUD">AUD - Australian Dollar</option>
+                    <option value="CHF">CHF - Swiss Franc</option>
+                    <option value="CNY">CNY - Chinese Yuan</option>
+                  </select>
+                  <small class="text-muted"> This will be used as default for new accounts </small>
+                </div>
+
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle"></i>
+                  Currency conversion is not available in this version.
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                  Save Currency Settings
+                </button>
+              </form>
+            </div>
+
+            <!-- Export Settings -->
+            <div class="tab-pane fade" id="export-settings">
+              <form id="exportSettingsForm">
+                <div class="mb-3">
+                  <label class="form-label">Default Export Format</label>
+                  <select class="form-select" name="export_format">
+                    <option value="csv">CSV</option>
+                    <option value="json">JSON</option>
+                    <option value="excel">Excel</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Export Date Range</label>
+                  <select class="form-select" name="export_date_range">
+                    <option value="all">All time</option>
+                    <option value="this_month">This month</option>
+                    <option value="last_month">Last month</option>
+                    <option value="this_year">This year</option>
+                    <option value="custom">Custom range</option>
+                  </select>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                  Save Export Settings
+                </button>
+              </form>
+            </div>
+
+            <!-- Defaults Settings -->
+            <div class="tab-pane fade" id="defaults-settings">
+              <form id="defaultsSettingsForm">
+                <div class="mb-3">
+                  <label class="form-label">Default Income Category</label>
+                  <select
+                    class="form-select"
+                    name="default_income_category"
+                    id="defaultIncomeCategory"
+                  >
+                    <option value="">Select Category</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Default Expense Category</label>
+                  <select
+                    class="form-select"
+                    name="default_expense_category"
+                    id="defaultExpenseCategory"
+                  >
+                    <option value="">Select Category</option>
+                  </select>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                  Save Defaults Settings
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Management -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h5 class="card-title mb-0"><i class="bi bi-database"></i> Data Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="border rounded p-3 text-center">
+                <i class="bi bi-download fs-2 text-primary mb-2"></i>
+                <h6>Export All Data</h6>
+                <p class="small text-muted mb-3">Export all your financial data</p>
+                <button class="btn btn-outline-primary btn-sm" onclick="exportData('json')">
+                  Export JSON
+                </button>
+                <button class="btn btn-outline-primary btn-sm" onclick="exportData('csv')">
+                  Export CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="border rounded p-3 text-center">
+                <i class="bi bi-arrow-repeat fs-2 text-success mb-2"></i>
+                <h6>Recalculate All</h6>
+                <p class="small text-muted mb-3">Recalculate all budget spent amounts</p>
+                <button class="btn btn-outline-success btn-sm" onclick="recalculateAllBudgets()">
+                  Recalculate
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="border rounded p-3 text-center">
+                <i class="bi bi-trash fs-2 text-danger mb-2"></i>
+                <h6>Reset Application</h6>
+                <p class="small text-muted mb-3">Reset all data (cannot be undone)</p>
+                <button class="btn btn-outline-danger btn-sm" onclick="resetDatabase()">
+                  Reset Data
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    loadUserStatistics();
+    loadSettings();
+    loadDefaultCategories();
+
+    // Update session duration every minute
+    setInterval(loadUserStatistics, 60000);
+  });
+
+  function loadUserStatistics() {
+    fetch('/api/v1/profile/statistics')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const stats = data.data;
+
+          // Update session info
+          document.getElementById('sessionId').textContent =
+            stats.session_id?.substring(0, 8) || '-';
+          document.getElementById('sessionStart').textContent = stats.session_start
+            ? formatDateTime(stats.session_start)
+            : '-';
+          document.getElementById('sessionDuration').textContent = `${
+            stats.session_duration || 0
+          } minutes`;
+
+          // Update statistics
+          document.getElementById('totalTransactions').textContent = stats.total_transactions || 0;
+          document.getElementById(
+            'transactionsToday'
+          ).innerHTML = `<i class="bi bi-arrow-up"></i> ${stats.transactions_today || 0} today`;
+
+          document.getElementById('totalAccounts').textContent = stats.total_accounts || 0;
+          document.getElementById('totalCategories').textContent = stats.total_categories || 0;
+          document.getElementById('totalBudgets').textContent = stats.total_budgets || 0;
+
+          document.getElementById('netWorth').textContent = formatCurrency(
+            stats.total_balance || 0
+          );
+          document.getElementById('totalBudget').textContent = formatCurrency(
+            stats.total_budget_amount || 0
+          );
+
+          const budgetPercent =
+            stats.total_budget_amount > 0
+              ? ((stats.total_budget_spent / stats.total_budget_amount) * 100).toFixed(1)
+              : 0;
+          document.getElementById('budgetProgress').textContent = `${budgetPercent}% used`;
+
+          // Set avatar initials
+          const initials = document.querySelector('.avatar-initials');
+          if (initials) {
+            initials.textContent = 'ET';
+          }
+        }
+      });
+  }
+
+  function loadSettings() {
+    fetch('/api/v1/profile/settings')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const settings = data.data;
+
+          // General settings
+          const itemsPerPage = document.querySelector('select[name="items_per_page"]');
+          if (itemsPerPage) itemsPerPage.value = settings.items_per_page || 20;
+
+          const dateFormat = document.querySelector('select[name="date_format"]');
+          if (dateFormat) dateFormat.value = settings.date_format || 'YYYY-MM-DD';
+
+          const timeFormat = document.querySelector('select[name="time_format"]');
+          if (timeFormat) timeFormat.value = settings.time_format || '24h';
+
+          // NEW: Timezone and regional settings
+          const timezone = document.querySelector('select[name="timezone"]');
+          if (timezone) timezone.value = settings.timezone || 'local';
+
+          const weekStart = document.querySelector('select[name="week_start"]');
+          if (weekStart) weekStart.value = settings.week_start || 'monday';
+
+          const numberFormat = document.querySelector('select[name="number_format"]');
+          if (numberFormat) numberFormat.value = settings.number_format || '1,234.56';
+
+          const notifications = document.querySelector('input[name="notifications_enabled"]');
+          if (notifications) notifications.checked = settings.notifications_enabled !== false;
+
+          // Theme
+          const theme = document.querySelector(
+            `input[name="theme"][value="${settings.theme || 'light'}"]`
+          );
+          if (theme) theme.checked = true;
+
+          // Currency
+          const currency = document.querySelector(`select[name="currency"]`);
+          if (currency) currency.value = settings.currency || 'USD';
+
+          // Export
+          const exportFormat = document.querySelector(`select[name="export_format"]`);
+          if (exportFormat) exportFormat.value = settings.export_format || 'csv';
+
+          // Defaults - will be loaded separately
+        }
+      });
+  }
+
+  function loadDefaultCategories() {
+    // Load income categories
+    fetch('/api/v1/categories?type=income')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const select = document.getElementById('defaultIncomeCategory');
+          data.data.forEach(category => {
+            select.append(new Option(category.name, category.id));
+          });
+        }
+      });
+
+    // Load expense categories
+    fetch('/api/v1/categories?type=expense')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const select = document.getElementById('defaultExpenseCategory');
+          data.data.forEach(category => {
+            select.append(new Option(category.name, category.id));
+          });
+        }
+      });
+
+    // Load current defaults
+    fetch('/api/v1/profile/settings')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('defaultIncomeCategory').value =
+            data.data.default_income_category || '';
+          document.getElementById('defaultExpenseCategory').value =
+            data.data.default_expense_category || '';
+        }
+      });
+  }
+
+  function saveSettings() {
+    // Collect all settings from active tab
+    const activeTab = document.querySelector('.tab-pane.active');
+    const form = activeTab.querySelector('form');
+    const formData = new FormData(form);
+    const settings = Object.fromEntries(formData.entries());
+
+    // Handle checkboxes
+    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      settings[cb.name] = cb.checked;
+    });
+
+    fetch('/api/v1/profile/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(settings)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire('Success', 'Settings saved successfully', 'success');
+
+          // Update theme if changed
+          if (settings.theme) {
+            toggleTheme(settings.theme);
+          }
+        } else {
+          Swal.fire('Error', data.error, 'error');
+        }
+      })
+      .catch(error => Swal.fire('Error', 'Failed to save settings', 'error'));
+  }
+
+  function resetSession() {
+    Swal.fire({
+      title: 'Reset Session?',
+      text: 'This will clear your current session data',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Reset'
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch('/api/v1/profile/reset-session', {
+          method: 'POST'
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              Swal.fire('Success', 'Session reset successfully', 'success');
+              loadUserStatistics();
+            }
+          });
+      }
+    });
+  }
+
+  function recalculateAllBudgets() {
+    Swal.fire({
+      title: 'Recalculate All Budgets?',
+      text: 'This will update all budget spent amounts based on transactions',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Recalculate'
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch('/api/v1/budgets/recalculate-all', {
+          method: 'POST'
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              Swal.fire('Success', `Recalculated ${data.data.length} budgets`, 'success');
+            }
+          });
+      }
+    });
+  }
+
+  function resetDatabase() {
+    Swal.fire({
+      title: 'Reset All Data?',
+      text: 'This will permanently delete all your financial data. This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Reset Everything',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Are you absolutely sure?',
+          text: 'Type "RESET" to confirm',
+          input: 'text',
+          inputPlaceholder: 'Type RESET to confirm',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Reset',
+          preConfirm: input => {
+            if (input !== 'RESET') {
+              Swal.showValidationMessage('Please type RESET to confirm');
+            }
+          }
+        }).then(result => {
+          if (result.isConfirmed) {
+            // This should be implemented with proper authentication
+            Swal.fire('Coming Soon', 'This feature requires authentication', 'info');
+          }
+        });
+      }
+    });
+  }
+</script>
+
+<style>
+  .avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .avatar-initials {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: white;
+  }
+
+  .fw-mono {
+    font-family: monospace;
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+    color: #fff;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,733 @@
+<!-- app/templates/help/guides/number-formats.html -->
+{% extends "base.html" %} {% block title %}Number Formats - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Number Formats</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction</a>
+            <a class="nav-link" href="#format-types">2. Number Format Types</a>
+            <a class="nav-link" href="#regional-formats">3. Regional Formats</a>
+            <a class="nav-link" href="#changing-format">4. Changing Your Format</a>
+            <a class="nav-link" href="#examples">5. Examples by Region</a>
+            <a class="nav-link" href="#faq">6. Frequently Asked Questions</a>
+          </nav>
+
+          <hr class="my-3" />
+
+          <div class="bg-light p-3 rounded">
+            <i class="bi bi-clock-history"></i>
+            <small class="d-block mt-2"> <strong>Estimated time:</strong> 5 minutes </small>
+            <small class="d-block"> <strong>Difficulty:</strong> Beginner </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Number Formats</h1>
+
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>Did you know?</strong> Different countries use different symbols for decimal
+            points and thousands separators. Expense Tracker allows you to choose the format that
+            matches your region.
+          </div>
+
+          <!-- Introduction -->
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction to Number Formats</h2>
+            <p>
+              Number formats determine how numbers, especially currency amounts, are displayed
+              throughout the application. The main differences between formats are:
+            </p>
+            <ul>
+              <li>
+                <strong>Decimal separator</strong> - The symbol used to separate the whole number
+                from the fractional part
+              </li>
+              <li>
+                <strong>Thousands separator</strong> - The symbol used to group digits for large
+                numbers
+              </li>
+              <li>
+                <strong>Placement of symbols</strong> - Whether separators are used and where
+                they're placed
+              </li>
+            </ul>
+            <div class="row g-4 mt-3">
+              <div class="col-md-6">
+                <div class="border rounded p-3 text-center">
+                  <h3 class="text-primary mb-2">1,234.56</h3>
+                  <p class="small text-muted mb-0">US/UK Format</p>
+                  <p class="small">Decimal: <code>.</code> | Thousands: <code>,</code></p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 text-center">
+                  <h3 class="text-success mb-2">1.234,56</h3>
+                  <p class="small text-muted mb-0">European Format</p>
+                  <p class="small">Decimal: <code>,</code> | Thousands: <code>.</code></p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Format Types -->
+          <section id="format-types" class="mb-5">
+            <h2 class="h4 mb-3">2. Number Format Types</h2>
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>Format</th>
+                    <th>Example</th>
+                    <th>Decimal Separator</th>
+                    <th>Thousands Separator</th>
+                    <th>Commonly Used In</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>1,234.56</code></td>
+                    <td>$1,234.56</td>
+                    <td><code>.</code> (period)</td>
+                    <td><code>,</code> (comma)</td>
+                    <td>United States, United Kingdom, Canada (English), Australia, India</td>
+                  </tr>
+                  <tr>
+                    <td><code>1.234,56</code></td>
+                    <td>€1.234,56</td>
+                    <td><code>,</code> (comma)</td>
+                    <td><code>.</code> (period)</td>
+                    <td>Germany, Italy, Spain, Netherlands, Austria, Belgium</td>
+                  </tr>
+                  <tr>
+                    <td><code>1 234,56</code></td>
+                    <td>€1 234,56</td>
+                    <td><code>,</code> (comma)</td>
+                    <td><code> </code> (space)</td>
+                    <td>France, Canada (French), Switzerland (French), Sweden</td>
+                  </tr>
+                  <tr>
+                    <td><code>1'234.56</code></td>
+                    <td>CHF 1'234.56</td>
+                    <td><code>.</code> (period)</td>
+                    <td><code>'</code> (apostrophe)</td>
+                    <td>Switzerland (some regions), Liechtenstein</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Regional Formats -->
+          <section id="regional-formats" class="mb-5">
+            <h2 class="h4 mb-3">3. Regional Formats in Detail</h2>
+
+            <div class="accordion" id="regionAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#region1"
+                  >
+                    <strong>🇺🇸 US/UK Format (1,234.56)</strong>
+                  </button>
+                </h2>
+                <div
+                  id="region1"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#regionAccordion"
+                >
+                  <div class="accordion-body">
+                    <p>
+                      This format uses a period (.) as the decimal separator and a comma (,) as the
+                      thousands separator.
+                    </p>
+                    <h6 class="mt-3">Examples:</h6>
+                    <ul>
+                      <li>
+                        One thousand two hundred thirty-four and fifty-six cents:
+                        <strong>$1,234.56</strong>
+                      </li>
+                      <li>Ten thousand: <strong>$10,000.00</strong></li>
+                      <li>One million: <strong>$1,000,000.00</strong></li>
+                    </ul>
+                    <div class="bg-light p-3 rounded">
+                      <strong>Used in:</strong> United States, United Kingdom, Canada (English),
+                      Australia, New Zealand, India, Japan, China
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#region2"
+                  >
+                    <strong>🇪🇺 European Format (1.234,56)</strong>
+                  </button>
+                </h2>
+                <div
+                  id="region2"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#regionAccordion"
+                >
+                  <div class="accordion-body">
+                    <p>
+                      This format uses a comma (,) as the decimal separator and a period (.) as the
+                      thousands separator.
+                    </p>
+                    <h6 class="mt-3">Examples:</h6>
+                    <ul>
+                      <li>
+                        One thousand two hundred thirty-four and fifty-six cents:
+                        <strong>€1.234,56</strong>
+                      </li>
+                      <li>Ten thousand: <strong>€10.000,00</strong></li>
+                      <li>One million: <strong>€1.000.000,00</strong></li>
+                    </ul>
+                    <div class="bg-light p-3 rounded">
+                      <strong>Used in:</strong> Germany, Italy, Spain, Netherlands, Austria,
+                      Belgium, Portugal, Greece, most of Europe
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#region3"
+                  >
+                    <strong>🇫🇷 French Format (1 234,56)</strong>
+                  </button>
+                </h2>
+                <div
+                  id="region3"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#regionAccordion"
+                >
+                  <div class="accordion-body">
+                    <p>
+                      This format uses a comma (,) as the decimal separator and a space ( ) as the
+                      thousands separator.
+                    </p>
+                    <h6 class="mt-3">Examples:</h6>
+                    <ul>
+                      <li>
+                        One thousand two hundred thirty-four and fifty-six cents:
+                        <strong>€1 234,56</strong>
+                      </li>
+                      <li>Ten thousand: <strong>€10 000,00</strong></li>
+                      <li>One million: <strong>€1 000 000,00</strong></li>
+                    </ul>
+                    <div class="bg-light p-3 rounded">
+                      <strong>Used in:</strong> France, Canada (French), Switzerland (French),
+                      Sweden, Finland
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#region4"
+                  >
+                    <strong>🇨🇭 Swiss Format (1'234.56)</strong>
+                  </button>
+                </h2>
+                <div
+                  id="region4"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#regionAccordion"
+                >
+                  <div class="accordion-body">
+                    <p>
+                      This format uses a period (.) as the decimal separator and an apostrophe (')
+                      as the thousands separator.
+                    </p>
+                    <h6 class="mt-3">Examples:</h6>
+                    <ul>
+                      <li>
+                        One thousand two hundred thirty-four and fifty-six cents:
+                        <strong>CHF 1'234.56</strong>
+                      </li>
+                      <li>Ten thousand: <strong>CHF 10'000.00</strong></li>
+                      <li>One million: <strong>CHF 1'000'000.00</strong></li>
+                    </ul>
+                    <div class="bg-light p-3 rounded">
+                      <strong>Used in:</strong> Switzerland (some regions), Liechtenstein
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Changing Your Format -->
+          <section id="changing-format" class="mb-5">
+            <h2 class="h4 mb-3">4. Changing Your Number Format</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Go to Profile Settings</h6>
+                <p>Click on your profile icon in the top right corner and select "Profile"</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Navigate to General Settings</h6>
+                <p>Click on the "General" tab in the settings section</p>
+                <img
+                  src="{{ url_for('static', filename='img/guides/general-settings.png') }}"
+                  alt="General Settings Tab"
+                  class="img-fluid rounded border mt-2"
+                  onerror="this.style.display='none'"
+                />
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Find Number Format Option</h6>
+                <p>Look for the "Number Format" dropdown menu</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Select Your Preferred Format</h6>
+                <p>Choose from the available options:</p>
+                <ul>
+                  <li><strong>1,234.56</strong> - US/UK format</li>
+                  <li><strong>1.234,56</strong> - European format</li>
+                  <li><strong>1 234,56</strong> - French format</li>
+                  <li><strong>1'234.56</strong> - Swiss format</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>Click "Save General Settings" to apply your new number format</p>
+                <div class="alert alert-success mt-2">
+                  <i class="bi bi-check-circle"></i>
+                  The format will be applied immediately across all pages
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Examples by Region -->
+          <section id="examples" class="mb-5">
+            <h2 class="h4 mb-3">5. Examples by Region</h2>
+
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Country/Region</th>
+                    <th>Format</th>
+                    <th>Example (1000.50)</th>
+                    <th>Currency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>🇺🇸 United States</td>
+                    <td><code>1,234.56</code></td>
+                    <td>$1,000.50</td>
+                    <td>USD</td>
+                  </tr>
+                  <tr>
+                    <td>🇬🇧 United Kingdom</td>
+                    <td><code>1,234.56</code></td>
+                    <td>£1,000.50</td>
+                    <td>GBP</td>
+                  </tr>
+                  <tr>
+                    <td>🇩🇪 Germany</td>
+                    <td><code>1.234,56</code></td>
+                    <td>€1.000,50</td>
+                    <td>EUR</td>
+                  </tr>
+                  <tr>
+                    <td>🇫🇷 France</td>
+                    <td><code>1 234,56</code></td>
+                    <td>€1 000,50</td>
+                    <td>EUR</td>
+                  </tr>
+                  <tr>
+                    <td>🇮🇹 Italy</td>
+                    <td><code>1.234,56</code></td>
+                    <td>€1.000,50</td>
+                    <td>EUR</td>
+                  </tr>
+                  <tr>
+                    <td>🇪🇸 Spain</td>
+                    <td><code>1.234,56</code></td>
+                    <td>€1.000,50</td>
+                    <td>EUR</td>
+                  </tr>
+                  <tr>
+                    <td>🇨🇦 Canada (English)</td>
+                    <td><code>1,234.56</code></td>
+                    <td>$1,000.50</td>
+                    <td>CAD</td>
+                  </tr>
+                  <tr>
+                    <td>🇨🇦 Canada (French)</td>
+                    <td><code>1 234,56</code></td>
+                    <td>$1 000,50</td>
+                    <td>CAD</td>
+                  </tr>
+                  <tr>
+                    <td>🇦🇺 Australia</td>
+                    <td><code>1,234.56</code></td>
+                    <td>$1,000.50</td>
+                    <td>AUD</td>
+                  </tr>
+                  <tr>
+                    <td>🇮🇳 India</td>
+                    <td><code>1,234.56</code></td>
+                    <td>₹1,000.50</td>
+                    <td>INR</td>
+                  </tr>
+                  <tr>
+                    <td>🇯🇵 Japan</td>
+                    <td><code>1,234.56</code></td>
+                    <td>¥1,000.50</td>
+                    <td>JPY</td>
+                  </tr>
+                  <tr>
+                    <td>🇨🇭 Switzerland</td>
+                    <td><code>1'234.56</code></td>
+                    <td>CHF 1'000.50</td>
+                    <td>CHF</td>
+                  </tr>
+                  <tr>
+                    <td>🇸🇪 Sweden</td>
+                    <td><code>1 234,56</code></td>
+                    <td>kr 1 000,50</td>
+                    <td>SEK</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="alert alert-warning mt-3">
+              <i class="bi bi-exclamation-triangle"></i>
+              <strong>Note:</strong> Currency symbols are determined by your currency setting, not
+              the number format. The number format only affects how digits are grouped and
+              separated.
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section id="faq" class="mb-5">
+            <h2 class="h4 mb-3">6. Frequently Asked Questions</h2>
+
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    Will changing the number format affect how numbers are stored?
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    No, the number format only affects <strong>display</strong>. All numbers are
+                    stored internally in the same way, regardless of your display preference. This
+                    ensures data consistency and accurate calculations.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    Can I use a format not listed in the options?
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Currently, we support the four most common international formats. If you need a
+                    format not listed, please contact support and we'll consider adding it in a
+                    future update.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Why do my numbers look wrong after changing the format?
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    If numbers look incorrect, try refreshing the page. Some cached data may need to
+                    reload. If the issue persists, try clearing your browser cache or contact
+                    support.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq4"
+                  >
+                    Does the number format affect CSV exports?
+                  </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    CSV exports use standard formatting to ensure compatibility with spreadsheet
+                    software. The numbers in CSV files use the US/UK format (1,234.56) regardless of
+                    your display preference.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq5"
+                  >
+                    Can I set different formats for different currencies?
+                  </button>
+                </h2>
+                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    The number format is global and applies to all numbers regardless of currency.
+                    If you need to display different currencies with their local formats, consider
+                    using separate accounts with different settings.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Related Guides -->
+          <section class="mb-5">
+            <h2 class="h4 mb-3">Related Guides</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <a
+                  href="{{ url_for('help.guide', topic='currency-settings') }}"
+                  class="text-decoration-none"
+                >
+                  <div class="d-flex align-items-center p-3 border rounded hover-bg">
+                    <i class="bi bi-currency-dollar fs-3 text-primary me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Currency Settings</h6>
+                      <small class="text-muted">Learn about currency selection</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-6">
+                <a
+                  href="{{ url_for('help.guide', topic='date-formatting') }}"
+                  class="text-decoration-none"
+                >
+                  <div class="d-flex align-items-center p-3 border rounded hover-bg">
+                    <i class="bi bi-calendar fs-3 text-success me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Date Formatting</h6>
+                      <small class="text-muted">Configure date and time display</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .step-content {
+    flex-grow: 1;
+  }
+
+  .hover-bg:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+
+  .table th {
+    font-weight: 600;
+  }
+
+  [data-theme='dark'] .table {
+    color: #fff;
+  }
+
+  [data-theme='dark'] .table-light {
+    background-color: #2b3035;
+    color: #fff;
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+  }
+
+  code {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+
+  [data-theme='dark'] code {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffc107;
+  }
+</style>
+
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'number-formats',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop() + 100;
+
+    $('section').each(function () {
+      var currentSection = $(this);
+      var sectionTop = currentSection.offset().top;
+
+      if (scrollPosition >= sectionTop) {
+        var id = currentSection.attr('id');
+        $('.nav-link').removeClass('active');
+        $('.nav-link[href="#' + id + '"]').addClass('active');
+      }
+    });
+  });
+
+  // Smooth scroll to sections
+  $(document).ready(function () {
+    $('.nav-link').click(function (e) {
+      e.preventDefault();
+      var target = $(this).attr('href');
+      $('html, body').animate(
+        {
+          scrollTop: $(target).offset().top - 80
+        },
+        500
+      );
+    });
+  });
+</script>
+{% endblock %}

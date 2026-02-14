@@ -1,0 +1,228 @@
+<!-- app/templates/help/contact.html -->
+{% extends "base.html" %} {% block title %}Contact Support - {{ super() }}{% endblock %} {% block
+content %}
+<div class="contact-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item active">Contact Support</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Contact Form -->
+    <div class="col-lg-8 mb-4">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0"><i class="bi bi-envelope"></i> Send us a Message</h5>
+        </div>
+        <div class="card-body">
+          <form id="contactForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Your Name *</label>
+                <input type="text" class="form-control" name="name" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email Address *</label>
+                <input type="email" class="form-control" name="email" required />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Subject *</label>
+              <select class="form-select" name="subject" required>
+                <option value="">Select a topic</option>
+                <option value="technical">Technical Issue</option>
+                <option value="billing">Billing Question</option>
+                <option value="feature">Feature Request</option>
+                <option value="bug">Report a Bug</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Message *</label>
+              <textarea class="form-control" name="message" rows="6" required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="urgent" name="urgent" />
+                <label class="form-check-label" for="urgent">
+                  This is urgent - please respond ASAP
+                </label>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="submitContactForm(event)">
+              <i class="bi bi-send"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0"><i class="bi bi-info-circle"></i> Contact Info</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-4">
+            <div class="icon-circle bg-primary bg-opacity-10 me-3">
+              <i class="bi bi-envelope-fill text-primary"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Email</h6>
+              <a href="mailto:support@expensetracker.com" class="text-decoration-none">
+                support@expensetracker.com
+              </a>
+              <br />
+              <small class="text-muted">Response within 24 hours</small>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-4">
+            <div class="icon-circle bg-success bg-opacity-10 me-3">
+              <i class="bi bi-chat-dots-fill text-success"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Live Chat</h6>
+              <span class="text-muted">Available Mon-Fri, 9am-5pm EST</span>
+              <br />
+              <button class="btn btn-sm btn-outline-success mt-2" onclick="startChat()">
+                Start Chat
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-4">
+            <div class="icon-circle bg-warning bg-opacity-10 me-3">
+              <i class="bi bi-twitter-x text-warning"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Twitter</h6>
+              <a href="https://twitter.com/expensetracker" class="text-decoration-none">
+                @expensetracker
+              </a>
+              <br />
+              <small class="text-muted">For quick questions</small>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div class="icon-circle bg-danger bg-opacity-10 me-3">
+              <i class="bi bi-github text-danger"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">GitHub</h6>
+              <a href="https://github.com/expense-tracker" class="text-decoration-none">
+                github.com/expense-tracker
+              </a>
+              <br />
+              <small class="text-muted">Report issues, contribute</small>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+          <h6 class="mb-3">Response Times</h6>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Email</span>
+            <span class="badge bg-success">&lt; 24 hours</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Live Chat</span>
+            <span class="badge bg-success">&lt; 5 minutes</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Twitter</span>
+            <span class="badge bg-warning">2-4 hours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function submitContactForm(event) {
+    event.preventDefault();
+
+    // Get the button and show loading state
+    const submitBtn = event.target;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+    const form = document.getElementById('contactForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch('/help/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Message Sent!',
+            text: "We'll respond within 24 hours.",
+            confirmButtonText: 'OK'
+          });
+          form.reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: data.error || 'Failed to send message'
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to send message. Please try again.'
+        });
+      })
+      .finally(() => {
+        // Restore button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      });
+  }
+
+  function startChat() {
+    Swal.fire({
+      icon: 'info',
+      title: 'Live Chat',
+      text: 'Live chat is currently in development. Please email us instead.',
+      confirmButtonText: 'OK'
+    });
+  }
+</script>
+
+<style>
+  .icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+{% endblock %}

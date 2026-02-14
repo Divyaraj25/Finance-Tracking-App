@@ -1,0 +1,59 @@
+<!-- app/templates/help/guides/export.html -->
+{% extends "base.html" %} {% block title %}Exporting Data - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Exporting Data</li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <div class="card-body p-4">
+      <h1 class="display-6 mb-4">Exporting Your Data</h1>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="text-center p-3 border rounded">
+            <i class="bi bi-filetype-csv fs-1 text-primary"></i>
+            <h5 class="mt-2">CSV</h5>
+            <p class="small">Compatible with Excel, Google Sheets</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center p-3 border rounded">
+            <i class="bi bi-filetype-json fs-1 text-success"></i>
+            <h5 class="mt-2">JSON</h5>
+            <p class="small">For developers, API integration</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center p-3 border rounded">
+            <i class="bi bi-file-earmark-excel fs-1 text-danger"></i>
+            <h5 class="mt-2">Excel</h5>
+            <p class="small">Formatted .xlsx workbook</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="h5 mt-5">How to Export:</h3>
+      <ol>
+        <li>Navigate to any page (Transactions, Accounts, Budgets)</li>
+        <li>Apply filters if you want specific data</li>
+        <li>Click the "Export" button</li>
+        <li>Choose your format (CSV, JSON, Excel)</li>
+        <li>File downloads automatically</li>
+      </ol>
+
+      <div class="alert alert-info mt-4">
+        <i class="bi bi-cloud-download"></i>
+        <strong>API Export:</strong> Use <code>/api/v1/export/&lt;format&gt;?type=all</code> for
+        programmatic access.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

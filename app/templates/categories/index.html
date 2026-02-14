@@ -1,0 +1,508 @@
+<!-- app/templates/categories/index.html -->
+{% extends "base.html" %} {% block title %}Categories - {{ super() }}{% endblock %} {% block content
+%}
+<div class="categories-page">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><i class="bi bi-tags text-primary"></i> Categories</h1>
+    <div class="btn-group">
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addCategoryModal"
+      >
+        <i class="bi bi-plus-circle"></i> Add Category
+      </button>
+      <button type="button" class="btn btn-outline-secondary" onclick="exportData('csv')">
+        <i class="bi bi-download"></i> Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Category Summary -->
+  <div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Total Categories</h6>
+              <h2 class="mb-0" id="totalCategories">0</h2>
+            </div>
+            <div class="icon-shape bg-primary bg-opacity-10">
+              <i class="bi bi-tag text-primary fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Expense Categories</h6>
+              <h2 class="mb-0" id="expenseCategories">0</h2>
+            </div>
+            <div class="icon-shape bg-danger bg-opacity-10">
+              <i class="bi bi-arrow-up text-danger fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Income Categories</h6>
+              <h2 class="mb-0" id="incomeCategories">0</h2>
+            </div>
+            <div class="icon-shape bg-success bg-opacity-10">
+              <i class="bi bi-arrow-down text-success fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Default Categories</h6>
+              <h2 class="mb-0" id="defaultCategories">0</h2>
+            </div>
+            <div class="icon-shape bg-warning bg-opacity-10">
+              <i class="bi bi-star text-warning fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories Tabs -->
+  <div class="card">
+    <div class="card-header bg-transparent">
+      <ul class="nav nav-tabs card-header-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#all-categories">
+            <i class="bi bi-grid"></i> All Categories
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#expense-categories">
+            <i class="bi bi-arrow-up"></i> Expense
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#income-categories">
+            <i class="bi bi-arrow-down"></i> Income
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#asset-categories">
+            <i class="bi bi-building"></i> Asset
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#liability-categories">
+            <i class="bi bi-credit-card"></i> Liability
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content">
+        <!-- All Categories Tab -->
+        <div class="tab-pane fade show active" id="all-categories">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle" id="categoriesTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th class="text-center">Default</th>
+                  <th class="text-center">Transactions</th>
+                  <th class="text-center">Budgets</th>
+                  <th class="text-end">Total Amount</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesTableBody">
+                <!-- Dynamic content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Other tabs will be populated dynamically -->
+        <div class="tab-pane fade" id="expense-categories"></div>
+        <div class="tab-pane fade" id="income-categories"></div>
+        <div class="tab-pane fade" id="asset-categories"></div>
+        <div class="tab-pane fade" id="liability-categories"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-plus-circle"></i> Add New Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="categoryForm">
+          <div class="mb-3">
+            <label class="form-label">Category Name *</label>
+            <input type="text" class="form-control" name="name" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Category Type *</label>
+            <select class="form-select" name="type" required>
+              <option value="">Select Type</option>
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+              <option value="asset">Asset</option>
+              <option value="liability">Liability</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="saveCategory()">
+          Save Category
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-pencil"></i> Edit Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editCategoryForm">
+          <input type="hidden" name="id" id="editCategoryId" />
+          <div class="mb-3">
+            <label class="form-label">Category Name</label>
+            <input type="text" class="form-control" name="name" id="editCategoryName" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              name="description"
+              id="editCategoryDescription"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Category type cannot be changed after creation.
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="updateCategory()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    loadCategories();
+    loadCategorySummary();
+
+    // Handle tab changes
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+      const target = $(e.target).attr('href').replace('#', '');
+      if (target !== 'all-categories') {
+        loadCategoriesByType(target.replace('-categories', ''));
+      }
+    });
+  });
+
+  function loadCategories() {
+    fetch('/api/v1/categories/data')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderCategories(data.data);
+        }
+      })
+      .catch(error => console.error('Error loading categories:', error));
+  }
+
+  function renderCategories(categories) {
+    const tbody = document.getElementById('categoriesTableBody');
+
+    if (categories.length === 0) {
+      tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center py-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-3 text-muted"></i>
+                    <span class="text-muted">No categories found</span>
+                </td>
+            </tr>
+        `;
+      return;
+    }
+
+    tbody.innerHTML = categories
+      .map(
+        c => `
+        <tr>
+            <td>
+                <span class="fw-medium">${escapeHtml(c.name)}</span>
+                ${c.is_default ? '<span class="badge bg-warning ms-2">Default</span>' : ''}
+            </td>
+            <td>
+                <span class="badge bg-${getCategoryTypeColor(c.type)}">
+                    ${c.type.charAt(0).toUpperCase() + c.type.slice(1)}
+                </span>
+            </td>
+            <td>${escapeHtml(c.description || '-')}</td>
+            <td class="text-center">
+                ${
+                  c.is_default
+                    ? '<i class="bi bi-check-circle-fill text-success"></i>'
+                    : '<i class="bi bi-x-circle-fill text-muted"></i>'
+                }
+            </td>
+            <td class="text-center">${c.transaction_count || 0}</td>
+            <td class="text-center">${c.budget_count || 0}</td>
+            <td class="text-end">${c.total_amount ? formatCurrency(c.total_amount) : '-'}</td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    ${
+                      !c.is_default
+                        ? `
+                        <button class="btn btn-outline-primary" onclick="editCategory('${c.id}')">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="deleteCategory('${c.id}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    `
+                        : `
+                        <button class="btn btn-outline-secondary" disabled>
+                            <i class="bi bi-lock"></i>
+                        </button>
+                    `
+                    }
+                </div>
+            </td>
+        </tr>
+    `
+      )
+      .join('');
+  }
+
+  function loadCategorySummary() {
+    fetch('/api/v1/categories/data')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const categories = data.data;
+          document.getElementById('totalCategories').textContent = categories.length;
+          document.getElementById('expenseCategories').textContent = categories.filter(
+            c => c.type === 'expense'
+          ).length;
+          document.getElementById('incomeCategories').textContent = categories.filter(
+            c => c.type === 'income'
+          ).length;
+          document.getElementById('defaultCategories').textContent = categories.filter(
+            c => c.is_default
+          ).length;
+        }
+      });
+  }
+
+  function loadCategoriesByType(type) {
+    fetch(`/api/v1/categories/by-type/${type}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const tabContent = document.getElementById(`${type}-categories`);
+          renderCategoryTab(tabContent, data.data, type);
+        }
+      });
+  }
+
+  function renderCategoryTab(container, categories, type) {
+    if (categories.length === 0) {
+      container.innerHTML = `
+            <div class="text-center py-5">
+                <i class="bi bi-inbox fs-1 d-block mb-3 text-muted"></i>
+                <h5>No ${type} categories found</h5>
+                <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="bi bi-plus-circle"></i> Add ${type} Category
+                </button>
+            </div>
+        `;
+      return;
+    }
+
+    container.innerHTML = `
+        <div class="row g-4">
+            ${categories
+              .map(
+                c => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="card-title mb-0">${escapeHtml(c.name)}</h6>
+                                ${
+                                  c.is_default
+                                    ? '<span class="badge bg-warning">Default</span>'
+                                    : ''
+                                }
+                            </div>
+                            <p class="card-text small text-muted mb-3">
+                                ${escapeHtml(c.description || 'No description')}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark">
+                                    ${c.transaction_count || 0} transactions
+                                </span>
+                                <span class="badge bg-light text-dark">
+                                    ${c.budget_count || 0} budgets
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+              )
+              .join('')}
+        </div>
+    `;
+  }
+
+  function saveCategory() {
+    const form = document.getElementById('categoryForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch('/api/v1/categories/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire('Success', 'Category created successfully', 'success');
+          $('#addCategoryModal').modal('hide');
+          form.reset();
+          loadCategories();
+          loadCategorySummary();
+        } else {
+          Swal.fire('Error', data.error, 'error');
+        }
+      })
+      .catch(error => Swal.fire('Error', 'Failed to save category', 'error'));
+  }
+
+  function editCategory(id) {
+    fetch(`/api/v1/categories/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const category = data.data;
+          document.getElementById('editCategoryId').value = category.id;
+          document.getElementById('editCategoryName').value = category.name;
+          document.getElementById('editCategoryDescription').value = category.description || '';
+          $('#editCategoryModal').modal('show');
+        }
+      });
+  }
+
+  function updateCategory() {
+    const id = document.getElementById('editCategoryId').value;
+    const data = {
+      name: document.getElementById('editCategoryName').value,
+      description: document.getElementById('editCategoryDescription').value
+    };
+
+    fetch(`/api/v1/categories/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire('Success', 'Category updated successfully', 'success');
+          $('#editCategoryModal').modal('hide');
+          loadCategories();
+        } else {
+          Swal.fire('Error', data.error, 'error');
+        }
+      });
+  }
+
+  function deleteCategory(id) {
+    Swal.fire({
+      title: 'Delete Category?',
+      text: 'This will reassign all transactions to default category. This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch(`/api/v1/categories/${id}`, {
+          method: 'DELETE'
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              Swal.fire('Deleted', 'Category deleted successfully', 'success');
+              loadCategories();
+              loadCategorySummary();
+            } else {
+              Swal.fire('Error', data.error, 'error');
+            }
+          });
+      }
+    });
+  }
+
+  function getCategoryTypeColor(type) {
+    const colors = {
+      expense: 'danger',
+      income: 'success',
+      asset: 'info',
+      liability: 'warning'
+    };
+    return colors[type] || 'secondary';
+  }
+</script>
+{% endblock %}

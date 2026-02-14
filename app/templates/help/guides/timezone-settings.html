@@ -1,0 +1,234 @@
+<!-- app/templates/help/guides/timezone-settings.html -->
+{% extends "base.html" %} {% block title %}Timezone Settings - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Timezone Settings</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#why-timezone">Why Timezone Matters</a>
+            <a class="nav-link" href="#setting-timezone">Setting Your Timezone</a>
+            <a class="nav-link" href="#timezone-options">Timezone Options</a>
+            <a class="nav-link" href="#effects">What Changes</a>
+            <a class="nav-link" href="#troubleshooting">Troubleshooting</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4">
+          <h1 class="display-6 mb-4">Timezone Settings</h1>
+
+          <section id="why-timezone" class="mb-5">
+            <h2 class="h4 mb-3">Why Timezone Matters</h2>
+            <p>
+              Setting the correct timezone ensures that all dates and times in the system accurately
+              reflect your local time. This is especially important for:
+            </p>
+            <ul>
+              <li><strong>Transaction dates</strong> - When you actually made the purchase</li>
+              <li><strong>Budget periods</strong> - Correct start and end of budget cycles</li>
+              <li><strong>Reports</strong> - Accurate monthly and yearly summaries</li>
+              <li><strong>Due dates</strong> - Credit card and bill payment reminders</li>
+            </ul>
+          </section>
+
+          <section id="setting-timezone" class="mb-5">
+            <h2 class="h4 mb-3">Setting Your Timezone</h2>
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Go to Profile Settings</h6>
+                <p>Click on your profile icon in the top right corner and select "Profile"</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Navigate to General Settings</h6>
+                <p>Click on the "General" tab in the settings section</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Select Your Timezone</h6>
+                <p>Find and select your timezone from the dropdown menu</p>
+                <div class="alert alert-info mt-2">
+                  <i class="bi bi-info-circle"></i>
+                  "Local Time (Browser)" uses your computer's timezone settings
+                </div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>Click "Save General Settings" to apply your new timezone</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="timezone-options" class="mb-5">
+            <h2 class="h4 mb-3">Timezone Options</h2>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Option</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>Local Time (Browser)</code></td>
+                    <td>Uses your computer's timezone</td>
+                    <td>Best for most users, automatically adjusts</td>
+                  </tr>
+                  <tr>
+                    <td><code>UTC</code></td>
+                    <td>Coordinated Universal Time</td>
+                    <td>For developers, international coordination</td>
+                  </tr>
+                  <tr>
+                    <td><code>America/New_York</code></td>
+                    <td>US Eastern Time</td>
+                    <td>New York, Atlanta, Miami</td>
+                  </tr>
+                  <tr>
+                    <td><code>Europe/London</code></td>
+                    <td>UK Time</td>
+                    <td>London, Dublin, Lisbon</td>
+                  </tr>
+                  <tr>
+                    <td><code>Asia/Kolkata</code></td>
+                    <td>Indian Standard Time</td>
+                    <td>India, Sri Lanka</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="effects" class="mb-5">
+            <h2 class="h4 mb-3">What Changes with Timezone</h2>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="text-success">✅ Transaction Dates</h6>
+                  <p class="small">All transaction dates will be converted to your local time</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="text-success">✅ Budget Periods</h6>
+                  <p class="small">Budget start/end dates adjust to your timezone</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="text-success">✅ Due Dates</h6>
+                  <p class="small">Payment reminders based on your local time</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="text-success">✅ Reports</h6>
+                  <p class="small">Monthly reports aligned with your calendar</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="troubleshooting" class="mb-5">
+            <h2 class="h4 mb-3">Troubleshooting</h2>
+            <div class="accordion" id="timezoneFaq">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#tzFaq1"
+                  >
+                    Dates still showing wrong after changing timezone
+                  </button>
+                </h2>
+                <div id="tzFaq1" class="accordion-collapse collapse" data-bs-parent="#timezoneFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Refresh the page after saving settings. Some cached
+                    data may need to reload.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#tzFaq2"
+                  >
+                    My timezone isn't in the list
+                  </button>
+                </h2>
+                <div id="tzFaq2" class="accordion-collapse collapse" data-bs-parent="#timezoneFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Use "Local Time (Browser)" which automatically
+                    detects your system timezone.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .step-content {
+    flex-grow: 1;
+  }
+  [data-theme='dark'] .table {
+    color: #fff;
+  }
+</style>
+{% endblock %}

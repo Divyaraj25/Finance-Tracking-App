@@ -1,0 +1,43 @@
+expense-tracker/
+├── app/
+│   ├── __init__.py          # Application factory
+│   ├── models.py            # Database models
+│   ├── routes/              # Route handlers
+│   │   ├── main.py         # Main routes (dashboard)
+│   │   ├── api.py          # RESTful API routes
+│   │   ├── transactions.py # Transaction management
+│   │   ├── accounts.py     # Account management
+│   │   ├── budgets.py      # Budget management
+│   │   ├── categories.py   # Category management
+│   │   ├── logs.py         # Log viewing
+│   │   ├── export.py       # Export functionality
+│   │   ├── profile.py      # User profile
+│   │   └── help.py         # Help system
+│   ├── static/             # Static files
+│   │   ├── css/           # Stylesheets
+│   │   ├── js/            # JavaScript files
+│   │   └── img/           # Images
+│   └── templates/          # HTML templates
+│       ├── base.html       # Base template
+│       ├── dashboard/      # Dashboard templates
+│       ├── transactions/   # Transaction templates
+│       ├── accounts/       # Account templates
+│       ├── budgets/        # Budget templates
+│       ├── categories/     # Category templates
+│       ├── logs/          # Log templates
+│       ├── profile/       # Profile templates
+│       ├── help/          # Help templates
+│       └── errors/        # Error pages
+├── docs/                   # Documentation
+│   ├── api/               # API documentation
+│   ├── guides/            # User guides
+│   └── deployment/        # Deployment guides
+├── tests/                 # Unit tests
+├── .env.example           # Environment variables example
+├── .gitignore            # Git ignore file
+├── config.py             # Configuration settings
+├── manage.py             # Management script
+├── requirements.txt      # Python dependencies
+├── run.py               # Application entry point
+├── wsgi.py              # WSGI entry point
+└── README.md            # This file

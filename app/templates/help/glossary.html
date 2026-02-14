@@ -1,0 +1,328 @@
+<!-- app/templates/help/glossary.html -->
+{% extends "base.html" %} {% block title %}Financial Glossary - {{ super() }}{% endblock %} {% block
+content %}
+<div class="glossary-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item active">Financial Glossary</li>
+    </ol>
+  </nav>
+
+  <div class="text-center mb-5">
+    <h1 class="display-6 mb-3">Financial Terms Glossary</h1>
+    <p class="text-muted">Common financial terms used in Expense Tracker</p>
+  </div>
+
+  <!-- A-Z Navigation -->
+  <div class="glossary-nav text-center mb-5">
+    <div class="btn-group flex-wrap" role="group">
+      {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+      <a href="#{{ letter }}" class="btn btn-outline-secondary btn-sm">{{ letter }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Glossary Terms -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <!-- A -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="A" class="border-bottom pb-2">A</h5>
+              <dl>
+                <dt>Account</dt>
+                <dd class="small text-muted mb-3">
+                  A record of financial transactions for a specific purpose (checking, savings,
+                  credit card).
+                </dd>
+
+                <dt>APR (Annual Percentage Rate)</dt>
+                <dd class="small text-muted mb-3">
+                  The yearly interest rate charged on loans or credit cards.
+                </dd>
+
+                <dt>Asset</dt>
+                <dd class="small text-muted mb-3">
+                  An item of value owned by an individual or corporation (investments, property,
+                  vehicles).
+                </dd>
+
+                <dt>Audit Trail</dt>
+                <dd class="small text-muted mb-3">
+                  A chronological record of all system activities and changes.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- B -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="B" class="border-bottom pb-2">B</h5>
+              <dl>
+                <dt>Balance</dt>
+                <dd class="small text-muted mb-3">
+                  The amount of money in an account at a specific time.
+                </dd>
+
+                <dt>Budget</dt>
+                <dd class="small text-muted mb-3">
+                  A spending plan that allocates income toward expenses and savings.
+                </dd>
+
+                <dt>Bulk Operation</dt>
+                <dd class="small text-muted mb-3">
+                  Performing the same action on multiple transactions at once.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- C -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="C" class="border-bottom pb-2">C</h5>
+              <dl>
+                <dt>Category</dt>
+                <dd class="small text-muted mb-3">
+                  A classification for transactions to help with organization and reporting.
+                </dd>
+
+                <dt>Credit</dt>
+                <dd class="small text-muted mb-3">Money added to an account (income, deposits).</dd>
+
+                <dt>Credit Card</dt>
+                <dd class="small text-muted mb-3">
+                  A revolving credit line that allows borrowing up to a limit.
+                </dd>
+
+                <dt>Credit Limit</dt>
+                <dd class="small text-muted mb-3">
+                  The maximum amount you can borrow on a credit card.
+                </dd>
+
+                <dt>CSV</dt>
+                <dd class="small text-muted mb-3">
+                  Comma-Separated Values - a file format for spreadsheet data.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- D -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="D" class="border-bottom pb-2">D</h5>
+              <dl>
+                <dt>Dashboard</dt>
+                <dd class="small text-muted mb-3">
+                  The main overview page showing financial summaries and charts.
+                </dd>
+
+                <dt>Debit</dt>
+                <dd class="small text-muted mb-3">
+                  Money removed from an account (expenses, payments).
+                </dd>
+
+                <dt>Debt</dt>
+                <dd class="small text-muted mb-3">
+                  Money owed to others (credit cards, loans, mortgages).
+                </dd>
+
+                <dt>Due Date</dt>
+                <dd class="small text-muted mb-3">The date by which a payment must be made.</dd>
+              </dl>
+            </div>
+
+            <!-- E -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="E" class="border-bottom pb-2">E</h5>
+              <dl>
+                <dt>Expense</dt>
+                <dd class="small text-muted mb-3">Money spent on goods or services.</dd>
+
+                <dt>Export</dt>
+                <dd class="small text-muted mb-3">
+                  Downloading data in various formats (CSV, JSON, Excel).
+                </dd>
+              </dl>
+            </div>
+
+            <!-- F -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="F" class="border-bottom pb-2">F</h5>
+              <dl>
+                <dt>Filter</dt>
+                <dd class="small text-muted mb-3">
+                  A tool to narrow down transactions based on specific criteria.
+                </dd>
+
+                <dt>Fixed Expense</dt>
+                <dd class="small text-muted mb-3">
+                  Regular expenses that don't change month to month (rent, insurance).
+                </dd>
+              </dl>
+            </div>
+
+            <!-- G -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="G" class="border-bottom pb-2">G</h5>
+              <dl>
+                <dt>Gross Income</dt>
+                <dd class="small text-muted mb-3">Income before taxes and deductions.</dd>
+              </dl>
+            </div>
+
+            <!-- I -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="I" class="border-bottom pb-2">I</h5>
+              <dl>
+                <dt>Income</dt>
+                <dd class="small text-muted mb-3">
+                  Money received from work, investments, or other sources.
+                </dd>
+
+                <dt>Interest</dt>
+                <dd class="small text-muted mb-3">
+                  The cost of borrowing money or earnings from savings.
+                </dd>
+
+                <dt>Investment</dt>
+                <dd class="small text-muted mb-3">
+                  Assets purchased with the expectation of future returns.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- J -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="J" class="border-bottom pb-2">J</h5>
+              <dl>
+                <dt>JSON</dt>
+                <dd class="small text-muted mb-3">
+                  JavaScript Object Notation - a lightweight data format.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- L -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="L" class="border-bottom pb-2">L</h5>
+              <dl>
+                <dt>Liability</dt>
+                <dd class="small text-muted mb-3">A financial obligation or debt.</dd>
+
+                <dt>Log</dt>
+                <dd class="small text-muted mb-3">A record of system events and user actions.</dd>
+              </dl>
+            </div>
+
+            <!-- N -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="N" class="border-bottom pb-2">N</h5>
+              <dl>
+                <dt>Net Income</dt>
+                <dd class="small text-muted mb-3">
+                  Income after taxes and deductions (take-home pay).
+                </dd>
+
+                <dt>Net Worth</dt>
+                <dd class="small text-muted mb-3">Total assets minus total liabilities.</dd>
+              </dl>
+            </div>
+
+            <!-- P -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="P" class="border-bottom pb-2">P</h5>
+              <dl>
+                <dt>Pagination</dt>
+                <dd class="small text-muted mb-3">Dividing large datasets into smaller pages.</dd>
+
+                <dt>Principal</dt>
+                <dd class="small text-muted mb-3">
+                  The original amount of a loan, excluding interest.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- R -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="R" class="border-bottom pb-2">R</h5>
+              <dl>
+                <dt>Reconciliation</dt>
+                <dd class="small text-muted mb-3">
+                  The process of matching recorded transactions with bank statements.
+                </dd>
+
+                <dt>REST API</dt>
+                <dd class="small text-muted mb-3">
+                  A web service interface for programmatic access.
+                </dd>
+              </dl>
+            </div>
+
+            <!-- S -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="S" class="border-bottom pb-2">S</h5>
+              <dl>
+                <dt>Statement Balance</dt>
+                <dd class="small text-muted mb-3">
+                  The amount due on a credit card for the current billing cycle.
+                </dd>
+
+                <dt>Savings</dt>
+                <dd class="small text-muted mb-3">Income not spent on current expenses.</dd>
+              </dl>
+            </div>
+
+            <!-- T -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="T" class="border-bottom pb-2">T</h5>
+              <dl>
+                <dt>Tags</dt>
+                <dd class="small text-muted mb-3">
+                  Additional labels for transactions beyond categories.
+                </dd>
+
+                <dt>Transaction</dt>
+                <dd class="small text-muted mb-3">
+                  A record of money moving in or out of an account.
+                </dd>
+
+                <dt>Transfer</dt>
+                <dd class="small text-muted mb-3">Moving money between your own accounts.</dd>
+              </dl>
+            </div>
+
+            <!-- V -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h5 id="V" class="border-bottom pb-2">V</h5>
+              <dl>
+                <dt>Variable Expense</dt>
+                <dd class="small text-muted mb-3">
+                  Expenses that change month to month (groceries, entertainment).
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .glossary-nav .btn {
+    margin: 2px;
+  }
+
+  .glossary-page dl dt {
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .glossary-page dl dd {
+    margin-left: 0;
+    padding-left: 0.5rem;
+    border-left: 2px solid var(--primary-color);
+  }
+</style>
+{% endblock %}

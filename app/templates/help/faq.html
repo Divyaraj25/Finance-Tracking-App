@@ -1,0 +1,1762 @@
+<!-- app/templates/help/faq.html -->
+{% extends "base.html" %} {% block title %}Frequently Asked Questions - {{ super() }}{% endblock %}
+{% block content %}
+<div class="faq-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item active">Frequently Asked Questions</li>
+    </ol>
+  </nav>
+
+  <div class="text-center mb-5">
+    <h1 class="display-6 mb-3">Frequently Asked Questions</h1>
+    <p class="text-muted">Find detailed answers to common questions about Expense Tracker</p>
+  </div>
+
+  <!-- Search FAQ -->
+  <div class="row mb-5">
+    <div class="col-lg-6 mx-auto">
+      <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-start-0"
+          id="faqSearch"
+          placeholder="Search FAQ..."
+          onkeyup="searchFAQ()"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <a href="#getting-started" class="btn btn-outline-primary btn-sm">🚀 Getting Started</a>
+        <a href="#accounts" class="btn btn-outline-primary btn-sm">💰 Accounts</a>
+        <a href="#transactions" class="btn btn-outline-primary btn-sm">📊 Transactions</a>
+        <a href="#budgets" class="btn btn-outline-primary btn-sm">🎯 Budgets</a>
+        <a href="#categories" class="btn btn-outline-primary btn-sm">🏷️ Categories</a>
+        <a href="#export-reports" class="btn btn-outline-primary btn-sm">📤 Export & Reports</a>
+        <a href="#settings" class="btn btn-outline-primary btn-sm">⚙️ Settings</a>
+        <a href="#troubleshooting" class="btn btn-outline-primary btn-sm">🔧 Troubleshooting</a>
+        <a href="#technical" class="btn btn-outline-primary btn-sm">💻 Technical</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Categories -->
+  <div class="row g-4">
+    <!-- Getting Started Section -->
+    <div class="col-12">
+      <h2 id="getting-started" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-rocket-takeoff text-primary"></i> Getting Started
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">First Steps</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqGettingStarted">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq1"
+                >
+                  How do I create my first account?
+                </button>
+              </h2>
+              <div
+                id="faq1"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqGettingStarted"
+              >
+                <div class="accordion-body">
+                  <p>Follow these steps to create your first account:</p>
+                  <ol>
+                    <li>Click on <strong>Accounts</strong> in the main navigation</li>
+                    <li>Click the <span class="badge bg-primary">+ Add Account</span> button</li>
+                    <li>
+                      Enter account details:
+                      <ul>
+                        <li><strong>Account Name:</strong> e.g., "Chase Checking"</li>
+                        <li><strong>Account Type:</strong> Bank Account, Credit Card, etc.</li>
+                        <li><strong>Initial Balance:</strong> Your current balance</li>
+                        <li><strong>Currency:</strong> USD, EUR, etc.</li>
+                      </ul>
+                    </li>
+                    <li>Click <strong>Save Account</strong></li>
+                  </ol>
+                  <div class="alert alert-info mt-2">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>Tip:</strong> You can create multiple accounts for different banks,
+                    credit cards, cash, assets, and liabilities.
+                  </div>
+                  <a
+                    href="{{ url_for('help.guide', topic='getting-started') }}"
+                    class="btn btn-sm btn-outline-primary mt-2"
+                  >
+                    <i class="bi bi-book"></i> Read Detailed Guide
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq2"
+                >
+                  How do I add my first transaction?
+                </button>
+              </h2>
+              <div
+                id="faq2"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqGettingStarted"
+              >
+                <div class="accordion-body">
+                  <p>Adding your first transaction is easy:</p>
+                  <ol>
+                    <li>
+                      Click <strong>Add Transaction</strong> on the Dashboard or go to Transactions
+                      page
+                    </li>
+                    <li>
+                      Select transaction type:
+                      <ul>
+                        <li><span class="text-success">Income</span> - Money received</li>
+                        <li><span class="text-danger">Expense</span> - Money spent</li>
+                        <li><span class="text-primary">Transfer</span> - Move between accounts</li>
+                      </ul>
+                    </li>
+                    <li>Enter amount, description, and date</li>
+                    <li>Select category and account</li>
+                    <li>Click <strong>Save Transaction</strong></li>
+                  </ol>
+                  <div class="alert alert-success mt-2">
+                    <i class="bi bi-lightning"></i>
+                    <strong>Quick Tip:</strong> Press <kbd>Ctrl</kbd> + <kbd>N</kbd> to quickly open
+                    the add transaction modal from anywhere!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq3"
+                >
+                  Do I need to create categories first?
+                </button>
+              </h2>
+              <div
+                id="faq3"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqGettingStarted"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>No, you don't need to!</strong> The system comes with pre-configured
+                    default categories:
+                  </p>
+                  <div class="row">
+                    <div class="col-6">
+                      <h6>Expense Categories:</h6>
+                      <ul class="small">
+                        <li>Food & Dining</li>
+                        <li>Transportation</li>
+                        <li>Utilities</li>
+                        <li>Entertainment</li>
+                        <li>Shopping</li>
+                      </ul>
+                    </div>
+                    <div class="col-6">
+                      <h6>Income Categories:</h6>
+                      <ul class="small">
+                        <li>Salary</li>
+                        <li>Freelance</li>
+                        <li>Investment</li>
+                        <li>Gift</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p>You can use these immediately and create custom categories later as needed.</p>
+                  <a
+                    href="{{ url_for('help.guide', topic='categories') }}"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    <i class="bi bi-tags"></i> Learn About Categories
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq4"
+                >
+                  How do I set up the dashboard?
+                </button>
+              </h2>
+              <div
+                id="faq4"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqGettingStarted"
+              >
+                <div class="accordion-body">
+                  <p>
+                    The dashboard automatically displays your financial overview once you add
+                    transactions. It includes:
+                  </p>
+                  <table class="table table-sm">
+                    <tr>
+                      <td><i class="bi bi-wallet2 text-primary"></i></td>
+                      <td><strong>Summary Cards</strong></td>
+                      <td>Total balance, monthly income/expense, budget status</td>
+                    </tr>
+                    <tr>
+                      <td><i class="bi bi-bar-chart text-success"></i></td>
+                      <td><strong>Charts</strong></td>
+                      <td>Income vs Expense trends, spending breakdown</td>
+                    </tr>
+                    <tr>
+                      <td><i class="bi bi-clock-history text-info"></i></td>
+                      <td><strong>Recent Transactions</strong></td>
+                      <td>Your latest 5 transactions</td>
+                    </tr>
+                  </table>
+                  <p>Use the <strong>Filters</strong> button to customize what data you see.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounts Section -->
+    <div class="col-12 mt-4">
+      <h2 id="accounts" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-wallet2 text-info"></i> Accounts
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Account Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqAccounts">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq7"
+                >
+                  How do credit card accounts work?
+                </button>
+              </h2>
+              <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccounts">
+                <div class="accordion-body">
+                  <p>
+                    Credit cards are special liability accounts that show negative balances (debt).
+                  </p>
+
+                  <h6>Credit Card Features:</h6>
+                  <ul>
+                    <li>
+                      <strong>Balance:</strong> Shown as negative (e.g., -$500 means you owe $500)
+                    </li>
+                    <li><strong>Credit Limit:</strong> Maximum spending limit</li>
+                    <li><strong>Due Date:</strong> Monthly payment due date</li>
+                    <li><strong>Statement Balance:</strong> Current statement amount</li>
+                  </ul>
+
+                  <h6 class="mt-3">How to Track:</h6>
+                  <table class="table table-sm">
+                    <tr>
+                      <th>Action</th>
+                      <th>Transaction Type</th>
+                    </tr>
+                    <tr>
+                      <td>Making a purchase</td>
+                      <td><code>Expense</code> (from credit card)</td>
+                    </tr>
+                    <tr>
+                      <td>Paying the bill</td>
+                      <td><code>Credit Card Payment</code></td>
+                    </tr>
+                    <tr>
+                      <td>Getting a refund</td>
+                      <td><code>Income</code> (to credit card)</td>
+                    </tr>
+                  </table>
+
+                  <div class="alert alert-warning mt-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Always enter credit card balances as POSITIVE numbers when creating the account
+                    (e.g., $500 debt = 500, not -500).
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq8"
+                >
+                  Can I delete an account with transactions?
+                </button>
+              </h2>
+              <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccounts">
+                <div class="accordion-body">
+                  <p>
+                    <strong>No, accounts with transactions cannot be permanently deleted.</strong>
+                    Instead, they are <strong>deactivated</strong> (soft delete).
+                  </p>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="border rounded p-2">
+                        <h6 class="text-warning">📋 With Transactions</h6>
+                        <ul class="small">
+                          <li>✓ Account is deactivated</li>
+                          <li>✓ Hidden from most views</li>
+                          <li>✓ Transactions preserved</li>
+                          <li>✓ Can be reactivated later</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="border rounded p-2">
+                        <h6 class="text-danger">🆕 Without Transactions</h6>
+                        <ul class="small">
+                          <li>✓ Permanently deleted</li>
+                          <li>✓ Cannot be recovered</li>
+                          <li>✓ No transaction history</li>
+                          <li>✓ Use with caution</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="alert alert-info mt-2">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    To reactivate a deactivated account, edit the account and set "Active" to true.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq9"
+                >
+                  How do I track investments?
+                </button>
+              </h2>
+              <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccounts">
+                <div class="accordion-body">
+                  <p>Track investments using <strong>Asset accounts</strong>:</p>
+
+                  <h6>Steps to Track Investments:</h6>
+                  <ol>
+                    <li>
+                      Create an <strong>Asset</strong> type account (e.g., "Vanguard 401k",
+                      "Robinhood Stocks")
+                    </li>
+                    <li>Record purchases as <strong>Asset Purchase</strong> transactions</li>
+                    <li>Update the balance manually as the value changes</li>
+                  </ol>
+
+                  <h6 class="mt-3">Investment Types:</h6>
+                  <table class="table table-sm">
+                    <tr>
+                      <td>Stocks & ETFs</td>
+                      <td>Asset account</td>
+                    </tr>
+                    <tr>
+                      <td>Retirement accounts (401k, IRA)</td>
+                      <td>Asset account</td>
+                    </tr>
+                    <tr>
+                      <td>Real estate</td>
+                      <td>Asset account</td>
+                    </tr>
+                    <tr>
+                      <td>Cryptocurrency</td>
+                      <td>Asset account</td>
+                    </tr>
+                  </table>
+
+                  <div class="alert alert-warning mt-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>Note:</strong> Investment values are not automatically updated. You'll
+                    need to manually adjust balances as market values change.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq10"
+                >
+                  What account types are supported?
+                </button>
+              </h2>
+              <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccounts">
+                <div class="accordion-body">
+                  <p>The system supports 6 account types:</p>
+
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Balance Sign</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span class="badge bg-primary">Bank Account</span></td>
+                        <td>Checking, savings accounts</td>
+                        <td class="text-success">Positive</td>
+                      </tr>
+                      <tr>
+                        <td><span class="badge bg-warning">Credit Card</span></td>
+                        <td>Revolving credit lines</td>
+                        <td class="text-danger">Negative</td>
+                      </tr>
+                      <tr>
+                        <td><span class="badge bg-secondary">Debit Card</span></td>
+                        <td>Direct access to funds</td>
+                        <td class="text-success">Positive</td>
+                      </tr>
+                      <tr>
+                        <td><span class="badge bg-success">Cash</span></td>
+                        <td>Physical currency</td>
+                        <td class="text-success">Positive</td>
+                      </tr>
+                      <tr>
+                        <td><span class="badge bg-info">Asset</span></td>
+                        <td>Investments, property, valuables</td>
+                        <td class="text-success">Positive</td>
+                      </tr>
+                      <tr>
+                        <td><span class="badge bg-danger">Liability</span></td>
+                        <td>Loans, mortgages, debts</td>
+                        <td class="text-danger">Negative</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transactions Section -->
+    <div class="col-12 mt-4">
+      <h2 id="transactions" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-arrow-left-right text-success"></i> Transactions
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Transaction Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqTransactions">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq11"
+                >
+                  Can I edit or delete a transaction?
+                </button>
+              </h2>
+              <div id="faq11" class="accordion-collapse collapse" data-bs-parent="#faqTransactions">
+                <div class="accordion-body">
+                  <p><strong>Yes, you can edit or delete any transaction.</strong></p>
+
+                  <h6>To Edit:</h6>
+                  <ol>
+                    <li>
+                      Click the <i class="bi bi-pencil"></i> edit icon next to the transaction
+                    </li>
+                    <li>Modify any field (amount, date, category, account, etc.)</li>
+                    <li>Click <strong>Update</strong> to save changes</li>
+                  </ol>
+
+                  <div class="alert alert-info">
+                    <i class="bi bi-calculator"></i>
+                    <strong>Automatic Recalculation:</strong> When you edit a transaction, account
+                    balances and budget spending are automatically recalculated.
+                  </div>
+
+                  <h6 class="mt-3">To Delete:</h6>
+                  <ol>
+                    <li>Click the <i class="bi bi-trash"></i> delete icon</li>
+                    <li>Confirm deletion in the dialog</li>
+                    <li>The transaction is permanently removed</li>
+                  </ol>
+
+                  <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <strong>Warning:</strong> Deletion is permanent and cannot be undone. Account
+                    balances and budgets will be adjusted automatically.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq12"
+                >
+                  How do I filter transactions?
+                </button>
+              </h2>
+              <div id="faq12" class="accordion-collapse collapse" data-bs-parent="#faqTransactions">
+                <div class="accordion-body">
+                  <p>The Transactions page includes powerful filtering options:</p>
+
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Filter</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Date Range</td>
+                        <td>Select start and end dates</td>
+                      </tr>
+                      <tr>
+                        <td>Transaction Type</td>
+                        <td>Income, Expense, or Transfer</td>
+                      </tr>
+                      <tr>
+                        <td>Category</td>
+                        <td>Filter by specific category</td>
+                      </tr>
+                      <tr>
+                        <td>Account</td>
+                        <td>Show transactions from specific account</td>
+                      </tr>
+                      <tr>
+                        <td>Amount Range</td>
+                        <td>Minimum and/or maximum amount</td>
+                      </tr>
+                      <tr>
+                        <td>Search</td>
+                        <td>Text search in description</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="mt-2">
+                    <strong>To apply filters:</strong>
+                    <ol>
+                      <li>Click the <strong>Filters</strong> button</li>
+                      <li>Select your filter criteria</li>
+                      <li>Click <strong>Apply Filters</strong></li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq13"
+                >
+                  What's the difference between Transfer and Expense?
+                </button>
+              </h2>
+              <div id="faq13" class="accordion-collapse collapse" data-bs-parent="#faqTransactions">
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="border rounded p-3">
+                        <h6 class="text-danger">💸 Expense</h6>
+                        <p>Money spent on goods or services</p>
+                        <ul class="small">
+                          <li>Decreases account balance</li>
+                          <li>Affects budget spending</li>
+                          <li>Example: Buying groceries</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="border rounded p-3">
+                        <h6 class="text-primary">🔄 Transfer</h6>
+                        <p>Moving money between your own accounts</p>
+                        <ul class="small">
+                          <li>Balance shifts between accounts</li>
+                          <li>Net worth unchanged</li>
+                          <li>Example: Savings transfer</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <table class="table table-sm mt-3">
+                    <tr>
+                      <th>Scenario</th>
+                      <th>Use</th>
+                    </tr>
+                    <tr>
+                      <td>Buying coffee</td>
+                      <td><span class="badge bg-danger">Expense</span></td>
+                    </tr>
+                    <tr>
+                      <td>Moving money to savings</td>
+                      <td><span class="badge bg-primary">Transfer</span></td>
+                    </tr>
+                    <tr>
+                      <td>Paying credit card bill</td>
+                      <td><span class="badge bg-warning">Credit Card Payment</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq14"
+                >
+                  How do I use tags?
+                </button>
+              </h2>
+              <div id="faq14" class="accordion-collapse collapse" data-bs-parent="#faqTransactions">
+                <div class="accordion-body">
+                  <p>Tags provide additional organization beyond categories:</p>
+
+                  <h6>Common Tag Uses:</h6>
+                  <ul>
+                    <li>
+                      <span class="badge bg-primary">vacation</span> - Track all vacation expenses
+                    </li>
+                    <li>
+                      <span class="badge bg-success">tax-deductible</span> - Find tax-related items
+                    </li>
+                    <li><span class="badge bg-warning">business</span> - Business expenses</li>
+                    <li><span class="badge bg-info">gift</span> - Gift purchases</li>
+                  </ul>
+
+                  <h6 class="mt-3">How to Add Tags:</h6>
+                  <ol>
+                    <li>In the transaction form, find the "Tags" field</li>
+                    <li>Enter comma-separated tags (e.g., "work, travel, hotel")</li>
+                    <li>Save the transaction</li>
+                  </ol>
+
+                  <h6 class="mt-3">Search with Tags:</h6>
+                  <p>
+                    Use the search bar with <code>tag:vacation</code> to find all transactions
+                    tagged with "vacation".
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budgets Section -->
+    <div class="col-12 mt-4">
+      <h2 id="budgets" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-pie-chart text-warning"></i> Budgets
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Budget Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqBudgets">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq15"
+                >
+                  Why is my budget showing spent from before I created it?
+                </button>
+              </h2>
+              <div id="faq15" class="accordion-collapse collapse" data-bs-parent="#faqBudgets">
+                <div class="accordion-body">
+                  <p>
+                    <strong>This is by design!</strong> Budgets automatically include all
+                    transactions from the start of the budget period.
+                  </p>
+
+                  <h6>Example:</h6>
+                  <p>
+                    If you create a monthly budget on January 15th, it will include all transactions
+                    from January 1st to 31st. This gives you an accurate picture of your spending
+                    for the entire month.
+                  </p>
+
+                  <div class="alert alert-info">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    <strong>Recalculation:</strong> If you edit past transactions, use the
+                    <strong>Recalculate</strong> option in the budget menu to update the spent
+                    amount.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq16"
+                >
+                  Can I have multiple budgets for one category?
+                </button>
+              </h2>
+              <div id="faq16" class="accordion-collapse collapse" data-bs-parent="#faqBudgets">
+                <div class="accordion-body">
+                  <p>
+                    <strong
+                      >No, you can only have one active budget per category per period.</strong
+                    >
+                  </p>
+
+                  <p>If you try to create another budget for the same category, the system will:</p>
+                  <ol>
+                    <li>Return the existing budget ID instead of creating a new one</li>
+                    <li>Show a message that the budget already exists</li>
+                  </ol>
+
+                  <p>To modify an existing budget:</p>
+                  <ol>
+                    <li>
+                      Click the three dots <i class="bi bi-three-dots-vertical"></i> on the budget
+                      card
+                    </li>
+                    <li>Select <strong>Edit</strong></li>
+                    <li>Update the amount or period as needed</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq17"
+                >
+                  What do the budget colors mean?
+                </button>
+              </h2>
+              <div id="faq17" class="accordion-collapse collapse" data-bs-parent="#faqBudgets">
+                <div class="accordion-body">
+                  <p>Budget progress bars use color coding for quick status identification:</p>
+
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="me-3">
+                      <span class="badge bg-success p-2">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div><strong>Green (0-50%)</strong> - On track, spending within budget</div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="me-3">
+                      <span class="badge bg-warning p-2">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div><strong>Yellow (50-75%)</strong> - Warning, approaching limit</div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="me-3">
+                      <span class="badge bg-danger p-2">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div><strong>Red (75-100%)</strong> - Critical, near or at limit</div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="me-3">
+                      <span class="badge bg-secondary p-2">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div><strong>Gray (100%+)</strong> - Exceeded, over budget</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq18"
+                >
+                  How are budgets calculated?
+                </button>
+              </h2>
+              <div id="faq18" class="accordion-collapse collapse" data-bs-parent="#faqBudgets">
+                <div class="accordion-body">
+                  <p>Budget spent amounts are calculated based on:</p>
+
+                  <pre class="bg-light p-2 rounded"><code>Spent = SUM(transaction.amount) 
+WHERE transaction.type IN ('expense', 'asset_purchase', 'credit_card_payment')
+  AND transaction.category_id = budget.category_id
+  AND transaction.date BETWEEN budget.start_date AND budget.end_date</code></pre>
+
+                  <h6 class="mt-3">What's Included:</h6>
+                  <ul>
+                    <li>✅ Expense transactions in the category</li>
+                    <li>✅ Asset purchases</li>
+                    <li>✅ Credit card payments</li>
+                  </ul>
+
+                  <h6>What's NOT Included:</h6>
+                  <ul>
+                    <li>❌ Income transactions</li>
+                    <li>❌ Transfers between accounts</li>
+                    <li>❌ Transactions in different categories</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="col-12 mt-4">
+      <h2 id="categories" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-tags text-danger"></i> Categories
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Category Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqCategories">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq19"
+                >
+                  Can I delete default categories?
+                </button>
+              </h2>
+              <div id="faq19" class="accordion-collapse collapse" data-bs-parent="#faqCategories">
+                <div class="accordion-body">
+                  <p>
+                    <strong
+                      >No, default categories are system-protected and cannot be deleted.</strong
+                    >
+                  </p>
+
+                  <p>Default categories include:</p>
+                  <ul>
+                    <li>Uncategorized Expense/Income</li>
+                    <li>Food & Dining</li>
+                    <li>Transportation</li>
+                    <li>Utilities</li>
+                    <li>Entertainment</li>
+                    <li>Salary</li>
+                    <li>Credit Card Bill</li>
+                  </ul>
+
+                  <div class="alert alert-info">
+                    <i class="bi bi-lock-fill"></i>
+                    Default categories ensure the system always has fallback options for
+                    uncategorized transactions.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq20"
+                >
+                  What happens when I delete a category?
+                </button>
+              </h2>
+              <div id="faq20" class="accordion-collapse collapse" data-bs-parent="#faqCategories">
+                <div class="accordion-body">
+                  <p>When you delete a custom category:</p>
+
+                  <ol>
+                    <li>
+                      <strong>All transactions</strong> using that category are automatically
+                      reassigned to the default category of the same type
+                    </li>
+                    <li>
+                      <strong>All budgets</strong> for that category are reassigned to the default
+                      category
+                    </li>
+                    <li>
+                      The category is <strong>soft-deleted</strong> (hidden, not permanently
+                      removed)
+                    </li>
+                  </ol>
+
+                  <div class="alert alert-warning mt-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>Note:</strong> This preserves your transaction history while removing
+                    the category from active use.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq21"
+                >
+                  How many categories can I create?
+                </button>
+              </h2>
+              <div id="faq21" class="accordion-collapse collapse" data-bs-parent="#faqCategories">
+                <div class="accordion-body">
+                  <p>
+                    <strong>There's no limit!</strong> You can create as many custom categories as
+                    you need to organize your finances effectively.
+                  </p>
+
+                  <h6>Category Creation Tips:</h6>
+                  <ul>
+                    <li>Keep names short but descriptive</li>
+                    <li>
+                      Use sub-categories with naming conventions (e.g., "Food: Groceries", "Food:
+                      Dining")
+                    </li>
+                    <li>Review unused categories periodically</li>
+                    <li>Use tags for additional organization</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export & Reports Section -->
+    <div class="col-12 mt-4">
+      <h2 id="export-reports" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-download text-secondary"></i> Export & Reports
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Export & Reports</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqExport">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq22"
+                >
+                  What export formats are supported?
+                </button>
+              </h2>
+              <div id="faq22" class="accordion-collapse collapse" data-bs-parent="#faqExport">
+                <div class="accordion-body">
+                  <p>Three export formats are available:</p>
+
+                  <table class="table">
+                    <tr>
+                      <td><span class="badge bg-primary">CSV</span></td>
+                      <td>Comma-separated values</td>
+                      <td>Compatible with Excel, Google Sheets</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-success">JSON</span></td>
+                      <td>JavaScript Object Notation</td>
+                      <td>For developers, API integration</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-danger">Excel</span></td>
+                      <td>.xlsx format</td>
+                      <td>Formatted Excel workbook</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq23"
+                >
+                  Can I export only specific transactions?
+                </button>
+              </h2>
+              <div id="faq23" class="accordion-collapse collapse" data-bs-parent="#faqExport">
+                <div class="accordion-body">
+                  <p><strong>Yes, you have two options:</strong></p>
+
+                  <h6>Option 1: Filter First</h6>
+                  <ol>
+                    <li>Apply filters on the Transactions page</li>
+                    <li>Click Export</li>
+                    <li>Only filtered results will be exported</li>
+                  </ol>
+
+                  <h6>Option 2: Select Transactions</h6>
+                  <ol>
+                    <li>Use checkboxes to select specific transactions</li>
+                    <li>Click Export Selected</li>
+                    <li>Only checked transactions will be exported</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq24"
+                >
+                  How do I generate financial reports?
+                </button>
+              </h2>
+              <div id="faq24" class="accordion-collapse collapse" data-bs-parent="#faqExport">
+                <div class="accordion-body">
+                  <p>Financial reports are available through the API:</p>
+
+                  <table class="table">
+                    <tr>
+                      <td><code>/api/v1/reports/summary</code></td>
+                      <td>Financial summary dashboard</td>
+                    </tr>
+                    <tr>
+                      <td><code>/api/v1/reports/monthly</code></td>
+                      <td>Monthly income/expense breakdown</td>
+                    </tr>
+                    <tr>
+                      <td><code>/api/v1/reports/categories</code></td>
+                      <td>Category spending analysis</td>
+                    </tr>
+                    <tr>
+                      <td><code>/api/v1/reports/income-statement</code></td>
+                      <td>Income statement for a period</td>
+                    </tr>
+                    <tr>
+                      <td><code>/api/v1/reports/balance-sheet</code></td>
+                      <td>Balance sheet as of a date</td>
+                    </tr>
+                    <tr>
+                      <td><code>/api/v1/reports/cash-flow</code></td>
+                      <td>Cash flow statement</td>
+                    </tr>
+                  </table>
+
+                  <div class="alert alert-info mt-2">
+                    <i class="bi bi-graph-up"></i>
+                    <strong>Coming Soon:</strong> Visual reports in the dashboard!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="col-12 mt-4">
+      <h2 id="settings" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-gear text-secondary"></i> Settings
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Profile & Settings</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqSettings">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq25"
+                >
+                  How do I change my timezone?
+                </button>
+              </h2>
+              <div id="faq25" class="accordion-collapse collapse" data-bs-parent="#faqSettings">
+                <div class="accordion-body">
+                  <p>To change your timezone:</p>
+                  <ol>
+                    <li>Go to <strong>Profile → Settings</strong></li>
+                    <li>Click the <strong>General</strong> tab</li>
+                    <li>Find the <strong>Timezone</strong> dropdown</li>
+                    <li>Select your timezone</li>
+                    <li>Click <strong>Save General Settings</strong></li>
+                  </ol>
+                  <p>All dates and times will automatically convert to your selected timezone.</p>
+                  <a
+                    href="{{ url_for('help.guide', topic='timezone-settings') }}"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    <i class="bi bi-clock"></i> Timezone Guide
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq26"
+                >
+                  How do I change the date format?
+                </button>
+              </h2>
+              <div id="faq26" class="accordion-collapse collapse" data-bs-parent="#faqSettings">
+                <div class="accordion-body">
+                  <p>Choose from multiple date formats:</p>
+                  <ul>
+                    <li><code>YYYY-MM-DD</code> (ISO standard)</li>
+                    <li><code>MM/DD/YYYY</code> (US format)</li>
+                    <li><code>DD/MM/YYYY</code> (UK/Europe format)</li>
+                    <li><code>MMM D, YYYY</code> (Long format: Jan 15, 2024)</li>
+                  </ul>
+                  <p>To change: <strong>Profile → Settings → General tab → Date Format</strong></p>
+                  <a
+                    href="{{ url_for('help.guide', topic='date-formatting') }}"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    <i class="bi bi-calendar"></i> Date Format Guide
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq27"
+                >
+                  How do I change the default currency?
+                </button>
+              </h2>
+              <div id="faq27" class="accordion-collapse collapse" data-bs-parent="#faqSettings">
+                <div class="accordion-body">
+                  <p>To change your default currency:</p>
+                  <ol>
+                    <li>Go to <strong>Profile → Settings</strong></li>
+                    <li>Click the <strong>Currency</strong> tab</li>
+                    <li>Select your preferred currency</li>
+                    <li>Click <strong>Save Currency Settings</strong></li>
+                  </ol>
+                  <p>Supported currencies: USD, EUR, GBP, JPY, INR, CAD, AUD, CHF, CNY, NZD</p>
+                  <a
+                    href="{{ url_for('help.guide', topic='currency-settings') }}"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    <i class="bi bi-currency-dollar"></i> Currency Guide
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq28"
+                >
+                  How do I enable dark mode?
+                </button>
+              </h2>
+              <div id="faq28" class="accordion-collapse collapse" data-bs-parent="#faqSettings">
+                <div class="accordion-body">
+                  <p>Enable dark mode for reduced eye strain:</p>
+                  <ol>
+                    <li>
+                      Click the <i class="bi bi-moon"></i> moon/sun icon in the top navigation bar
+                    </li>
+                    <li>The theme will toggle between light and dark</li>
+                    <li>Your preference is saved for future visits</li>
+                  </ol>
+                  <p>
+                    You can also set dark mode permanently in
+                    <strong>Profile → Settings → Appearance tab</strong>
+                  </p>
+                  <a
+                    href="{{ url_for('help.guide', topic='dark-mode') }}"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    <i class="bi bi-moon"></i> Dark Mode Guide
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Troubleshooting Section -->
+    <div class="col-12 mt-4">
+      <h2 id="troubleshooting" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-exclamation-triangle text-warning"></i> Troubleshooting
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Common Issues</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqTroubleshooting">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq29"
+                >
+                  Transaction won't save - "Invalid amount"
+                </button>
+              </h2>
+              <div
+                id="faq29"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqTroubleshooting"
+              >
+                <div class="accordion-body">
+                  <p><strong>Solution:</strong> Amount must be a positive number.</p>
+                  <ul>
+                    <li>Remove commas or currency symbols</li>
+                    <li>Ensure you're using numbers only</li>
+                    <li>Check that you haven't entered letters</li>
+                  </ul>
+                  <p>Example: <code>$1,234.56</code> should be entered as <code>1234.56</code></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq30"
+                >
+                  Credit card balance shows positive instead of negative
+                </button>
+              </h2>
+              <div
+                id="faq30"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqTroubleshooting"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Solution:</strong> Credit cards should show negative balances (debt).
+                  </p>
+                  <ol>
+                    <li>Edit the credit card account</li>
+                    <li>Set a negative balance (e.g., -500.00)</li>
+                    <li>Or add a payment transaction to correct it</li>
+                  </ol>
+                  <div class="alert alert-info mt-2">
+                    <i class="bi bi-info-circle"></i>
+                    Remember: When creating a credit card, enter the debt as a POSITIVE number, and
+                    the system will handle the sign.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq31"
+                >
+                  Budget spent amount is incorrect
+                </button>
+              </h2>
+              <div
+                id="faq31"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqTroubleshooting"
+              >
+                <div class="accordion-body">
+                  <p><strong>Solution:</strong> Try recalculating the budget.</p>
+                  <ol>
+                    <li>
+                      Click the three dots <i class="bi bi-three-dots-vertical"></i> on the budget
+                      card
+                    </li>
+                    <li>Select <strong>Recalculate</strong></li>
+                    <li>The system will recount all transactions in the period</li>
+                  </ol>
+                  <p>If the problem persists, check for:</p>
+                  <ul>
+                    <li>Transactions with wrong category</li>
+                    <li>Transactions outside the budget period</li>
+                    <li>Duplicate transactions</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq32"
+                >
+                  Can't find a transaction
+                </button>
+              </h2>
+              <div
+                id="faq32"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqTroubleshooting"
+              >
+                <div class="accordion-body">
+                  <p><strong>Solution:</strong> Clear or adjust your filters.</p>
+                  <ol>
+                    <li>
+                      Click <strong>Clear</strong> or <strong>Reset</strong> to remove all filters
+                    </li>
+                    <li>Check if you're on the correct page (maybe it's on a different page)</li>
+                    <li>Use the search box to find by description</li>
+                    <li>Check the date range - maybe it's outside your current view</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq33"
+                >
+                  Export file won't download
+                </button>
+              </h2>
+              <div
+                id="faq33"
+                class="accordion-collapse collapse"
+                data-bs-parent="#faqTroubleshooting"
+              >
+                <div class="accordion-body">
+                  <p><strong>Solution:</strong> Check browser settings.</p>
+                  <ul>
+                    <li>Disable pop-up blockers temporarily</li>
+                    <li>Check your browser's download folder</li>
+                    <li>Try a different export format</li>
+                    <li>If using API, ensure the endpoint is correct</li>
+                  </ul>
+                  <p>You can also try using the API directly:</p>
+                  <code>curl -X GET http://localhost:5000/api/v1/export/csv?type=all</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Section -->
+    <div class="col-12 mt-4">
+      <h2 id="technical" class="h4 mb-3 pb-2 border-bottom">
+        <i class="bi bi-code-slash text-dark"></i> Technical
+      </h2>
+    </div>
+
+    <div class="col-md-6 col-lg-12">
+      <div class="card h-100">
+        <div class="card-header bg-transparent">
+          <h5 class="mb-0">Technical Questions</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="faqTechnical">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq34"
+                >
+                  Is there an API?
+                </button>
+              </h2>
+              <div id="faq34" class="accordion-collapse collapse" data-bs-parent="#faqTechnical">
+                <div class="accordion-body">
+                  <p><strong>Yes! A complete RESTful API is available.</strong></p>
+
+                  <h6>Base URL:</h6>
+                  <code>http://localhost:5000/api/v1</code>
+
+                  <h6 class="mt-3">Example Endpoints:</h6>
+                  <ul>
+                    <li><code>GET /transactions</code> - List transactions</li>
+                    <li><code>POST /transactions</code> - Create transaction</li>
+                    <li><code>GET /accounts</code> - List accounts</li>
+                    <li><code>GET /budgets</code> - List budgets</li>
+                    <li><code>GET /reports/summary</code> - Financial summary</li>
+                  </ul>
+
+                  <a
+                    href="{{ url_for('help.guide', topic='api') }}"
+                    class="btn btn-sm btn-outline-primary"
+                  >
+                    <i class="bi bi-code-slash"></i> View API Documentation
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq35"
+                >
+                  How is data stored?
+                </button>
+              </h2>
+              <div id="faq35" class="accordion-collapse collapse" data-bs-parent="#faqTechnical">
+                <div class="accordion-body">
+                  <p>Data is stored in <strong>MongoDB</strong>, a NoSQL database.</p>
+
+                  <h6>Key Features:</h6>
+                  <ul>
+                    <li>All dates are stored in <strong>UTC</strong> format</li>
+                    <li>Data is converted to your local timezone when displayed</li>
+                    <li>Regular backups are recommended</li>
+                  </ul>
+
+                  <h6>Backup Command:</h6>
+                  <pre class="bg-light p-2 rounded"><code>python manage.py backup</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faq36"
+                >
+                  How do I reset my data?
+                </button>
+              </h2>
+              <div id="faq36" class="accordion-collapse collapse" data-bs-parent="#faqTechnical">
+                <div class="accordion-body">
+                  <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <strong>Warning:</strong> This will permanently delete all your data!
+                  </div>
+
+                  <p>To reset your database:</p>
+                  <pre class="bg-dark text-white p-2 rounded"><code>python manage.py reset-db
+python manage.py init-db</code></pre>
+
+                  <p>To backup first:</p>
+                  <pre class="bg-dark text-white p-2 rounded"><code>python manage.py backup
+python manage.py reset-db
+python manage.py init-db</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Still Have Questions? -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card bg-primary text-white">
+        <div class="card-body text-center py-5">
+          <h4 class="mb-3">Still Have Questions?</h4>
+          <p class="mb-4">Our support team is ready to help you</p>
+          <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{{ url_for('help.contact') }}" class="btn btn-light">
+              <i class="bi bi-envelope"></i> Contact Support
+            </a>
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-light">
+              <i class="bi bi-book"></i> View Guides
+            </a>
+            <a
+              href="https://github.com/yourusername/expense-tracker/issues"
+              target="_blank"
+              class="btn btn-outline-light"
+            >
+              <i class="bi bi-github"></i> GitHub Issues
+            </a>
+          </div>
+          <div class="mt-4">
+            <small class="text-white-50"> Response time: Within 24 hours • Available 24/7 </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .faq-page .accordion-item {
+    border: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-page .accordion-button {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem !important;
+    padding: 1rem;
+    font-weight: 500;
+  }
+
+  .faq-page .accordion-button:not(.collapsed) {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+  }
+
+  .faq-page .accordion-body {
+    padding: 1.25rem;
+    background-color: white;
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  [data-theme='dark'] .faq-page .accordion-button {
+    background-color: #2b3035;
+    color: #fff;
+  }
+
+  [data-theme='dark'] .faq-page .accordion-body {
+    background-color: #212529;
+    color: #fff;
+  }
+
+  .faq-page .btn-outline-primary {
+    margin: 2px;
+  }
+
+  .faq-page kbd {
+    background-color: #212529;
+    color: white;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .faq-page .table {
+    margin-bottom: 0;
+  }
+
+  .faq-page .border-bottom {
+    border-bottom: 2px solid var(--primary-color) !important;
+    padding-bottom: 0.5rem;
+  }
+</style>
+
+<script>
+  function searchFAQ() {
+    const query = document.getElementById('faqSearch').value.toLowerCase().trim();
+    const items = document.querySelectorAll('.accordion-item');
+    let visibleCount = 0;
+
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const matches = text.includes(query) || query === '';
+
+      item.style.display = matches ? 'block' : 'none';
+      if (matches) visibleCount++;
+    });
+
+    // Show/hide section headers based on visible items
+    document.querySelectorAll('.col-12.mt-4').forEach(section => {
+      const sectionId = section.querySelector('h2')?.id;
+      if (sectionId) {
+        const sectionItems = section.nextElementSibling?.querySelectorAll('.accordion-item') || [];
+        const hasVisibleItems = Array.from(sectionItems).some(
+          item => item.style.display !== 'none'
+        );
+        section.style.display = hasVisibleItems ? 'block' : 'none';
+      }
+    });
+
+    // Show message if no results
+    const noResultsMsg = document.getElementById('noResultsMessage');
+    if (visibleCount === 0 && query !== '') {
+      if (!noResultsMsg) {
+        const msg = document.createElement('div');
+        msg.id = 'noResultsMessage';
+        msg.className = 'alert alert-warning text-center mt-3';
+        msg.innerHTML = `<i class="bi bi-info-circle"></i> No results found for "${query}". Try different keywords.`;
+        document.querySelector('.faq-page .row.g-4').prepend(msg);
+      }
+    } else if (noResultsMsg) {
+      noResultsMsg.remove();
+    }
+  }
+
+  // Highlight active section in quick links on scroll
+  $(window).scroll(function () {
+    const scrollPosition = $(window).scrollTop() + 100;
+
+    $('h2[id]').each(function () {
+      const section = $(this);
+      const sectionTop = section.offset().top;
+      const sectionBottom = sectionTop + section.height();
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+        const id = section.attr('id');
+        $('.btn-outline-primary').removeClass('active');
+        $(`.btn-outline-primary[href="#${id}"]`).addClass('active');
+      }
+    });
+  });
+
+  // Smooth scroll for quick links
+  $(document).ready(function () {
+    $('.btn-outline-primary[href^="#"]').click(function (e) {
+      e.preventDefault();
+      const target = $(this).attr('href');
+      $('html, body').animate(
+        {
+          scrollTop: $(target).offset().top - 80
+        },
+        500
+      );
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,666 @@
+<!-- app/templates/help/guides/currency-settings.html -->
+{% extends "base.html" %} {% block title %}Currency Settings - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Currency Settings</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction</a>
+            <a class="nav-link" href="#supported-currencies">2. Supported Currencies</a>
+            <a class="nav-link" href="#changing-currency">3. Changing Your Currency</a>
+            <a class="nav-link" href="#currency-symbols">4. Currency Symbols</a>
+            <a class="nav-link" href="#multi-currency">5. Multi-Currency Support</a>
+            <a class="nav-link" href="#faq">6. Frequently Asked Questions</a>
+          </nav>
+
+          <hr class="my-3" />
+
+          <div class="bg-light p-3 rounded">
+            <i class="bi bi-clock-history"></i>
+            <small class="d-block mt-2"> <strong>Estimated time:</strong> 6 minutes </small>
+            <small class="d-block"> <strong>Difficulty:</strong> Beginner </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Currency Settings</h1>
+
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>Did you know?</strong> The currency setting determines how monetary values are
+            displayed throughout the application. You can choose from 10+ major world currencies.
+          </div>
+
+          <!-- Introduction -->
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction to Currency Settings</h2>
+            <p>The currency setting in Expense Tracker determines:</p>
+            <ul>
+              <li>
+                <strong>Currency symbol</strong> - The symbol displayed before or after amounts ($,
+                €, £, etc.)
+              </li>
+              <li>
+                <strong>Default currency</strong> - The currency used for new accounts by default
+              </li>
+              <li>
+                <strong>Display format</strong> - How amounts are formatted (with or without
+                decimals, symbol placement)
+              </li>
+            </ul>
+            <div class="row g-4 mt-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <h3 class="text-primary mb-2">$1,234.56</h3>
+                  <p class="small text-muted mb-0">US Dollar (USD)</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <h3 class="text-success mb-2">€1.234,56</h3>
+                  <p class="small text-muted mb-0">Euro (EUR)</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <h3 class="text-warning mb-2">¥1,234</h3>
+                  <p class="small text-muted mb-0">Japanese Yen (JPY)</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Supported Currencies -->
+          <section id="supported-currencies" class="mb-5">
+            <h2 class="h4 mb-3">2. Supported Currencies</h2>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>Currency Code</th>
+                    <th>Currency Name</th>
+                    <th>Symbol</th>
+                    <th>Example</th>
+                    <th>Commonly Used In</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>USD</code></td>
+                    <td>US Dollar</td>
+                    <td>$</td>
+                    <td>$1,234.56</td>
+                    <td>United States, Ecuador, El Salvador</td>
+                  </tr>
+                  <tr>
+                    <td><code>EUR</code></td>
+                    <td>Euro</td>
+                    <td>€</td>
+                    <td>€1.234,56 or €1,234.56</td>
+                    <td>Eurozone countries (Germany, France, Spain, Italy, etc.)</td>
+                  </tr>
+                  <tr>
+                    <td><code>GBP</code></td>
+                    <td>British Pound</td>
+                    <td>£</td>
+                    <td>£1,234.56</td>
+                    <td>United Kingdom, Channel Islands, Isle of Man</td>
+                  </tr>
+                  <tr>
+                    <td><code>JPY</code></td>
+                    <td>Japanese Yen</td>
+                    <td>¥</td>
+                    <td>¥1,234 (no decimals)</td>
+                    <td>Japan</td>
+                  </tr>
+                  <tr>
+                    <td><code>INR</code></td>
+                    <td>Indian Rupee</td>
+                    <td>₹</td>
+                    <td>₹1,234.56</td>
+                    <td>India</td>
+                  </tr>
+                  <tr>
+                    <td><code>CAD</code></td>
+                    <td>Canadian Dollar</td>
+                    <td>$ or C$</td>
+                    <td>$1,234.56 or C$1,234.56</td>
+                    <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td><code>AUD</code></td>
+                    <td>Australian Dollar</td>
+                    <td>$ or A$</td>
+                    <td>$1,234.56 or A$1,234.56</td>
+                    <td>Australia, Kiribati, Nauru, Tuvalu</td>
+                  </tr>
+                  <tr>
+                    <td><code>CHF</code></td>
+                    <td>Swiss Franc</td>
+                    <td>CHF or Fr.</td>
+                    <td>CHF 1'234.56</td>
+                    <td>Switzerland, Liechtenstein</td>
+                  </tr>
+                  <tr>
+                    <td><code>CNY</code></td>
+                    <td>Chinese Yuan</td>
+                    <td>¥ or CN¥</td>
+                    <td>¥1,234.56 or CN¥1,234.56</td>
+                    <td>China</td>
+                  </tr>
+                  <tr>
+                    <td><code>NZD</code></td>
+                    <td>New Zealand Dollar</td>
+                    <td>$ or NZ$</td>
+                    <td>$1,234.56 or NZ$1,234.56</td>
+                    <td>New Zealand, Cook Islands, Niue, Tokelau</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="alert alert-warning mt-3">
+              <i class="bi bi-exclamation-triangle"></i>
+              <strong>Note:</strong> The number format (decimal/thousands separators) is controlled
+              by your Number Format setting, not the currency. The currency only determines the
+              symbol.
+            </div>
+          </section>
+
+          <!-- Changing Your Currency -->
+          <section id="changing-currency" class="mb-5">
+            <h2 class="h4 mb-3">3. Changing Your Default Currency</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Go to Profile Settings</h6>
+                <p>Click on your profile icon in the top right corner and select "Profile"</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Navigate to Currency Settings</h6>
+                <p>Click on the "Currency" tab in the settings section</p>
+                <img
+                  src="{{ url_for('static', filename='img/guides/currency-tab.png') }}"
+                  alt="Currency Settings Tab"
+                  class="img-fluid rounded border mt-2"
+                  onerror="this.style.display='none'"
+                />
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Select Your Currency</h6>
+                <p>Choose your preferred currency from the dropdown menu</p>
+                <div class="bg-light p-3 rounded mt-2">
+                  <strong>Available options:</strong> USD, EUR, GBP, JPY, INR, CAD, AUD, CHF, CNY,
+                  NZD
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>Click "Save Currency Settings" to apply your new currency</p>
+                <div class="alert alert-success mt-2">
+                  <i class="bi bi-check-circle"></i>
+                  The currency will be applied as the default for new accounts and will be used for
+                  all displays.
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-info mt-4">
+              <i class="bi bi-info-circle"></i>
+              <strong>Note about existing accounts:</strong> Changing your default currency does
+              <strong>not</strong> automatically convert existing account balances. Each account has
+              its own currency setting that you can change individually when editing the account.
+            </div>
+          </section>
+
+          <!-- Currency Symbols -->
+          <section id="currency-symbols" class="mb-5">
+            <h2 class="h4 mb-3">4. Understanding Currency Symbols</h2>
+
+            <p>Different currencies use different symbols and placement conventions:</p>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="mb-3">🇺🇸🇬🇧 Prefix Symbols ($, £, €, ₹)</h6>
+                  <p class="mb-2">Most currencies place the symbol before the amount:</p>
+                  <ul>
+                    <li><strong>US Dollar:</strong> $1,234.56</li>
+                    <li><strong>British Pound:</strong> £1,234.56</li>
+                    <li><strong>Euro:</strong> €1,234.56 (in some regions)</li>
+                    <li><strong>Indian Rupee:</strong> ₹1,234.56</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="mb-3">🇪🇺🇨🇭 Suffix Symbols</h6>
+                  <p class="mb-2">Some currencies place the symbol after the amount:</p>
+                  <ul>
+                    <li><strong>Euro (in some regions):</strong> 1.234,56 €</li>
+                    <li><strong>Swiss Franc:</strong> 1'234.56 CHF</li>
+                    <li><strong>Japanese Yen:</strong> 1,234¥</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h6>Special Cases:</h6>
+              <table class="table table-sm">
+                <tr>
+                  <td><strong>Japanese Yen (JPY)</strong></td>
+                  <td>No decimal places are shown (¥1,234 instead of ¥1,234.00)</td>
+                </tr>
+                <tr>
+                  <td><strong>Swiss Franc (CHF)</strong></td>
+                  <td>Often uses apostrophe as thousands separator (CHF 1'234.56)</td>
+                </tr>
+                <tr>
+                  <td><strong>Canadian Dollar (CAD)</strong></td>
+                  <td>May use C$ to distinguish from US Dollar in international contexts</td>
+                </tr>
+              </table>
+            </div>
+          </section>
+
+          <!-- Multi-Currency Support -->
+          <section id="multi-currency" class="mb-5">
+            <h2 class="h4 mb-3">5. Multi-Currency Support</h2>
+
+            <p>
+              Expense Tracker allows you to have accounts in different currencies. Here's how it
+              works:
+            </p>
+
+            <div class="card mb-4">
+              <div class="card-header bg-transparent">
+                <h6 class="mb-0">Account-Level Currency</h6>
+              </div>
+              <div class="card-body">
+                <p>
+                  Each account can have its own currency setting, independent of your default
+                  currency:
+                </p>
+                <ul>
+                  <li>
+                    <strong>When creating an account:</strong> You can select any supported currency
+                  </li>
+                  <li>
+                    <strong>Display:</strong> Account balances are shown with their respective
+                    currency symbols
+                  </li>
+                  <li>
+                    <strong>Net Worth:</strong> All accounts are converted to your default currency
+                    for the net worth calculation
+                  </li>
+                </ul>
+                <div class="alert alert-warning mb-0">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <strong>Important:</strong> Currency conversion rates are not automatically
+                  updated. You'll need to manually update account balances if exchange rates change
+                  significantly.
+                </div>
+              </div>
+            </div>
+
+            <h6 class="mt-4">Example Scenario:</h6>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Currency</th>
+                  <th>Balance</th>
+                  <th>Display</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>US Checking</td>
+                  <td>USD</td>
+                  <td>5,000.00</td>
+                  <td>$5,000.00</td>
+                </tr>
+                <tr>
+                  <td>Euro Travel Card</td>
+                  <td>EUR</td>
+                  <td>1,500.00</td>
+                  <td>€1.500,00</td>
+                </tr>
+                <tr>
+                  <td>UK Savings</td>
+                  <td>GBP</td>
+                  <td>2,000.00</td>
+                  <td>£2,000.00</td>
+                </tr>
+                <tr>
+                  <td class="text-end"><strong>Net Worth (USD):</strong></td>
+                  <td colspan="3">
+                    $5,000 + €1,500 (≈$1,620) + £2,000 (≈$2,500) = <strong>$9,120</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- FAQ -->
+          <section id="faq" class="mb-5">
+            <h2 class="h4 mb-3">6. Frequently Asked Questions</h2>
+
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    Will changing my default currency convert all my existing balances?
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    No, changing your default currency only affects new accounts and how amounts are
+                    displayed. Existing accounts keep their original currency. To change an
+                    account's currency, edit the account directly.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    Can I have transactions in different currencies?
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Yes, transactions inherit the currency of the account they're associated with.
+                    If you need to track transactions in multiple currencies, create separate
+                    accounts for each currency.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Does Expense Tracker automatically update exchange rates?
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Currently, exchange rates are not automatically updated. You'll need to manually
+                    adjust account balances if exchange rates change significantly. This feature is
+                    planned for a future update.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq4"
+                  >
+                    Why does my Japanese Yen account show no decimals?
+                  </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    The Japanese Yen (JPY) is traditionally displayed without decimal places as it's
+                    the smallest unit of currency. This is the standard convention in Japan and is
+                    automatically applied when you select JPY as your currency.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq5"
+                  >
+                    Can I add a currency that's not in the list?
+                  </button>
+                </h2>
+                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    The currently supported currencies are the most commonly used worldwide. If you
+                    need a currency not in the list, please contact support and we'll consider
+                    adding it in a future update.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq6"
+                  >
+                    How is net worth calculated with multiple currencies?
+                  </button>
+                </h2>
+                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Net worth is calculated by converting all account balances to your default
+                    currency using the exchange rates you've set (manually updated). The total is
+                    then displayed in your default currency.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Related Guides -->
+          <section class="mb-5">
+            <h2 class="h4 mb-3">Related Guides</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <a
+                  href="{{ url_for('help.guide', topic='number-formats') }}"
+                  class="text-decoration-none"
+                >
+                  <div class="d-flex align-items-center p-3 border rounded hover-bg">
+                    <i class="bi bi-123 fs-3 text-primary me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Number Formats</h6>
+                      <small class="text-muted">Configure decimal and thousand separators</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-md-6">
+                <a
+                  href="{{ url_for('help.guide', topic='accounts') }}"
+                  class="text-decoration-none"
+                >
+                  <div class="d-flex align-items-center p-3 border rounded hover-bg">
+                    <i class="bi bi-wallet2 fs-3 text-success me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Account Management</h6>
+                      <small class="text-muted">Learn about creating multi-currency accounts</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .step-content {
+    flex-grow: 1;
+  }
+
+  .hover-bg:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+
+  .table th {
+    font-weight: 600;
+  }
+
+  [data-theme='dark'] .table {
+    color: #fff;
+  }
+
+  [data-theme='dark'] .table-light {
+    background-color: #2b3035;
+    color: #fff;
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+  }
+
+  code {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+
+  [data-theme='dark'] code {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffc107;
+  }
+</style>
+
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'currency-settings',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop() + 100;
+
+    $('section').each(function () {
+      var currentSection = $(this);
+      var sectionTop = currentSection.offset().top;
+
+      if (scrollPosition >= sectionTop) {
+        var id = currentSection.attr('id');
+        $('.nav-link').removeClass('active');
+        $('.nav-link[href="#' + id + '"]').addClass('active');
+      }
+    });
+  });
+
+  // Smooth scroll to sections
+  $(document).ready(function () {
+    $('.nav-link').click(function (e) {
+      e.preventDefault();
+      var target = $(this).attr('href');
+      $('html, body').animate(
+        {
+          scrollTop: $(target).offset().top - 80
+        },
+        500
+      );
+    });
+  });
+</script>
+{% endblock %}

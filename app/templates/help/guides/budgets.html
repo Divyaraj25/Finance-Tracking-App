@@ -1,0 +1,1085 @@
+<!-- app/templates/help/guides/budgets.html -->
+{% extends "base.html" %} {% block title %}Budget Planning - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Budget Planning</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction to Budgets</a>
+            <a class="nav-link" href="#budget-periods">2. Budget Periods</a>
+            <a class="nav-link" href="#create-budget">3. Creating Budgets</a>
+            <a class="nav-link" href="#tracking">4. Tracking Progress</a>
+            <a class="nav-link" href="#understanding">5. Understanding Budget Metrics</a>
+            <a class="nav-link" href="#edit-budget">6. Editing Budgets</a>
+            <a class="nav-link" href="#recalculate">7. Recalculating Budgets</a>
+            <a class="nav-link" href="#alerts">8. Budget Alerts</a>
+            <a class="nav-link" href="#strategies">9. Budgeting Strategies</a>
+            <a class="nav-link" href="#best-practices">10. Best Practices</a>
+          </nav>
+
+          <hr class="my-3" />
+
+          <div class="bg-light p-3 rounded">
+            <i class="bi bi-clock-history"></i>
+            <small class="d-block mt-2"> <strong>Estimated time:</strong> 15 minutes </small>
+            <small class="d-block"> <strong>Difficulty:</strong> Advanced </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Budget Planning</h1>
+
+          <div class="alert alert-primary">
+            <i class="bi bi-info-circle"></i>
+            <strong>Core Concept:</strong> Budgets help you plan and control your spending by
+            setting limits on expense categories.
+          </div>
+
+          <!-- Introduction -->
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction to Budgets</h2>
+            <p>
+              Budgets are financial plans that help you allocate your income toward different
+              spending categories. The Expense Tracker system automatically tracks your spending
+              against these budgets in real-time.
+            </p>
+
+            <div class="row g-4 mt-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <i class="bi bi-check-circle-fill text-success fs-1"></i>
+                  <h6 class="mt-2">Control Spending</h6>
+                  <small class="text-muted">Know where your money goes</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <i class="bi bi-graph-up-arrow text-primary fs-1"></i>
+                  <h6 class="mt-2">Track Progress</h6>
+                  <small class="text-muted">Visual feedback on goals</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <i class="bi bi-exclamation-triangle-fill text-warning fs-1"></i>
+                  <h6 class="mt-2">Get Alerts</h6>
+                  <small class="text-muted">Warning before overspending</small>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Budget Periods -->
+          <section id="budget-periods" class="mb-5">
+            <h2 class="h4 mb-3">2. Budget Periods</h2>
+
+            <p>The system supports three budget periods to match your planning style:</p>
+
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <div class="display-5 mb-2">📅</div>
+                    <h5>Weekly</h5>
+                    <p class="small text-muted">Monday to Sunday</p>
+                    <ul class="text-start small">
+                      <li>Best for: Groceries, Dining</li>
+                      <li>Resets every Monday</li>
+                      <li>52 budgets per year</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card h-100 border-primary">
+                  <div class="card-body text-center">
+                    <div class="display-5 mb-2">📆</div>
+                    <h5>Monthly</h5>
+                    <p class="small text-muted">1st to last day</p>
+                    <ul class="text-start small">
+                      <li>Best for: Utilities, Rent</li>
+                      <li>Most common period</li>
+                      <li>12 budgets per year</li>
+                    </ul>
+                    <span class="badge bg-primary mt-2">Most Popular</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <div class="display-5 mb-2">📊</div>
+                    <h5>Yearly</h5>
+                    <p class="small text-muted">Jan 1 to Dec 31</p>
+                    <ul class="text-start small">
+                      <li>Best for: Insurance, Subscriptions</li>
+                      <li>Annual planning</li>
+                      <li>1 budget per year</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-info mt-4">
+              <i class="bi bi-calendar-check"></i>
+              <strong>Date Ranges:</strong> Budgets are fixed to the current period. For example, a
+              monthly budget created on January 15th covers January 1-31, not the next 30 days.
+            </div>
+          </section>
+
+          <!-- Creating Budgets -->
+          <section id="create-budget" class="mb-5">
+            <h2 class="h4 mb-3">3. Creating Budgets</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Navigate to Budgets Page</h6>
+                <p>Click "Budgets" in the main navigation menu.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Click "Create Budget" Button</h6>
+                <p>The button is located at the top right corner of the Budgets page.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Select a Category</h6>
+                <p>Choose the expense category you want to budget for.</p>
+                <div class="bg-warning bg-opacity-10 p-3 rounded mt-2">
+                  <i class="bi bi-lightbulb"></i>
+                  <strong>Tip:</strong> Only expense and asset purchase categories can have budgets.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Set Budget Amount</h6>
+                <p>Enter your spending limit for this category.</p>
+                <table class="table table-sm mt-2">
+                  <tr>
+                    <th>Category Example</th>
+                    <th>Recommended Budget</th>
+                  </tr>
+                  <tr>
+                    <td>Food & Dining</td>
+                    <td>$400-600/month</td>
+                  </tr>
+                  <tr>
+                    <td>Transportation</td>
+                    <td>$100-300/month</td>
+                  </tr>
+                  <tr>
+                    <td>Entertainment</td>
+                    <td>$50-200/month</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h6>Choose Period</h6>
+                <p>Select Weekly, Monthly, or Yearly based on your planning preference.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">6</div>
+              <div class="step-content">
+                <h6>Create Budget</h6>
+                <p>
+                  Click "Create Budget" to save. The system will immediately calculate spending from
+                  the start of the period.
+                </p>
+                <div class="bg-success bg-opacity-10 p-3 rounded mt-2">
+                  <i class="bi bi-magic"></i>
+                  <strong>Automatic History:</strong> If you've already spent money this month on
+                  this category, that spending will be included in your budget tracking.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tracking Progress -->
+          <section id="tracking" class="mb-5">
+            <h2 class="h4 mb-3">4. Tracking Budget Progress</h2>
+
+            <p>Each budget card provides a complete overview of your spending status:</p>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6>📊 Progress Bar</h6>
+                    <div class="progress mb-3" style="height: 20px">
+                      <div class="progress-bar bg-success" style="width: 35%">35%</div>
+                    </div>
+                    <p class="small text-muted">Visual representation of spent percentage</p>
+
+                    <h6 class="mt-4">🎨 Color Coding</h6>
+                    <div class="d-flex gap-3">
+                      <div><span class="badge bg-success">Green</span> &lt; 50%</div>
+                      <div><span class="badge bg-warning">Yellow</span> 50-75%</div>
+                      <div><span class="badge bg-danger">Red</span> 75-100%</div>
+                      <div><span class="badge bg-secondary">Gray</span> &gt; 100%</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h6>📈 Key Metrics</h6>
+                    <table class="table table-sm">
+                      <tr>
+                        <td>Budget Amount</td>
+                        <td>Your spending limit</td>
+                      </tr>
+                      <tr>
+                        <td>Spent</td>
+                        <td>Total spent in this period</td>
+                      </tr>
+                      <tr>
+                        <td>Remaining</td>
+                        <td>Budget - Spent</td>
+                      </tr>
+                      <tr>
+                        <td>Progress %</td>
+                        <td>(Spent ÷ Budget) × 100</td>
+                      </tr>
+                      <tr>
+                        <td>Transaction Count</td>
+                        <td>Number of transactions in period</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6>✅ On Track (Green)</h6>
+                  <p class="small text-muted">
+                    You're spending within your budget comfortably. Keep up the good work!
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6>⚠️ Warning (Yellow)</h6>
+                  <p class="small text-muted">
+                    You've used 50-75% of your budget. Time to watch your spending.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6>🔴 Critical (Red)</h6>
+                  <p class="small text-muted">
+                    You've used 75-100% of your budget. Consider reducing spending.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6>⚫ Exceeded (Gray)</h6>
+                  <p class="small text-muted">
+                    You've overspent your budget. Review these expenses.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Understanding Budget Metrics -->
+          <section id="understanding" class="mb-5">
+            <h2 class="h4 mb-3">5. Understanding Budget Metrics</h2>
+
+            <div class="card">
+              <div class="card-body">
+                <h6>How "Spent" is Calculated:</h6>
+                <p>
+                  The spent amount includes all expense-type transactions in the selected category
+                  within the budget period:
+                </p>
+
+                <pre class="bg-light p-3 rounded"><code>Spent = SUM(transaction.amount) 
+WHERE transaction.type IN ('expense', 'asset_purchase', 'credit_card_payment')
+  AND transaction.category_id = budget.category_id
+  AND transaction.date BETWEEN budget.start_date AND budget.end_date</code></pre>
+
+                <h6 class="mt-4">What's NOT Included:</h6>
+                <ul>
+                  <li>Income transactions</li>
+                  <li>Transfers between accounts</li>
+                  <li>Transactions in different categories</li>
+                  <li>Transactions outside the budget period</li>
+                </ul>
+
+                <h6 class="mt-4">Example Calculation:</h6>
+                <table class="table table-sm">
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Included?</th>
+                  </tr>
+                  <tr>
+                    <td>Jan 5</td>
+                    <td>Grocery Store</td>
+                    <td>$75.50</td>
+                    <td>Food</td>
+                    <td><span class="text-success">✓ Yes</span></td>
+                  </tr>
+                  <tr>
+                    <td>Jan 12</td>
+                    <td>Restaurant</td>
+                    <td>$45.00</td>
+                    <td>Food</td>
+                    <td><span class="text-success">✓ Yes</span></td>
+                  </tr>
+                  <tr>
+                    <td>Jan 15</td>
+                    <td>Salary</td>
+                    <td>$3,000</td>
+                    <td>Income</td>
+                    <td><span class="text-danger">✗ No</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class="text-end"><strong>Total Spent:</strong></td>
+                    <td><strong>$120.50</strong></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Editing Budgets -->
+          <section id="edit-budget" class="mb-5">
+            <h2 class="h4 mb-3">6. Editing Budgets</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Find Your Budget</h6>
+                <p>Locate the budget card you want to modify.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Open Menu</h6>
+                <p>
+                  Click the three dots <i class="bi bi-three-dots-vertical"></i> in the top right
+                  corner of the budget card.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Select "Edit"</h6>
+                <p>Choose Edit from the dropdown menu.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Modify Budget Details</h6>
+                <p>You can update:</p>
+                <ul>
+                  <li><strong>Amount:</strong> Increase or decrease your spending limit</li>
+                  <li><strong>Period:</strong> Change from weekly to monthly, etc.</li>
+                </ul>
+                <div class="alert alert-warning mt-2">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <strong>Note:</strong> Changing the period will reset the date range to the
+                  current period.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>Click "Update Budget" to save your modifications.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Recalculating Budgets -->
+          <section id="recalculate" class="mb-5">
+            <h2 class="h4 mb-3">7. Recalculating Budgets</h2>
+
+            <div class="alert alert-info">
+              <i class="bi bi-arrow-clockwise"></i>
+              <strong>What is Recalculation?</strong> Budgets automatically track spending in
+              real-time. However, if you edit past transactions or create a budget mid-period, you
+              may need to recalculate.
+            </div>
+
+            <h6 class="mt-4">When to Recalculate:</h6>
+            <ul>
+              <li>✅ After editing a transaction's amount or category</li>
+              <li>✅ After deleting a transaction</li>
+              <li>✅ When creating a budget in the middle of a period</li>
+              <li>✅ If you suspect the spent amount is incorrect</li>
+              <li>❌ Not needed for normal daily use</li>
+            </ul>
+
+            <div class="step-item mt-4">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Open Budget Menu</h6>
+                <p>
+                  Click the three dots <i class="bi bi-three-dots-vertical"></i> on the budget card.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Select "Recalculate"</h6>
+                <p>Choose Recalculate from the menu.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Confirm Recalculation</h6>
+                <p>The system will scan all transactions and update the spent amount.</p>
+              </div>
+            </div>
+
+            <h6 class="mt-4">Recalculate All Budgets:</h6>
+            <p>To recalculate all active budgets at once:</p>
+            <ol>
+              <li>Click "Recalculate All" button at the top of the Budgets page</li>
+              <li>Confirm the action</li>
+              <li>All budgets will be updated with current transaction data</li>
+            </ol>
+          </section>
+
+          <!-- Budget Alerts -->
+          <section id="alerts" class="mb-5">
+            <h2 class="h4 mb-3">8. Budget Alerts</h2>
+
+            <p>The system provides proactive alerts to help you stay on track:</p>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="alert alert-warning d-flex align-items-center">
+                  <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                  <div>
+                    <strong>Warning Alert</strong>
+                    <br />
+                    <small>Triggered at 75% of budget</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="alert alert-danger d-flex align-items-center">
+                  <i class="bi bi-exclamation-circle-fill fs-4 me-3"></i>
+                  <div>
+                    <strong>Critical Alert</strong>
+                    <br />
+                    <small>Triggered at 90% of budget</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="alert alert-secondary d-flex align-items-center">
+                  <i class="bi bi-x-circle-fill fs-4 me-3"></i>
+                  <div>
+                    <strong>Exceeded Alert</strong>
+                    <br />
+                    <small>Triggered when over budget</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="alert alert-success d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+                  <div>
+                    <strong>On Track</strong>
+                    <br />
+                    <small>No alert - you're doing great!</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h6>Where to Find Alerts:</h6>
+              <ul>
+                <li><strong>Budget Cards:</strong> Color-coded progress bars and status badges</li>
+                <li><strong>Dashboard:</strong> Budget alert summary card</li>
+                <li><strong>System Logs:</strong> Audit trail of budget warnings</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Budgeting Strategies -->
+          <section id="strategies" class="mb-5">
+            <h2 class="h4 mb-3">9. Budgeting Strategies</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">50/30/20 Rule</h5>
+                    <p class="card-text small">A simple, effective budgeting method:</p>
+                    <ul class="small">
+                      <li>
+                        <strong>50% Needs:</strong> Housing, utilities, groceries, transportation
+                      </li>
+                      <li><strong>30% Wants:</strong> Dining, entertainment, shopping</li>
+                      <li>
+                        <strong>20% Savings:</strong> Emergency fund, investments, debt repayment
+                      </li>
+                    </ul>
+                    <div class="mt-3">
+                      <div class="d-flex justify-content-between">
+                        <span>Needs</span>
+                        <span class="text-primary">50%</span>
+                      </div>
+                      <div class="progress mb-2" style="height: 8px">
+                        <div class="progress-bar bg-primary" style="width: 50%"></div>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <span>Wants</span>
+                        <span class="text-success">30%</span>
+                      </div>
+                      <div class="progress mb-2" style="height: 8px">
+                        <div class="progress-bar bg-success" style="width: 30%"></div>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <span>Savings</span>
+                        <span class="text-warning">20%</span>
+                      </div>
+                      <div class="progress" style="height: 8px">
+                        <div class="progress-bar bg-warning" style="width: 20%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Zero-Based Budget</h5>
+                    <p class="card-text small">Every dollar has a job:</p>
+                    <ul class="small">
+                      <li>Income - Expenses - Savings = $0</li>
+                      <li>Assign every dollar of income</li>
+                      <li>Great for detailed tracking</li>
+                      <li>Requires regular attention</li>
+                    </ul>
+                    <div class="bg-light p-3 rounded mt-3">
+                      <small>Example:</small>
+                      <pre class="mb-0 small"><code>Income: $4,000
+Housing: $1,200
+Utilities: $300
+Food: $500
+Transport: $200
+Savings: $800
+Other: $1,000
+Total: $4,000</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Envelope System</h5>
+                    <p class="card-text small">Digital version of cash envelopes:</p>
+                    <ul class="small">
+                      <li>Create separate budgets for each category</li>
+                      <li>Stop spending when envelope is empty</li>
+                      <li>Great for variable expenses</li>
+                      <li>Builds spending discipline</li>
+                    </ul>
+                    <div class="mt-3">
+                      <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-primary p-2">Groceries: $400</span>
+                        <span class="badge bg-success p-2">Dining: $200</span>
+                        <span class="badge bg-warning p-2">Gas: $150</span>
+                        <span class="badge bg-info p-2">Shopping: $100</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Pay Yourself First</h5>
+                    <p class="card-text small">Prioritize savings:</p>
+                    <ul class="small">
+                      <li>Set savings goal as first budget</li>
+                      <li>Treat savings as non-negotiable</li>
+                      <li>Live off remaining income</li>
+                      <li>Build wealth automatically</li>
+                    </ul>
+                    <div class="bg-success bg-opacity-10 p-3 rounded mt-3">
+                      <i class="bi bi-piggy-bank"></i>
+                      <strong>Example:</strong> Save 20% ($800) immediately, budget the rest
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Best Practices -->
+          <section id="best-practices" class="mb-5">
+            <h2 class="h4 mb-3">10. Budgeting Best Practices</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">1</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Start with Fixed Expenses</h6>
+                    <p class="small text-muted">
+                      Budget for rent/mortgage, utilities, insurance first
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">2</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Be Realistic</h6>
+                    <p class="small text-muted">
+                      Use historical spending to set achievable budgets
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">3</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Review Weekly</h6>
+                    <p class="small text-muted">
+                      Check budget progress every week, not just month-end
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">4</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Adjust as Needed</h6>
+                    <p class="small text-muted">
+                      Budgets aren't permanent - adjust when circumstances change
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">5</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Include Irregular Expenses</h6>
+                    <p class="small text-muted">Annual subscriptions, car maintenance, gifts</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">6</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Celebrate Success</h6>
+                    <p class="small text-muted">
+                      When you stay under budget, roll over savings or treat yourself
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Common Issues -->
+          <section id="common-issues" class="mb-5">
+            <h2 class="h4 mb-3">Common Issues & Solutions</h2>
+
+            <div class="accordion" id="budgetFaq">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    Budget spent amount seems incorrect
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#budgetFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Try recalculating the budget. If that doesn't work,
+                    check for:
+                    <ul class="mb-0 mt-2">
+                      <li>Transactions with wrong category</li>
+                      <li>Transactions outside the budget period</li>
+                      <li>Duplicate transactions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    Can't create budget for a category
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#budgetFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Budgets can only be created for expense-type
+                    categories. Income, asset, and liability categories cannot have spending
+                    budgets.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Budget already exists error
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#budgetFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> You can only have one active budget per category per
+                    period. Edit the existing budget instead of creating a new one.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq4"
+                  >
+                    How to handle irregular income?
+                  </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#budgetFaq">
+                  <div class="accordion-body">
+                    <strong>Strategy:</strong> Base your budget on your average monthly income over
+                    the past 6-12 months. In low-income months, reduce discretionary spending.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Keyboard Shortcuts -->
+          <section id="shortcuts" class="mb-5">
+            <h2 class="h4 mb-3">Keyboard Shortcuts</h2>
+            <table class="table table-sm">
+              <tr>
+                <td><kbd>Ctrl</kbd> + <kbd>B</kbd></td>
+                <td>Go to Budgets page</td>
+              </tr>
+              <tr>
+                <td><kbd>Shift</kbd> + <kbd>B</kbd></td>
+                <td>Create new budget</td>
+              </tr>
+              <tr>
+                <td><kbd>R</kbd></td>
+                <td>Recalculate selected budget</td>
+              </tr>
+            </table>
+          </section>
+
+          <!-- Sample Budget Template -->
+          <section id="template" class="mb-5">
+            <h2 class="h4 mb-3">Sample Budget Template</h2>
+
+            <div class="card">
+              <div class="card-body">
+                <h6 class="card-title">Monthly Budget Template</h6>
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Category</th>
+                      <th>Suggested %</th>
+                      <th>Sample ($4,000 income)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Housing (Rent/Mortgage)</td>
+                      <td>25-30%</td>
+                      <td>$1,000-1,200</td>
+                    </tr>
+                    <tr>
+                      <td>Utilities</td>
+                      <td>5-8%</td>
+                      <td>$200-320</td>
+                    </tr>
+                    <tr>
+                      <td>Groceries</td>
+                      <td>8-12%</td>
+                      <td>$320-480</td>
+                    </tr>
+                    <tr>
+                      <td>Transportation</td>
+                      <td>10-15%</td>
+                      <td>$400-600</td>
+                    </tr>
+                    <tr>
+                      <td>Healthcare</td>
+                      <td>5-8%</td>
+                      <td>$200-320</td>
+                    </tr>
+                    <tr>
+                      <td>Dining Out</td>
+                      <td>5-10%</td>
+                      <td>$200-400</td>
+                    </tr>
+                    <tr>
+                      <td>Entertainment</td>
+                      <td>5-8%</td>
+                      <td>$200-320</td>
+                    </tr>
+                    <tr>
+                      <td>Shopping</td>
+                      <td>5-8%</td>
+                      <td>$200-320</td>
+                    </tr>
+                    <tr>
+                      <td>Savings</td>
+                      <td>10-20%</td>
+                      <td>$400-800</td>
+                    </tr>
+                    <tr>
+                      <td>Debt Payment</td>
+                      <td>5-10%</td>
+                      <td>$200-400</td>
+                    </tr>
+                    <tr>
+                      <td>Personal Care</td>
+                      <td>3-5%</td>
+                      <td>$120-200</td>
+                    </tr>
+                    <tr>
+                      <td>Miscellaneous</td>
+                      <td>2-5%</td>
+                      <td>$80-200</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="small text-muted mt-2">
+                  <i class="bi bi-info-circle"></i>
+                  Adjust percentages based on your location, lifestyle, and financial goals.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Next Steps -->
+          <section id="next-steps">
+            <div class="bg-light p-4 rounded">
+              <h5 class="mb-3">Ready to learn more?</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <a
+                    href="{{ url_for('help.guide', topic='categories') }}"
+                    class="text-decoration-none"
+                  >
+                    <div class="d-flex align-items-center p-2 rounded hover-bg">
+                      <i class="bi bi-tags fs-4 me-3 text-primary"></i>
+                      <div>
+                        <strong>Category Management</strong>
+                        <br />
+                        <small class="text-muted">Organize your spending categories</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <a
+                    href="{{ url_for('help.guide', topic='reports') }}"
+                    class="text-decoration-none"
+                  >
+                    <div class="d-flex align-items-center p-2 rounded hover-bg">
+                      <i class="bi bi-graph-up fs-4 me-3 text-success"></i>
+                      <div>
+                        <strong>Reports & Analytics</strong>
+                        <br />
+                        <small class="text-muted">Analyze your spending patterns</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .step-content {
+    flex-grow: 1;
+  }
+
+  .hover-bg:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+  }
+
+  .progress {
+    background-color: #e9ecef;
+  }
+
+  [data-theme='dark'] .progress {
+    background-color: #495057;
+  }
+</style>
+
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'budgets',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop() + 100;
+
+    $('section').each(function () {
+      var currentSection = $(this);
+      var sectionTop = currentSection.offset().top;
+
+      if (scrollPosition >= sectionTop) {
+        var id = currentSection.attr('id');
+        $('.nav-link').removeClass('active');
+        $('.nav-link[href="#' + id + '"]').addClass('active');
+      }
+    });
+  });
+</script>
+{% endblock %}

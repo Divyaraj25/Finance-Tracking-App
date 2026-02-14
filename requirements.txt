@@ -1,0 +1,39 @@
+# Flask Framework
+Flask
+flask-pymongo
+flask-cors
+flask-caching
+flask-limiter
+
+# Database
+pymongo
+
+# Data Processing
+pandas
+openpyxl
+
+# Environment & CLI
+python-dotenv
+click
+
+# Markdown for documentation
+markdown
+
+setuptools
+pytz
+
+# Production Server
+gunicorn
+
+# Testing
+pytest
+pytest-flask
+pytest-cov
+mongomock
+
+# Monitoring
+psutil
+
+# Utilities
+bcrypt
+email-validator

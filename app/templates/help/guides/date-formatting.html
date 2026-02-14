@@ -1,0 +1,247 @@
+<!-- app/templates/help/guides/date-formatting.html -->
+{% extends "base.html" %} {% block title %}Date Formatting - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Date Formatting</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#date-formats">Available Date Formats</a>
+            <a class="nav-link" href="#time-formats">Time Formats</a>
+            <a class="nav-link" href="#week-start">Week Start Options</a>
+            <a class="nav-link" href="#changing-format">Changing Your Format</a>
+            <a class="nav-link" href="#examples">Examples by Region</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4">
+          <h1 class="display-6 mb-4">Date and Time Formatting</h1>
+
+          <section id="date-formats" class="mb-5">
+            <h2 class="h4 mb-3">Available Date Formats</h2>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Format</th>
+                    <th>Example</th>
+                    <th>Region</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>YYYY-MM-DD</code></td>
+                    <td>2026-02-14</td>
+                    <td>ISO Standard, Sweden, China</td>
+                  </tr>
+                  <tr>
+                    <td><code>MM/DD/YYYY</code></td>
+                    <td>02/14/2026</td>
+                    <td>United States</td>
+                  </tr>
+                  <tr>
+                    <td><code>DD/MM/YYYY</code></td>
+                    <td>14/02/2026</td>
+                    <td>UK, Australia, India, Europe</td>
+                  </tr>
+                  <tr>
+                    <td><code>MM-DD-YYYY</code></td>
+                    <td>02-14-2026</td>
+                    <td>United States (alternative)</td>
+                  </tr>
+                  <tr>
+                    <td><code>DD-MM-YYYY</code></td>
+                    <td>14-02-2026</td>
+                    <td>Europe (alternative)</td>
+                  </tr>
+                  <tr>
+                    <td><code>MMM D, YYYY</code></td>
+                    <td>Feb 14, 2026</td>
+                    <td>US, Canada (long form)</td>
+                  </tr>
+                  <tr>
+                    <td><code>D MMM YYYY</code></td>
+                    <td>14 Feb 2026</td>
+                    <td>UK, Australia (long form)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="time-formats" class="mb-5">
+            <h2 class="h4 mb-3">Time Formats</h2>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h5>12-Hour Format</h5>
+                  <p class="display-6 mb-2">3:45 PM</p>
+                  <p class="text-muted">Common in US, Canada, Australia, Philippines</p>
+                  <ul class="small">
+                    <li>Uses AM/PM indicators</li>
+                    <li>Hours from 1-12</li>
+                    <li>More conversational</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h5>24-Hour Format</h5>
+                  <p class="display-6 mb-2">15:45</p>
+                  <p class="text-muted">Common in Europe, military, scientific</p>
+                  <ul class="small">
+                    <li>No AM/PM ambiguity</li>
+                    <li>Hours from 0-23</li>
+                    <li>More precise for sorting</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="week-start" class="mb-5">
+            <h2 class="h4 mb-3">Week Start Options</h2>
+            <p>Choose which day your week begins on. This affects:</p>
+            <ul>
+              <li><strong>Weekly budgets</strong> - When the budget period resets</li>
+              <li><strong>Reports</strong> - Weekly summaries and charts</li>
+              <li><strong>Calendar views</strong> - How the week is displayed</li>
+            </ul>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <span class="badge bg-primary mb-2">Option 1</span>
+                  <h6>Monday</h6>
+                  <p class="small text-muted">
+                    International standard<br />Mon, Tue, Wed, Thu, Fri, Sat, Sun
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <span class="badge bg-primary mb-2">Option 2</span>
+                  <h6>Sunday</h6>
+                  <p class="small text-muted">US & Canada<br />Sun, Mon, Tue, Wed, Thu, Fri, Sat</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <span class="badge bg-primary mb-2">Option 3</span>
+                  <h6>Saturday</h6>
+                  <p class="small text-muted">Middle East<br />Sat, Sun, Mon, Tue, Wed, Thu, Fri</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="changing-format" class="mb-5">
+            <h2 class="h4 mb-3">Changing Your Format</h2>
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Go to Profile Settings</h6>
+                <p>Click your profile icon and select "Profile"</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Select General Tab</h6>
+                <p>Navigate to the "General" settings tab</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Choose Your Preferences</h6>
+                <p>Select your preferred date format, time format, and week start</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>Click "Save General Settings" to apply</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="examples" class="mb-5">
+            <h2 class="h4 mb-3">Examples by Region</h2>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Region</th>
+                    <th>Date Format</th>
+                    <th>Time Format</th>
+                    <th>Week Start</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>United States</td>
+                    <td><code>MM/DD/YYYY</code></td>
+                    <td>12h</td>
+                    <td>Sunday</td>
+                  </tr>
+                  <tr>
+                    <td>United Kingdom</td>
+                    <td><code>DD/MM/YYYY</code></td>
+                    <td>24h / 12h</td>
+                    <td>Monday</td>
+                  </tr>
+                  <tr>
+                    <td>Canada</td>
+                    <td><code>YYYY-MM-DD</code></td>
+                    <td>12h</td>
+                    <td>Sunday</td>
+                  </tr>
+                  <tr>
+                    <td>Australia</td>
+                    <td><code>DD/MM/YYYY</code></td>
+                    <td>12h</td>
+                    <td>Monday</td>
+                  </tr>
+                  <tr>
+                    <td>India</td>
+                    <td><code>DD/MM/YYYY</code></td>
+                    <td>12h</td>
+                    <td>Monday</td>
+                  </tr>
+                  <tr>
+                    <td>Germany</td>
+                    <td><code>DD.MM.YYYY</code></td>
+                    <td>24h</td>
+                    <td>Monday</td>
+                  </tr>
+                  <tr>
+                    <td>Japan</td>
+                    <td><code>YYYY/MM/DD</code></td>
+                    <td>24h</td>
+                    <td>Monday</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

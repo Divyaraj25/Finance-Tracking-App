@@ -1,0 +1,588 @@
+<!-- app/templates/accounts/index.html -->
+{% extends "base.html" %} {% block title %}Accounts - {{ super() }}{% endblock %} {% block content
+%}
+<div class="accounts-page">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><i class="bi bi-wallet2 text-primary"></i> Accounts</h1>
+    <div class="btn-group">
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addAccountModal"
+      >
+        <i class="bi bi-plus-circle"></i> Add Account
+      </button>
+      <button type="button" class="btn btn-outline-secondary" onclick="exportData('csv')">
+        <i class="bi bi-download"></i> Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Account Summary Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Total Balance</h6>
+              <h2 class="mb-0" id="totalBalance">$0.00</h2>
+            </div>
+            <div class="icon-shape bg-primary bg-opacity-10">
+              <i class="bi bi-cash-stack text-primary fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Active Accounts</h6>
+              <h2 class="mb-0" id="totalAccounts">0</h2>
+            </div>
+            <div class="icon-shape bg-success bg-opacity-10">
+              <i class="bi bi-check-circle text-success fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Bank Accounts</h6>
+              <h2 class="mb-0" id="bankAccounts">0</h2>
+            </div>
+            <div class="icon-shape bg-info bg-opacity-10">
+              <i class="bi bi-bank text-info fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card summary-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-2">Credit Cards</h6>
+              <h2 class="mb-0" id="creditCards">0</h2>
+            </div>
+            <div class="icon-shape bg-warning bg-opacity-10">
+              <i class="bi bi-credit-card text-warning fs-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accounts Table -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle" id="accountsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="text-end">Balance</th>
+              <th>Currency</th>
+              <th>Credit Limit</th>
+              <th>Due Date</th>
+              <th>Transactions</th>
+              <th>Last Activity</th>
+              <th width="100">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="accountsTableBody">
+            <!-- Dynamic content -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Account Modal -->
+<div class="modal fade" id="addAccountModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-plus-circle"></i> Add New Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="accountForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Account Name *</label>
+              <input type="text" class="form-control" name="name" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Account Type *</label>
+              <select class="form-select" name="type" id="accountType" required>
+                <option value="">Select Type</option>
+                <option value="bank_account">Bank Account</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="cash">Cash</option>
+                <option value="asset">Asset</option>
+                <option value="liability">Liability</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Initial Balance</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" name="balance" step="0.01" value="0" />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Currency</label>
+              <select class="form-select" name="currency">
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="INR">INR - Indian Rupee</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Credit Card Specific Fields -->
+          <div id="creditCardFields" style="display: none">
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Credit Limit</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" name="credit_limit" step="0.01" />
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Due Date</label>
+                <input type="date" class="form-control" name="due_date" />
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Statement Balance</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" name="statement_balance" step="0.01" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Asset/Liability Specific Fields -->
+          <div id="assetLiabilityFields" style="display: none">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Interest Rate (%)</label>
+                <input type="number" class="form-control" name="interest_rate" step="0.01" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="saveAccount()">Save Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Account Modal -->
+<div class="modal fade" id="editAccountModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-pencil"></i> Edit Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editAccountForm">
+          <input type="hidden" name="id" id="editAccountId" />
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Account Name *</label>
+              <input type="text" class="form-control" name="name" id="edit_name" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Account Type *</label>
+              <select class="form-select" name="type" id="edit_type" disabled>
+                <option value="bank_account">Bank Account</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="cash">Cash</option>
+                <option value="asset">Asset</option>
+                <option value="liability">Liability</option>
+              </select>
+              <small class="text-muted">Type cannot be changed</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Balance</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="balance"
+                  id="edit_balance"
+                  step="0.01"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Currency</label>
+              <select class="form-select" name="currency" id="edit_currency">
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="INR">INR - Indian Rupee</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Credit Card Specific Fields -->
+          <div id="editCreditCardFields" style="display: none">
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Credit Limit</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="credit_limit"
+                    id="edit_credit_limit"
+                    step="0.01"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Due Date</label>
+                <input type="date" class="form-control" name="due_date" id="edit_due_date" />
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Statement Balance</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="statement_balance"
+                    id="edit_statement_balance"
+                    step="0.01"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Asset/Liability Specific Fields -->
+          <div id="editAssetLiabilityFields" style="display: none">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Interest Rate (%)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="interest_rate"
+                  id="edit_interest_rate"
+                  step="0.01"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="updateAccount()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    loadAccounts();
+    loadAccountSummary();
+
+    // Show/hide conditional fields based on account type
+    document.getElementById('accountType').addEventListener('change', function () {
+      const type = this.value;
+      document.getElementById('creditCardFields').style.display =
+        type === 'credit_card' ? 'block' : 'none';
+      document.getElementById('assetLiabilityFields').style.display =
+        type === 'asset' || type === 'liability' ? 'block' : 'none';
+    });
+  });
+
+  function loadAccounts() {
+    fetch('/api/v1/accounts/data')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          renderAccounts(data.data);
+        }
+      })
+      .catch(error => console.error('Error loading accounts:', error));
+  }
+
+  function renderAccounts(accounts) {
+    const tbody = document.getElementById('accountsTableBody');
+
+    if (accounts.length === 0) {
+      tbody.innerHTML = `
+            <tr>
+                <td colspan="9" class="text-center py-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-3 text-muted"></i>
+                    <span class="text-muted">No accounts found</span>
+                </td>
+            </tr>
+        `;
+      return;
+    }
+
+    tbody.innerHTML = accounts
+      .map(
+        a => `
+        <tr>
+            <td>
+                <span class="fw-medium">${escapeHtml(a.name)}</span>
+                ${!a.is_active ? '<span class="badge bg-secondary ms-2">Inactive</span>' : ''}
+            </td>
+            <td>
+                <span class="badge bg-light text-dark">
+                    ${formatAccountType(a.type)}
+                </span>
+            </td>
+            <td class="text-end ${a.balance >= 0 ? 'text-success' : 'text-danger'} fw-bold">
+                ${formatCurrency(a.balance)}
+            </td>
+            <td>${a.currency || 'USD'}</td>
+            <td>${a.credit_limit ? formatCurrency(a.credit_limit) : '-'}</td>
+            <td>${a.due_date ? formatDate(a.due_date) : '-'}</td>
+            <td class="text-center">${a.transaction_count || 0}</td>
+            <td>${a.last_transaction ? formatDate(a.last_transaction) : 'Never'}</td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary" onclick="editAccount('${a.id}')">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="confirmDelete('${a.id}')">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `
+      )
+      .join('');
+  }
+
+  function loadAccountSummary() {
+    fetch('/api/v1/accounts/summary')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('totalBalance').textContent = formatCurrency(
+            data.data.total_balance
+          );
+          document.getElementById('totalAccounts').textContent = data.data.total_accounts;
+          document.getElementById('bankAccounts').textContent =
+            data.data.by_type?.bank_account?.count || 0;
+          document.getElementById('creditCards').textContent =
+            data.data.by_type?.credit_card?.count || 0;
+        }
+      });
+  }
+
+  function saveAccount() {
+    const form = document.getElementById('accountForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch('/api/v1/accounts/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire('Success', 'Account created successfully', 'success');
+          $('#addAccountModal').modal('hide');
+          form.reset();
+          loadAccounts();
+          loadAccountSummary();
+        } else {
+          Swal.fire('Error', data.error, 'error');
+        }
+      })
+      .catch(error => Swal.fire('Error', 'Failed to save account', 'error'));
+  }
+
+  function editAccount(id) {
+    fetch(`/api/v1/accounts/${id}/edit`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success) {
+          const account = data.data;
+
+          // Set values with null checks
+          document.getElementById('editAccountId').value = account.id || '';
+
+          const nameInput = document.getElementById('edit_name');
+          if (nameInput) nameInput.value = account.name || '';
+
+          const typeSelect = document.getElementById('edit_type');
+          if (typeSelect) typeSelect.value = account.type || '';
+
+          const balanceInput = document.getElementById('edit_balance');
+          if (balanceInput) balanceInput.value = account.balance || 0;
+
+          const currencySelect = document.getElementById('edit_currency');
+          if (currencySelect) currencySelect.value = account.currency || 'USD';
+
+          // Show/hide conditional fields
+          const creditCardFields = document.getElementById('editCreditCardFields');
+          const assetLiabilityFields = document.getElementById('editAssetLiabilityFields');
+
+          if (account.type === 'credit_card') {
+            if (creditCardFields) {
+              creditCardFields.style.display = 'block';
+
+              const creditLimitInput = document.getElementById('edit_credit_limit');
+              if (creditLimitInput) creditLimitInput.value = account.credit_limit || '';
+
+              const dueDateInput = document.getElementById('edit_due_date');
+              if (dueDateInput) dueDateInput.value = account.due_date || '';
+
+              const statementBalanceInput = document.getElementById('edit_statement_balance');
+              if (statementBalanceInput)
+                statementBalanceInput.value = account.statement_balance || '';
+            }
+            if (assetLiabilityFields) assetLiabilityFields.style.display = 'none';
+          } else if (account.type === 'asset' || account.type === 'liability') {
+            if (creditCardFields) creditCardFields.style.display = 'none';
+            if (assetLiabilityFields) {
+              assetLiabilityFields.style.display = 'block';
+
+              const interestRateInput = document.getElementById('edit_interest_rate');
+              if (interestRateInput) interestRateInput.value = account.interest_rate || '';
+            }
+          } else {
+            if (creditCardFields) creditCardFields.style.display = 'none';
+            if (assetLiabilityFields) assetLiabilityFields.style.display = 'none';
+          }
+
+          $('#editAccountModal').modal('show');
+        } else {
+          Swal.fire('Error', data.error || 'Failed to load account', 'error');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        Swal.fire('Error', 'Failed to load account details', 'error');
+      });
+  }
+
+  function updateAccount() {
+    const form = document.getElementById('editAccountForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    const accountId = document.getElementById('editAccountId').value;
+
+    // Remove empty fields
+    Object.keys(data).forEach(key => {
+      if (data[key] === '' || data[key] === null || data[key] === undefined) {
+        delete data[key];
+      }
+    });
+
+    fetch(`/api/v1/accounts/${accountId}/update`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire('Success', 'Account updated successfully', 'success');
+          $('#editAccountModal').modal('hide');
+          loadAccounts();
+          loadAccountSummary();
+        } else {
+          Swal.fire('Error', data.error, 'error');
+        }
+      })
+      .catch(error => Swal.fire('Error', 'Failed to update account', 'error'));
+  }
+
+  function confirmDelete(id) {
+    Swal.fire({
+      title: 'Delete Account?',
+      text: 'This action cannot be undone. Accounts with transactions will be deactivated.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch(`/api/v1/accounts/${id}`, {
+          method: 'DELETE'
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              Swal.fire('Deleted', data.message, 'success');
+              loadAccounts();
+              loadAccountSummary();
+            } else {
+              Swal.fire('Error', data.error, 'error');
+            }
+          });
+      }
+    });
+  }
+
+  function formatAccountType(type) {
+    const types = {
+      bank_account: 'Bank Account',
+      credit_card: 'Credit Card',
+      debit_card: 'Debit Card',
+      cash: 'Cash',
+      asset: 'Asset',
+      liability: 'Liability'
+    };
+    return types[type] || type;
+  }
+</script>
+{% endblock %}

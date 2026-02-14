@@ -1,0 +1,140 @@
+<!-- app/templates/help/guides/dark-mode.html -->
+{% extends "base.html" %} {% block title %}Dark Mode Guide - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Dark Mode Guide</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body p-4">
+          <h1 class="display-6 mb-4">Dark Mode Guide</h1>
+
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <div class="border rounded p-3 text-center">
+                <div class="bg-light p-3 mb-3" style="background: #f8f9fa; border-radius: 8px">
+                  <i class="bi bi-sun fs-1 text-warning"></i>
+                </div>
+                <h5>Light Mode</h5>
+                <p class="small">Default theme with bright background</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="border rounded p-3 text-center" style="background: #1a1e24; color: white">
+                <div class="p-3 mb-3" style="background: #252b33; border-radius: 8px">
+                  <i class="bi bi-moon fs-1 text-primary"></i>
+                </div>
+                <h5 style="color: white">Dark Mode</h5>
+                <p class="small" style="color: #b0b7c4">Reduced eye strain, saves battery</p>
+              </div>
+            </div>
+          </div>
+
+          <section class="mb-5">
+            <h2 class="h4 mb-3">Enabling Dark Mode</h2>
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Click the Theme Toggle</h6>
+                <p>Find the sun/moon icon in the top navigation bar</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Toggle Theme</h6>
+                <p>Click to switch between light and dark mode</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Persistent Setting</h6>
+                <p>Your preference is saved and will apply across all pages and future visits</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="mb-5">
+            <h2 class="h4 mb-3">Dark Mode Benefits</h2>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <i class="bi bi-eye fs-2 text-primary me-3"></i>
+                  <div>
+                    <h6>Reduced Eye Strain</h6>
+                    <p class="small text-muted">
+                      Less blue light exposure, especially in low-light environments
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <i class="bi bi-battery-charging fs-2 text-success me-3"></i>
+                  <div>
+                    <h6>Battery Saving</h6>
+                    <p class="small text-muted">On OLED screens, dark pixels use less power</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <i class="bi bi-contrast fs-2 text-info me-3"></i>
+                  <div>
+                    <h6>Better Focus</h6>
+                    <p class="small text-muted">Reduces distractions, helps focus on content</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <i class="bi bi-clock fs-2 text-warning me-3"></i>
+                  <div>
+                    <h6>Night Usage</h6>
+                    <p class="small text-muted">Easier on eyes when using at night</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="mb-5">
+            <h2 class="h4 mb-3">Dark Mode Features</h2>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                  <i class="bi bi-palette fs-1 text-primary mb-2"></i>
+                  <h6>Optimized Colors</h6>
+                  <p class="small">Carefully chosen contrast ratios for readability</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                  <i class="bi bi-bar-chart fs-1 text-success mb-2"></i>
+                  <h6>Chart Themes</h6>
+                  <p class="small">Charts automatically adapt to dark mode</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                  <i class="bi bi-table fs-1 text-info mb-2"></i>
+                  <h6>Table Readability</h6>
+                  <p class="small">Tables maintain contrast in dark mode</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

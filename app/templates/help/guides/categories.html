@@ -1,0 +1,183 @@
+<!-- app/templates/help/guides/categories.html -->
+{% extends "base.html" %} {% block title %}Managing Categories - {{ super() }}{% endblock %} {%
+block content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Managing Categories</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction</a>
+            <a class="nav-link" href="#category-types">2. Category Types</a>
+            <a class="nav-link" href="#default-categories">3. Default Categories</a>
+            <a class="nav-link" href="#create-category">4. Creating Categories</a>
+            <a class="nav-link" href="#edit-category">5. Editing Categories</a>
+            <a class="nav-link" href="#delete-category">6. Deleting Categories</a>
+            <a class="nav-link" href="#best-practices">7. Best Practices</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Managing Categories</h1>
+
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction to Categories</h2>
+            <p>
+              Categories help you organize transactions and track spending patterns. Each
+              transaction must be assigned to a category.
+            </p>
+          </section>
+
+          <section id="category-types" class="mb-5">
+            <h2 class="h4 mb-3">2. Category Types</h2>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Examples</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge bg-success">Income</span></td>
+                    <td>Money received</td>
+                    <td>Salary, Freelance, Gifts</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-danger">Expense</span></td>
+                    <td>Money spent</td>
+                    <td>Food, Rent, Utilities</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-info">Asset</span></td>
+                    <td>Items of value</td>
+                    <td>Investments, Property</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-warning">Liability</span></td>
+                    <td>Money owed</td>
+                    <td>Loans, Credit Card Bills</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="default-categories" class="mb-5">
+            <h2 class="h4 mb-3">3. Default Categories</h2>
+            <p>The system comes with pre-configured categories:</p>
+            <ul>
+              <li><strong>Uncategorized Expense/Income</strong> - Fallback categories</li>
+              <li><strong>Food & Dining</strong> - Restaurants, groceries</li>
+              <li><strong>Transportation</strong> - Fuel, public transit</li>
+              <li><strong>Utilities</strong> - Electricity, water, internet</li>
+              <li><strong>Entertainment</strong> - Movies, games</li>
+              <li><strong>Salary</strong> - Employment income</li>
+              <li><strong>Credit Card Bill</strong> - Credit card payments</li>
+            </ul>
+            <div class="alert alert-warning">
+              <i class="bi bi-lock-fill"></i>
+              <strong>Note:</strong> Default categories cannot be deleted or have their type
+              changed.
+            </div>
+          </section>
+
+          <section id="create-category" class="mb-5">
+            <h2 class="h4 mb-3">4. Creating Categories</h2>
+            <ol>
+              <li>Go to Categories page</li>
+              <li>Click "Add Category" button</li>
+              <li>Enter category name</li>
+              <li>Select category type</li>
+              <li>Add description (optional)</li>
+              <li>Click "Save Category"</li>
+            </ol>
+          </section>
+
+          <section id="edit-category" class="mb-5">
+            <h2 class="h4 mb-3">5. Editing Categories</h2>
+            <div class="alert alert-info">
+              <i class="bi bi-pencil"></i>
+              You can edit category name and description, but not the type.
+            </div>
+          </section>
+
+          <section id="delete-category" class="mb-5">
+            <h2 class="h4 mb-3">6. Deleting Categories</h2>
+            <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle"></i>
+              When you delete a category, all associated transactions and budgets are automatically
+              reassigned to the default category.
+            </div>
+          </section>
+
+          <section id="best-practices" class="mb-5">
+            <h2 class="h4 mb-3">7. Best Practices</h2>
+            <ul>
+              <li>Keep category names short and descriptive</li>
+              <li>Create sub-categories using naming conventions (e.g., "Food: Groceries")</li>
+              <li>Review unused categories periodically</li>
+              <li>Use tags for additional organization</li>
+            </ul>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'budgets',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+</script>
+{% endblock %}

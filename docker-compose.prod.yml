@@ -1,0 +1,110 @@
+# docker-compose.prod.yml
+version: "3.8"
+
+services:
+  web:
+    image: expense-tracker:latest
+    build: .
+    ports:
+      - "8000:5000"
+    environment:
+      - FLASK_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_DB=expense_tracker
+      - SECRET_KEY=${SECRET_KEY}
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=expense_tracker
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+    command: redis-server --appendonly yes
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./app/static:/app/static:ro
+    depends_on:
+      - web
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  backup:
+    image: mongo:6.0
+    volumes:
+      - mongo-data:/data/db:ro
+      - ./backups:/backups
+    entrypoint: |
+      sh -c '
+        while true; do
+          timestamp=$$(date +%Y%m%d_%H%M%S)
+          mongodump --host mongo --username $$MONGO_ROOT_USER --password $$MONGO_ROOT_PASSWORD \
+            --authenticationDatabase admin --db expense_tracker \
+            --out /backups/backup_$$timestamp
+          echo "Backup completed: backup_$$timestamp"
+          sleep 86400
+        done
+      '
+    environment:
+      - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+    depends_on:
+      - mongo
+    networks:
+      - expense-tracker-network
+
+volumes:
+  mongo-data:
+  redis-data:
+
+networks:
+  expense-tracker-network:
+    driver: overlay

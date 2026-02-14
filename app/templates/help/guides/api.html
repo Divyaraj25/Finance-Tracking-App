@@ -1,0 +1,755 @@
+<!-- app/templates/help/guides/api.html -->
+{% extends "base.html" %} {% block title %}API Documentation - {{ super() }}{% endblock %} {% block
+content %}
+<div class="api-docs-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">API Documentation</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">API Reference</h6>
+          <nav class="nav flex-column nav-pills">
+            <a class="nav-link" href="#overview">Overview</a>
+            <a class="nav-link" href="#base-url">Base URL</a>
+            <a class="nav-link" href="#authentication">Authentication</a>
+            <a class="nav-link" href="#responses">Responses</a>
+            <a class="nav-link" href="#errors">Error Handling</a>
+            <a class="nav-link" href="#rate-limiting">Rate Limiting</a>
+            <hr />
+            <a class="nav-link" href="#transactions">📊 Transactions</a>
+            <a class="nav-link" href="#accounts">💰 Accounts</a>
+            <a class="nav-link" href="#categories">🏷️ Categories</a>
+            <a class="nav-link" href="#budgets">🎯 Budgets</a>
+            <a class="nav-link" href="#reports">📈 Reports</a>
+            <a class="nav-link" href="#export">📤 Export</a>
+            <hr />
+            <a class="nav-link" href="#examples">Code Examples</a>
+            <a class="nav-link" href="#postman">Postman Collection</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Expense Tracker API v1.0.0</h1>
+
+          <div class="alert alert-primary">
+            <i class="bi bi-info-circle"></i>
+            <strong>Base URL:</strong> <code>http://localhost:5000/api/v1</code>
+            <br />
+            <small class="text-muted">Replace with your production URL when deployed</small>
+          </div>
+
+          <!-- Overview -->
+          <section id="overview" class="mb-5">
+            <h2 class="h4 mb-3">📋 Overview</h2>
+            <p>
+              The Expense Tracker API provides RESTful endpoints for complete financial management.
+              All endpoints return JSON responses and support standard HTTP methods.
+            </p>
+            <div class="bg-light p-3 rounded">
+              <strong>Features:</strong>
+              <ul class="mb-0 mt-2">
+                <li>Full CRUD operations for all resources</li>
+                <li>Advanced filtering and pagination</li>
+                <li>Comprehensive error handling</li>
+                <li>Rate limiting (100 requests/minute)</li>
+                <li>CORS enabled for all origins</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Base URL -->
+          <section id="base-url" class="mb-5">
+            <h2 class="h4 mb-3">🔗 Base URL</h2>
+            <div class="api-endpoint mb-3">
+              <span class="badge bg-primary">Production</span>
+              <code class="ms-2">https://your-domain.com/api/v1</code>
+            </div>
+            <div class="api-endpoint">
+              <span class="badge bg-secondary">Development</span>
+              <code class="ms-2">http://localhost:5000/api/v1</code>
+            </div>
+          </section>
+
+          <!-- Authentication -->
+          <section id="authentication" class="mb-5">
+            <h2 class="h4 mb-3">🔐 Authentication</h2>
+            <div class="alert alert-warning">
+              <i class="bi bi-exclamation-triangle"></i>
+              <strong>Current Version:</strong> API is open (no authentication required).
+              Authentication will be added in version 2.0.0.
+            </div>
+          </section>
+
+          <!-- Responses -->
+          <section id="responses" class="mb-5">
+            <h2 class="h4 mb-3">📦 Response Format</h2>
+            <h6 class="mb-2">Success Response:</h6>
+            <pre class="bg-light p-3 rounded"><code>{
+  "success": true,
+  "data": { ... },
+  "message": "Optional success message"
+}</code></pre>
+
+            <h6 class="mb-2 mt-3">Error Response:</h6>
+            <pre class="bg-light p-3 rounded"><code>{
+  "success": false,
+  "error": "Error description",
+  "code": 400
+}</code></pre>
+
+            <h6 class="mb-2 mt-3">Paginated Response:</h6>
+            <pre class="bg-light p-3 rounded"><code>{
+  "success": true,
+  "data": [ ... ],
+  "pagination": {
+    "page": 1,
+    "per_page": 20,
+    "total": 100,
+    "pages": 5
+  }
+}</code></pre>
+          </section>
+
+          <!-- Error Handling -->
+          <section id="errors" class="mb-5">
+            <h2 class="h4 mb-3">⚠️ Error Codes</h2>
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge bg-secondary">400</span></td>
+                  <td>Bad Request</td>
+                  <td><code>Missing field: amount</code></td>
+                </tr>
+                <tr>
+                  <td><span class="badge bg-danger">404</span></td>
+                  <td>Not Found</td>
+                  <td><code>Transaction not found</code></td>
+                </tr>
+                <tr>
+                  <td><span class="badge bg-warning">429</span></td>
+                  <td>Too Many Requests</td>
+                  <td><code>Rate limit exceeded</code></td>
+                </tr>
+                <tr>
+                  <td><span class="badge bg-danger">500</span></td>
+                  <td>Internal Server Error</td>
+                  <td><code>Database connection failed</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Rate Limiting -->
+          <section id="rate-limiting" class="mb-5">
+            <h2 class="h4 mb-3">⏱️ Rate Limiting</h2>
+            <div class="alert alert-info">
+              <i class="bi bi-clock"></i>
+              <strong>Limit:</strong> 100 requests per minute per IP address
+            </div>
+            <p>Rate limit headers are included in all responses:</p>
+            <pre class="bg-light p-3 rounded"><code>X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1640995200</code></pre>
+          </section>
+
+          <!-- Transactions API -->
+          <section id="transactions" class="mb-5">
+            <h2 class="h4 mb-3">📊 Transactions API</h2>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /transactions</h6>
+              <p class="text-muted small">List all transactions with filters</p>
+              <div class="bg-light p-3 rounded">
+                <strong>Query Parameters:</strong>
+                <table class="table table-sm mt-2">
+                  <tr>
+                    <td><code>page</code></td>
+                    <td>Page number (default: 1)</td>
+                  </tr>
+                  <tr>
+                    <td><code>per_page</code></td>
+                    <td>Items per page (default: 20)</td>
+                  </tr>
+                  <tr>
+                    <td><code>type</code></td>
+                    <td>Filter by type (income/expense/transfer)</td>
+                  </tr>
+                  <tr>
+                    <td><code>category_id</code></td>
+                    <td>Filter by category</td>
+                  </tr>
+                  <tr>
+                    <td><code>account_id</code></td>
+                    <td>Filter by account</td>
+                  </tr>
+                  <tr>
+                    <td><code>start_date</code></td>
+                    <td>Start date (YYYY-MM-DD)</td>
+                  </tr>
+                  <tr>
+                    <td><code>end_date</code></td>
+                    <td>End date (YYYY-MM-DD)</td>
+                  </tr>
+                  <tr>
+                    <td><code>search</code></td>
+                    <td>Search in description</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="mt-2">
+                <span class="badge bg-success">Example:</span>
+                <code class="ms-2"
+                  >GET /api/v1/transactions?type=expense&start_date=2024-01-01&per_page=10</code
+                >
+              </div>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">POST /transactions</h6>
+              <p class="text-muted small">Create a new transaction</p>
+              <pre class="bg-light p-3 rounded"><code>{
+  "type": "expense",
+  "amount": 50.00,
+  "description": "Grocery shopping",
+  "date": "2024-01-15T10:30:00",
+  "category_id": "5f8d0d55b5c5a12345678902",
+  "from_account_id": "5f8d0d55b5c5a12345678903",
+  "tags": ["groceries", "food"]
+}</code></pre>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /transactions/{id}</h6>
+              <p class="text-muted small">Get a single transaction</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">PUT /transactions/{id}</h6>
+              <p class="text-muted small">Update a transaction</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">DELETE /transactions/{id}</h6>
+              <p class="text-muted small">Delete a transaction</p>
+            </div>
+          </section>
+
+          <!-- Accounts API -->
+          <section id="accounts" class="mb-5">
+            <h2 class="h4 mb-3">💰 Accounts API</h2>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /accounts</h6>
+              <p class="text-muted small">List all active accounts</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">POST /accounts</h6>
+              <p class="text-muted small">Create a new account</p>
+              <pre class="bg-light p-3 rounded"><code>{
+  "name": "Checking Account",
+  "type": "bank_account",
+  "balance": 5000.00,
+  "currency": "USD"
+}</code></pre>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /accounts/{id}</h6>
+              <p class="text-muted small">Get account details with statistics</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">PUT /accounts/{id}</h6>
+              <p class="text-muted small">Update account information</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">DELETE /accounts/{id}</h6>
+              <p class="text-muted small">Deactivate or delete account</p>
+            </div>
+          </section>
+
+          <!-- Categories API -->
+          <section id="categories" class="mb-5">
+            <h2 class="h4 mb-3">🏷️ Categories API</h2>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /categories</h6>
+              <p class="text-muted small">List all categories</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">POST /categories</h6>
+              <p class="text-muted small">Create a new category</p>
+              <pre class="bg-light p-3 rounded"><code>{
+  "name": "Transportation",
+  "type": "expense",
+  "description": "Fuel, public transport, parking"
+}</code></pre>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /categories/{id}</h6>
+              <p class="text-muted small">Get category details</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">PUT /categories/{id}</h6>
+              <p class="text-muted small">Update category</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">DELETE /categories/{id}</h6>
+              <p class="text-muted small">Delete category (reassigns to default)</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /categories/by-type/{type}</h6>
+              <p class="text-muted small">
+                Get categories by type (expense/income/asset/liability)
+              </p>
+            </div>
+          </section>
+
+          <!-- Budgets API -->
+          <section id="budgets" class="mb-5">
+            <h2 class="h4 mb-3">🎯 Budgets API</h2>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /budgets</h6>
+              <p class="text-muted small">List all active budgets with progress</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">POST /budgets</h6>
+              <p class="text-muted small">Create a new budget</p>
+              <pre class="bg-light p-3 rounded"><code>{
+  "category_id": "5f8d0d55b5c5a12345678902",
+  "amount": 500.00,
+  "period": "monthly"
+}</code></pre>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /budgets/{id}</h6>
+              <p class="text-muted small">Get budget details with transactions</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">PUT /budgets/{id}</h6>
+              <p class="text-muted small">Update budget</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">DELETE /budgets/{id}</h6>
+              <p class="text-muted small">Delete budget</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">POST /budgets/recalculate/{id}</h6>
+              <p class="text-muted small">Recalculate budget spent amount</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">POST /budgets/recalculate-all</h6>
+              <p class="text-muted small">Recalculate all active budgets</p>
+            </div>
+          </section>
+
+          <!-- Reports API -->
+          <section id="reports" class="mb-5">
+            <h2 class="h4 mb-3">📈 Reports API</h2>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /reports/summary</h6>
+              <p class="text-muted small">Get financial summary</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /reports/monthly</h6>
+              <p class="text-muted small">Get monthly report</p>
+              <div class="mt-2">
+                <span class="badge bg-success">Example:</span>
+                <code class="ms-2">GET /api/v1/reports/monthly?year=2024&month=1</code>
+              </div>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /reports/categories</h6>
+              <p class="text-muted small">Get category spending analysis</p>
+              <div class="mt-2">
+                <span class="badge bg-success">Example:</span>
+                <code class="ms-2"
+                  >GET /api/v1/reports/categories?start_date=2024-01-01&end_date=2024-01-31</code
+                >
+              </div>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /reports/income-statement</h6>
+              <p class="text-muted small">Generate income statement for a period</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /reports/balance-sheet</h6>
+              <p class="text-muted small">Generate balance sheet as of date</p>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /reports/cash-flow</h6>
+              <p class="text-muted small">Generate cash flow statement</p>
+            </div>
+          </section>
+
+          <!-- Export API -->
+          <section id="export" class="mb-5">
+            <h2 class="h4 mb-3">📤 Export API</h2>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /export/{format}</h6>
+              <p class="text-muted small">Export data in specified format</p>
+              <div class="bg-light p-3 rounded">
+                <strong>Supported formats:</strong>
+                <ul class="mb-0 mt-2">
+                  <li><code>csv</code> - Comma-separated values</li>
+                  <li><code>json</code> - JSON format</li>
+                  <li><code>excel</code> - Excel workbook (.xlsx)</li>
+                </ul>
+              </div>
+              <div class="mt-2">
+                <span class="badge bg-success">Example:</span>
+                <code class="ms-2"
+                  >GET /api/v1/export/csv?type=transactions&start_date=2024-01-01</code
+                >
+              </div>
+              <table class="table table-sm mt-3">
+                <tr>
+                  <td><code>type</code></td>
+                  <td>Data type (transactions/accounts/budgets/categories/all)</td>
+                </tr>
+                <tr>
+                  <td><code>start_date</code></td>
+                  <td>Start date for transactions</td>
+                </tr>
+                <tr>
+                  <td><code>end_date</code></td>
+                  <td>End date for transactions</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="api-section mb-4">
+              <h6 class="mb-2">GET /export/formats</h6>
+              <p class="text-muted small">Get available export formats</p>
+            </div>
+          </section>
+
+          <!-- Code Examples -->
+          <section id="examples" class="mb-5">
+            <h2 class="h4 mb-3">💻 Code Examples</h2>
+
+            <h6 class="mb-2">Python</h6>
+            <pre class="bg-light p-3 rounded"><code>import requests
+
+BASE_URL = "http://localhost:5000/api/v1"
+
+# Get all transactions
+response = requests.get(f"{BASE_URL}/transactions")
+transactions = response.json()["data"]
+
+# Create a new transaction
+transaction = {
+    "type": "expense",
+    "amount": 50.00,
+    "description": "Coffee",
+    "category_id": "5f8d0d55b5c5a12345678902",
+    "from_account_id": "5f8d0d55b5c5a12345678903"
+}
+response = requests.post(f"{BASE_URL}/transactions", json=transaction)
+print(response.json()["transaction_id"])</code></pre>
+
+            <h6 class="mb-2 mt-4">JavaScript</h6>
+            <pre class="bg-light p-3 rounded"><code>const BASE_URL = 'http://localhost:5000/api/v1';
+
+// Get financial summary
+fetch(`${BASE_URL}/reports/summary`)
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+// Export transactions as CSV
+window.location.href = `${BASE_URL}/export/csv?type=transactions`;</code></pre>
+
+            <h6 class="mb-2 mt-4">cURL</h6>
+            <pre class="bg-light p-3 rounded"><code># List accounts
+curl http://localhost:5000/api/v1/accounts
+
+# Create category
+curl -X POST http://localhost:5000/api/v1/categories \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Transportation", "type": "expense"}'
+
+# Get monthly report
+curl http://localhost:5000/api/v1/reports/monthly?year=2024&month=1</code></pre>
+
+            <h6 class="mb-2 mt-4">PHP</h6>
+            <pre class="bg-light p-3 rounded"><code>&lt;?php
+$base_url = "http://localhost:5000/api/v1";
+
+// Get budgets
+$ch = curl_init("$base_url/budgets");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+$data = json_decode($response, true);
+curl_close($ch);
+
+// Create transaction
+$transaction = [
+    'type' => 'income',
+    'amount' => 2000,
+    'description' => 'Salary',
+    'to_account_id' => '5f8d0d55b5c5a12345678903'
+];
+
+$ch = curl_init("$base_url/transactions");
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($transaction));
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+curl_exec($ch);
+curl_close($ch);
+?&gt;</code></pre>
+          </section>
+
+          <!-- Postman Collection -->
+          <section id="postman" class="mb-5">
+            <h2 class="h4 mb-3">📮 Postman Collection</h2>
+            <div class="alert alert-success">
+              <i class="bi bi-download"></i>
+              <strong>Download Postman Collection:</strong>
+              <a
+                href="{{ url_for('static', filename='postman/expense-tracker-api.json') }}"
+                class="alert-link"
+              >
+                expense-tracker-api.json
+              </a>
+            </div>
+            <p>Import this collection into Postman to test all API endpoints:</p>
+            <ol>
+              <li>Open Postman</li>
+              <li>Click "Import" button</li>
+              <li>Select the downloaded file</li>
+              <li>Set environment variable <code>base_url</code> to your API URL</li>
+            </ol>
+          </section>
+
+          <!-- API Status -->
+          <section id="status" class="mb-5">
+            <h2 class="h4 mb-3">📊 API Status</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-success me-2">Operational</span>
+                    <small class="text-muted">99.9% uptime</small>
+                  </div>
+                  <h6 class="mb-0">API Health</h6>
+                  <small class="text-muted">All systems operational</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-success me-2">100</span>
+                    <small class="text-muted">requests/minute</small>
+                  </div>
+                  <h6 class="mb-0">Rate Limit</h6>
+                  <small class="text-muted">Per IP address</small>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Support -->
+          <section id="support">
+            <h2 class="h4 mb-3">🆘 API Support</h2>
+            <p>Having issues with the API? Contact our support team:</p>
+            <ul>
+              <li>
+                Email:
+                <a href="mailto:api-support@expensetracker.com">api-support@expensetracker.com</a>
+              </li>
+              <li>GitHub Issues: <a href="#">https://github.com/expense-tracker/api/issues</a></li>
+              <li>
+                Documentation:
+                <a href="{{ url_for('help.guide', topic='api') }}">Full API Reference</a>
+              </li>
+            </ul>
+            <div class="bg-light p-3 rounded mt-3">
+              <small class="text-muted">
+                <i class="bi bi-info-circle"></i>
+                API version: 1.0.0 | Last updated: January 15, 2024
+              </small>
+            </div>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .api-docs-page .nav-pills .nav-link {
+    color: #6c757d;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+  }
+
+  .api-docs-page .nav-pills .nav-link:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+
+  .api-docs-page .nav-pills .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .api-section {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .api-endpoint {
+    font-family: monospace;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+  }
+
+  [data-theme='dark'] .api-endpoint,
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+    color: #fff;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  @media (max-width: 768px) {
+    .api-docs-page .col-lg-3 {
+      position: static !important;
+    }
+
+    .api-docs-page .sticky-top {
+      position: relative !important;
+      top: 0 !important;
+    }
+  }
+</style>
+
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'budgets',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop() + 100;
+
+    $('section').each(function () {
+      var currentSection = $(this);
+      var sectionTop = currentSection.offset().top;
+
+      if (scrollPosition >= sectionTop) {
+        var id = currentSection.attr('id');
+        $('.nav-pills .nav-link').removeClass('active');
+        $('.nav-pills .nav-link[href="#' + id + '"]').addClass('active');
+      }
+    });
+  });
+
+  // Smooth scroll to sections
+  $(document).ready(function () {
+    $('.nav-pills .nav-link').click(function (e) {
+      e.preventDefault();
+      var target = $(this).attr('href');
+      $('html, body').animate(
+        {
+          scrollTop: $(target).offset().top - 80
+        },
+        500
+      );
+    });
+  });
+
+  // Copy code blocks
+  $(document).on('click', 'pre', function () {
+    var code = $(this).text();
+    navigator.clipboard.writeText(code).then(function () {
+      Swal.fire({
+        icon: 'success',
+        title: 'Copied!',
+        text: 'Code copied to clipboard',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    });
+  });
+</script>
+{% endblock %}

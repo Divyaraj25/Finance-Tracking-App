@@ -1,0 +1,373 @@
+<!-- app/templates/help/guides/index.html -->
+{% extends "base.html" %} {% block title %}User Guides - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guides-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item active">User Guides</li>
+    </ol>
+  </nav>
+
+  <div class="text-center mb-5">
+    <h1 class="display-6 mb-3">Expense Tracker User Guides</h1>
+    <p class="text-muted">Comprehensive guides to help you master your finances</p>
+  </div>
+
+  <!-- Guides Grid -->
+  <div class="row g-4">
+    <!-- Getting Started -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-primary bg-opacity-10 mb-3">
+            <i class="bi bi-rocket-takeoff text-primary fs-2"></i>
+          </div>
+          <h5 class="card-title">Getting Started</h5>
+          <p class="card-text text-muted small">
+            New to Expense Tracker? Start here to set up your account and add your first
+            transaction.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">10 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='getting-started') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transactions -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-success bg-opacity-10 mb-3">
+            <i class="bi bi-arrow-left-right text-success fs-2"></i>
+          </div>
+          <h5 class="card-title">Managing Transactions</h5>
+          <p class="card-text text-muted small">
+            Learn how to add, edit, delete, and filter transactions effectively.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">8 min read</span>
+            <span class="badge bg-light text-dark">Intermediate</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='transactions') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounts -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-info bg-opacity-10 mb-3">
+            <i class="bi bi-wallet2 text-info fs-2"></i>
+          </div>
+          <h5 class="card-title">Account Management</h5>
+          <p class="card-text text-muted small">
+            Create and manage different types of accounts including credit cards and assets.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">12 min read</span>
+            <span class="badge bg-light text-dark">Intermediate</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='accounts') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budgets -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-warning bg-opacity-10 mb-3">
+            <i class="bi bi-pie-chart text-warning fs-2"></i>
+          </div>
+          <h5 class="card-title">Budget Planning</h5>
+          <p class="card-text text-muted small">
+            Set spending limits, track progress, and achieve your financial goals.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">15 min read</span>
+            <span class="badge bg-light text-dark">Advanced</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='budgets') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-danger bg-opacity-10 mb-3">
+            <i class="bi bi-tags text-danger fs-2"></i>
+          </div>
+          <h5 class="card-title">Categories</h5>
+          <p class="card-text text-muted small">
+            Organize your transactions with custom categories and tags.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">6 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='categories') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timezone Settings Guide -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-info bg-opacity-10 mb-3">
+            <i class="bi bi-clock text-info fs-2"></i>
+          </div>
+          <h5 class="card-title">Timezone Settings</h5>
+          <p class="card-text text-muted small">
+            Learn how to set your timezone for accurate date/time display.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">5 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a
+            href="{{ url_for('help.guide', topic='timezone-settings') }}"
+            class="stretched-link"
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date Formatting Guide -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-success bg-opacity-10 mb-3">
+            <i class="bi bi-calendar text-success fs-2"></i>
+          </div>
+          <h5 class="card-title">Date Formatting</h5>
+          <p class="card-text text-muted small">
+            Choose how dates and times appear throughout the application.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">7 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='date-formatting') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Mode Guide -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-warning bg-opacity-10 mb-3">
+            <i class="bi bi-moon text-warning fs-2"></i>
+          </div>
+          <h5 class="card-title">Dark Mode</h5>
+          <p class="card-text text-muted small">
+            Enable dark mode for reduced eye strain and better night usage.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">4 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='dark-mode') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Number Formats Guide -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-danger bg-opacity-10 mb-3">
+            <i class="bi bi-123 text-danger fs-2"></i>
+          </div>
+          <h5 class="card-title">Number Formats</h5>
+          <p class="card-text text-muted small">
+            Configure decimal and thousand separators for your region.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">5 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='number-formats') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Currency Settings Guide -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-success bg-opacity-10 mb-3">
+            <i class="bi bi-currency-dollar text-success fs-2"></i>
+          </div>
+          <h5 class="card-title">Currency Settings</h5>
+          <p class="card-text text-muted small">
+            Learn how to set your default currency and understand currency display options.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">6 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a
+            href="{{ url_for('help.guide', topic='currency-settings') }}"
+            class="stretched-link"
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-secondary bg-opacity-10 mb-3">
+            <i class="bi bi-download text-secondary fs-2"></i>
+          </div>
+          <h5 class="card-title">Exporting Data</h5>
+          <p class="card-text text-muted small">
+            Export your financial data to CSV, JSON, or Excel formats.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">5 min read</span>
+            <span class="badge bg-light text-dark">Beginner</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='export') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-primary bg-opacity-10 mb-3">
+            <i class="bi bi-funnel text-primary fs-2"></i>
+          </div>
+          <h5 class="card-title">Advanced Filters</h5>
+          <p class="card-text text-muted small">
+            Master the filtering system to find exactly what you're looking for.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">7 min read</span>
+            <span class="badge bg-light text-dark">Intermediate</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='filters') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-success bg-opacity-10 mb-3">
+            <i class="bi bi-graph-up text-success fs-2"></i>
+          </div>
+          <h5 class="card-title">Reports & Analytics</h5>
+          <p class="card-text text-muted small">
+            Generate insights and understand your spending patterns.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">10 min read</span>
+            <span class="badge bg-light text-dark">Advanced</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='reports') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- API -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-dark bg-opacity-10 mb-3">
+            <i class="bi bi-code-slash text-dark fs-2"></i>
+          </div>
+          <h5 class="card-title">API Documentation</h5>
+          <p class="card-text text-muted small">
+            Integrate Expense Tracker with your own applications using REST API.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">20 min read</span>
+            <span class="badge bg-light text-dark">Developer</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='api') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Troubleshooting -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 guide-card">
+        <div class="card-body">
+          <div class="icon-circle bg-danger bg-opacity-10 mb-3">
+            <i class="bi bi-exclamation-triangle text-danger fs-2"></i>
+          </div>
+          <h5 class="card-title">Troubleshooting</h5>
+          <p class="card-text text-muted small">Solutions for common issues and error messages.</p>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">8 min read</span>
+            <span class="badge bg-light text-dark">All levels</span>
+          </div>
+          <a href="{{ url_for('help.guide', topic='troubleshooting') }}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Still Need Help? -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card bg-light border-0">
+        <div class="card-body text-center py-5">
+          <h4 class="mb-3">Still Need Help?</h4>
+          <p class="text-muted mb-4">
+            Can't find what you're looking for? Our support team is here to help.
+          </p>
+          <div class="d-flex gap-3 justify-content-center">
+            <a href="{{ url_for('help.contact') }}" class="btn btn-primary">
+              <i class="bi bi-envelope"></i> Contact Support
+            </a>
+            <a href="{{ url_for('help.faq') }}" class="btn btn-outline-primary">
+              <i class="bi bi-question-circle"></i> View FAQ
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .guide-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .guide-card .icon-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+    color: #fff;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,975 @@
+<!-- app/templates/help/guides/accounts.html -->
+{% extends "base.html" %} {% block title %}Managing Accounts - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Managing Accounts</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction to Accounts</a>
+            <a class="nav-link" href="#account-types">2. Account Types</a>
+            <a class="nav-link" href="#create-account">3. Creating Accounts</a>
+            <a class="nav-link" href="#credit-cards">4. Credit Card Management</a>
+            <a class="nav-link" href="#assets-liabilities">5. Assets & Liabilities</a>
+            <a class="nav-link" href="#edit-account">6. Editing Accounts</a>
+            <a class="nav-link" href="#delete-account">7. Deleting/Deactivating</a>
+            <a class="nav-link" href="#balance">8. Understanding Balances</a>
+            <a class="nav-link" href="#reconciliation">9. Account Reconciliation</a>
+            <a class="nav-link" href="#best-practices">10. Best Practices</a>
+          </nav>
+
+          <hr class="my-3" />
+
+          <div class="bg-light p-3 rounded">
+            <i class="bi bi-clock-history"></i>
+            <small class="d-block mt-2"> <strong>Estimated time:</strong> 12 minutes </small>
+            <small class="d-block"> <strong>Difficulty:</strong> Intermediate </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Managing Accounts</h1>
+
+          <div class="alert alert-primary">
+            <i class="bi bi-info-circle"></i>
+            <strong>Core Concept:</strong> Accounts represent where your money lives. Every
+            transaction must be linked to at least one account.
+          </div>
+
+          <!-- Introduction -->
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction to Accounts</h2>
+            <p>
+              The Expense Tracker system supports multiple account types to accurately represent
+              your complete financial picture. From traditional bank accounts to credit cards,
+              assets, and liabilities - you can track everything in one place.
+            </p>
+
+            <div class="row g-3 mt-3">
+              <div class="col-md-3 col-6">
+                <div class="text-center p-2">
+                  <i class="bi bi-bank fs-1 text-primary"></i>
+                  <h6 class="mt-2">Bank Accounts</h6>
+                  <small class="text-muted">Checking, Savings</small>
+                </div>
+              </div>
+              <div class="col-md-3 col-6">
+                <div class="text-center p-2">
+                  <i class="bi bi-credit-card fs-1 text-warning"></i>
+                  <h6 class="mt-2">Credit Cards</h6>
+                  <small class="text-muted">With credit limits</small>
+                </div>
+              </div>
+              <div class="col-md-3 col-6">
+                <div class="text-center p-2">
+                  <i class="bi bi-cash fs-1 text-success"></i>
+                  <h6 class="mt-2">Cash</h6>
+                  <small class="text-muted">Physical currency</small>
+                </div>
+              </div>
+              <div class="col-md-3 col-6">
+                <div class="text-center p-2">
+                  <i class="bi bi-building fs-1 text-info"></i>
+                  <h6 class="mt-2">Assets</h6>
+                  <small class="text-muted">Investments, Property</small>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Account Types -->
+          <section id="account-types" class="mb-5">
+            <h2 class="h4 mb-3">2. Account Types Explained</h2>
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>Account Type</th>
+                    <th>Description</th>
+                    <th>Balance Sign</th>
+                    <th>Special Fields</th>
+                    <th>Use Cases</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge bg-primary">Bank Account</span></td>
+                    <td>Traditional bank accounts</td>
+                    <td><span class="text-success">Positive</span></td>
+                    <td>Account number, Bank name</td>
+                    <td>Checking, Savings, Money Market</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-warning">Credit Card</span></td>
+                    <td>Revolving credit lines</td>
+                    <td><span class="text-danger">Negative</span> (debt)</td>
+                    <td>Credit limit, Due date, Statement balance</td>
+                    <td>Visa, Mastercard, Amex, Store cards</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-secondary">Debit Card</span></td>
+                    <td>Direct access to funds</td>
+                    <td><span class="text-success">Positive</span></td>
+                    <td>Linked bank account</td>
+                    <td>Checking account access</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-success">Cash</span></td>
+                    <td>Physical currency</td>
+                    <td><span class="text-success">Positive</span></td>
+                    <td>Location</td>
+                    <td>Wallet, Home safe, Petty cash</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-info">Asset</span></td>
+                    <td>Items of value</td>
+                    <td><span class="text-success">Positive</span></td>
+                    <td>Interest rate, Purchase date</td>
+                    <td>Investments, Real estate, Vehicles</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge bg-danger">Liability</span></td>
+                    <td>Money owed</td>
+                    <td><span class="text-danger">Negative</span></td>
+                    <td>Interest rate, Lender, Term</td>
+                    <td>Loans, Mortgages, Student debt</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Creating Accounts -->
+          <section id="create-account" class="mb-5">
+            <h2 class="h4 mb-3">3. Creating Accounts</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Navigate to Accounts Page</h6>
+                <p>Click "Accounts" in the main navigation menu.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Click "Add Account" Button</h6>
+                <p>The button is located at the top right corner of the Accounts page.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Fill Account Details</h6>
+                <div class="row mt-2">
+                  <div class="col-md-6">
+                    <strong>Required Information:</strong>
+                    <ul class="mt-2">
+                      <li>Account Name</li>
+                      <li>Account Type</li>
+                      <li>Initial Balance</li>
+                      <li>Currency</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <strong>Optional (Type-Specific):</strong>
+                    <ul class="mt-2">
+                      <li>Credit Limit (Credit Cards)</li>
+                      <li>Due Date (Credit Cards)</li>
+                      <li>Statement Balance (Credit Cards)</li>
+                      <li>Interest Rate (Assets/Liabilities)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Set Initial Balance</h6>
+                <p>
+                  Enter your current account balance. For credit cards and liabilities, use positive
+                  numbers for the debt amount.
+                </p>
+                <div class="bg-warning bg-opacity-10 p-3 rounded mt-2">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <strong>Important:</strong> Credit card balances should be entered as POSITIVE
+                  numbers (e.g., $500 debt = 500, not -500).
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h6>Save Account</h6>
+                <p>
+                  Click "Save Account" to create your account. It will appear immediately in your
+                  accounts list.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Credit Card Management -->
+          <section id="credit-cards" class="mb-5">
+            <h2 class="h4 mb-3">4. Credit Card Management</h2>
+
+            <div class="card mb-4">
+              <div class="card-header bg-warning bg-opacity-10">
+                <h6 class="mb-0"><i class="bi bi-credit-card"></i> Credit Card Features</h6>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6>Credit Card Fields:</h6>
+                    <ul>
+                      <li><strong>Credit Limit:</strong> Maximum spending limit</li>
+                      <li><strong>Due Date:</strong> Monthly payment due date</li>
+                      <li><strong>Statement Balance:</strong> Current statement amount</li>
+                      <li><strong>Available Credit:</strong> Automatically calculated</li>
+                      <li><strong>Usage Percentage:</strong> Balance ÷ Limit × 100</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h6>Credit Card Transactions:</h6>
+                    <ul>
+                      <li><strong>Purchases:</strong> Record as EXPENSE transactions</li>
+                      <li><strong>Payments:</strong> Use CREDIT_CARD_PAYMENT type</li>
+                      <li><strong>Refunds:</strong> Record as negative expenses</li>
+                      <li><strong>Annual Fees:</strong> Record as expenses</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h5 class="mt-4">Making Credit Card Payments</h5>
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Select "Credit Card Payment" Transaction Type</h6>
+                <p>This special transaction type correctly handles both accounts.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Choose Source Account</h6>
+                <p>Select the bank account or cash account making the payment.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Choose Destination Account</h6>
+                <p>Select the credit card account you're paying.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Enter Amount</h6>
+                <p>Enter the payment amount. The system will:</p>
+                <ul>
+                  <li>Decrease your bank account balance</li>
+                  <li>Decrease your credit card debt (make it less negative)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-success bg-opacity-10 p-3 rounded mt-3">
+              <i class="bi bi-graph-up"></i>
+              <strong>Credit Card Dashboard:</strong> View all your credit cards, balances, due
+              dates, and usage percentages in the Credit Card Summary page.
+            </div>
+          </section>
+
+          <!-- Assets & Liabilities -->
+          <section id="assets-liabilities" class="mb-5">
+            <h2 class="h4 mb-3">5. Assets & Liabilities</h2>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <h5 class="text-info">🏢 Assets</h5>
+                  <p>Assets are items of value that you own.</p>
+                  <h6 class="mt-3">Examples:</h6>
+                  <ul>
+                    <li>Investment accounts (stocks, bonds)</li>
+                    <li>Real estate properties</li>
+                    <li>Vehicles</li>
+                    <li>Cryptocurrency</li>
+                    <li>Precious metals</li>
+                    <li>Art and collectibles</li>
+                  </ul>
+                  <h6 class="mt-3">Tracking Tips:</h6>
+                  <ul>
+                    <li>Update asset values periodically</li>
+                    <li>Record purchases as ASSET_PURCHASE</li>
+                    <li>Track appreciation/depreciation manually</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <h5 class="text-danger">📉 Liabilities</h5>
+                  <p>Liabilities are debts and money you owe.</p>
+                  <h6 class="mt-3">Examples:</h6>
+                  <ul>
+                    <li>Mortgages</li>
+                    <li>Student loans</li>
+                    <li>Personal loans</li>
+                    <li>Car loans</li>
+                    <li>Medical debt</li>
+                    <li>Business loans</li>
+                  </ul>
+                  <h6 class="mt-3">Tracking Tips:</h6>
+                  <ul>
+                    <li>Record payments as LIABILITY_PAYMENT</li>
+                    <li>Track interest rates separately</li>
+                    <li>Monitor remaining term/balance</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h6>Interest Rate Tracking:</h6>
+              <p>
+                For both assets and liabilities, you can store the interest rate. This helps with:
+              </p>
+              <ul>
+                <li>Understanding loan costs</li>
+                <li>Comparing investment returns</li>
+                <li>Financial planning</li>
+              </ul>
+              <div class="alert alert-info">
+                <i class="bi bi-calculator"></i>
+                <strong>Note:</strong> Interest calculations are not automatic. Use the stored rate
+                for your own calculations.
+              </div>
+            </div>
+          </section>
+
+          <!-- Editing Accounts -->
+          <section id="edit-account" class="mb-5">
+            <h2 class="h4 mb-3">6. Editing Accounts</h2>
+
+            <div class="alert alert-warning">
+              <i class="bi bi-exclamation-triangle"></i>
+              <strong>Note:</strong> Editing account details does NOT affect transaction history. To
+              adjust balances, add a transaction.
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Find the Account</h6>
+                <p>Locate the account in the Accounts table.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Click Edit Button</h6>
+                <p>Click the <i class="bi bi-pencil"></i> icon in the Actions column.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Modify Account Details</h6>
+                <p>You can update:</p>
+                <ul>
+                  <li>Account name</li>
+                  <li>Credit limit (credit cards)</li>
+                  <li>Due date (credit cards)</li>
+                  <li>Statement balance (credit cards)</li>
+                  <li>Interest rate (assets/liabilities)</li>
+                </ul>
+                <p class="text-muted mt-2">
+                  <small
+                    ><i class="bi bi-lock"></i> Account type and currency cannot be changed after
+                    creation.</small
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>Click "Update Account" to save your modifications.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Deleting/Deactivating Accounts -->
+          <section id="delete-account" class="mb-5">
+            <h2 class="h4 mb-3">7. Deleting & Deactivating Accounts</h2>
+
+            <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              <strong>Important:</strong> Account deletion behavior depends on whether the account
+              has transaction history.
+            </div>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="text-warning">📋 Accounts WITH Transactions</h6>
+                  <p><strong>Soft Delete (Deactivation):</strong></p>
+                  <ul class="small">
+                    <li>Account is marked as inactive</li>
+                    <li>Hidden from most views</li>
+                    <li>Transactions remain intact</li>
+                    <li>Can be reactivated later</li>
+                  </ul>
+                  <div class="bg-light p-2 rounded mt-2">
+                    <code>Account deactivated successfully</code>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6 class="text-danger">🆕 Accounts WITHOUT Transactions</h6>
+                  <p><strong>Hard Delete (Permanent):</strong></p>
+                  <ul class="small">
+                    <li>Account is permanently deleted</li>
+                    <li>Cannot be recovered</li>
+                    <li>No transaction history exists</li>
+                    <li>Use with caution</li>
+                  </ul>
+                  <div class="bg-light p-2 rounded mt-2">
+                    <code>Account deleted permanently</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item mt-4">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Click Delete Button</h6>
+                <p>Click the <i class="bi bi-trash"></i> icon in the Actions column.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Review Warning Message</h6>
+                <p>
+                  The system will tell you whether the account will be deactivated or permanently
+                  deleted.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Confirm Deletion</h6>
+                <p>Click "Confirm" to proceed or "Cancel" to abort.</p>
+              </div>
+            </div>
+
+            <div class="bg-info bg-opacity-10 p-3 rounded mt-3">
+              <i class="bi bi-arrow-counterclockwise"></i>
+              <strong>Reactivating Accounts:</strong> Deactivated accounts can be reactivated by
+              editing the account and setting "Active" to true. This feature is coming in v1.1.0.
+            </div>
+          </section>
+
+          <!-- Understanding Balances -->
+          <section id="balance" class="mb-5">
+            <h2 class="h4 mb-3">8. Understanding Account Balances</h2>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <h6>How Balances Work:</h6>
+                <p>
+                  Account balances are automatically calculated based on all transactions. You never
+                  manually set a balance after initial creation.
+                </p>
+
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Transaction Type</th>
+                      <th>Effect on Balance</th>
+                      <th>Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Income</td>
+                      <td><span class="text-success">+ Amount</span></td>
+                      <td>Salary deposit increases balance</td>
+                    </tr>
+                    <tr>
+                      <td>Expense</td>
+                      <td><span class="text-danger">- Amount</span></td>
+                      <td>Purchase decreases balance</td>
+                    </tr>
+                    <tr>
+                      <td>Transfer (From)</td>
+                      <td><span class="text-danger">- Amount</span></td>
+                      <td>Money leaves account</td>
+                    </tr>
+                    <tr>
+                      <td>Transfer (To)</td>
+                      <td><span class="text-success">+ Amount</span></td>
+                      <td>Money arrives in account</td>
+                    </tr>
+                    <tr>
+                      <td>Credit Card Payment</td>
+                      <td><span class="text-danger">- Amount</span> (bank)</td>
+                      <td>Payment reduces bank balance</td>
+                    </tr>
+                    <tr>
+                      <td>Credit Card Payment</td>
+                      <td><span class="text-success">+ Amount</span> (credit card)</td>
+                      <td>Payment reduces debt (makes balance less negative)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="mt-3">
+                  <strong>Balance Display:</strong>
+                  <ul>
+                    <li>
+                      <span class="text-success">Green</span> = Positive balance (you have money)
+                    </li>
+                    <li><span class="text-danger">Red</span> = Negative balance (you owe money)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Account Reconciliation -->
+          <section id="reconciliation" class="mb-5">
+            <h2 class="h4 mb-3">9. Account Reconciliation</h2>
+
+            <p>Reconciliation ensures your recorded balances match your actual bank statements.</p>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Get Current Balance</h6>
+                <p>
+                  Check your actual account balance from your bank, credit card statement, or
+                  physical count.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Compare with System Balance</h6>
+                <p>View the account balance in Expense Tracker. Do they match?</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>If They Match</h6>
+                <p>
+                  Great! Your records are accurate. Consider marking transactions as reconciled.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>If They Don't Match</h6>
+                <p>Common causes and solutions:</p>
+                <table class="table table-sm mt-2">
+                  <tr>
+                    <td>🔍 Missing transaction</td>
+                    <td>Add the missing transaction</td>
+                  </tr>
+                  <tr>
+                    <td>✏️ Incorrect amount</td>
+                    <td>Edit the transaction amount</td>
+                  </tr>
+                  <tr>
+                    <td>📅 Wrong date</td>
+                    <td>Check if transaction is in wrong period</td>
+                  </tr>
+                  <tr>
+                    <td>🔄 Duplicate entry</td>
+                    <td>Delete the duplicate transaction</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="bg-primary bg-opacity-10 p-3 rounded mt-3">
+              <i class="bi bi-check-circle"></i>
+              <strong>Reconciliation Frequency:</strong>
+              <ul class="mb-0 mt-2">
+                <li>Bank accounts: Monthly</li>
+                <li>Credit cards: Monthly (when statement arrives)</li>
+                <li>Cash: Weekly or bi-weekly</li>
+                <li>Assets: Quarterly or annually</li>
+                <li>Liabilities: Monthly with payment</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Best Practices -->
+          <section id="best-practices" class="mb-5">
+            <h2 class="h4 mb-3">10. Account Management Best Practices</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">1</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Use Descriptive Names</h6>
+                    <p class="small text-muted">
+                      "Chase Sapphire Preferred" instead of just "Credit Card"
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">2</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Set Credit Card Due Dates</h6>
+                    <p class="small text-muted">Get payment reminders before the due date</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">3</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Update Asset Values Annually</h6>
+                    <p class="small text-muted">Keep your net worth calculation accurate</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">4</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Don't Delete - Deactivate</h6>
+                    <p class="small text-muted">
+                      Preserve transaction history by deactivating instead of deleting
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">5</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Reconcile Monthly</h6>
+                    <p class="small text-muted">Catch errors early with regular reconciliation</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">6</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Track All Accounts</h6>
+                    <p class="small text-muted">
+                      Include all financial accounts for complete picture
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Common Issues -->
+          <section id="common-issues" class="mb-5">
+            <h2 class="h4 mb-3">Common Issues & Solutions</h2>
+
+            <div class="accordion" id="accountFaq">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    My credit card balance is positive instead of negative
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accountFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Credit card balances should be negative. Edit the
+                    account and set a negative balance, or add a transaction to correct it.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    Can't delete account - "Account has transactions"
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accountFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Accounts with transactions cannot be permanently
+                    deleted. Use "Deactivate" instead, which hides the account while preserving
+                    transaction history.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Account balance doesn't match bank statement
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accountFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> This usually indicates missing or duplicate
+                    transactions. Reconcile your account by comparing each transaction with your
+                    bank statement.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq4"
+                  >
+                    How do I change account currency?
+                  </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accountFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Currency cannot be changed after account creation due
+                    to accounting consistency. Create a new account with the correct currency and
+                    transfer the balance.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Keyboard Shortcuts -->
+          <section id="shortcuts" class="mb-5">
+            <h2 class="h4 mb-3">Keyboard Shortcuts</h2>
+            <table class="table table-sm">
+              <tr>
+                <td><kbd>Ctrl</kbd> + <kbd>A</kbd></td>
+                <td>Go to Accounts page</td>
+              </tr>
+              <tr>
+                <td><kbd>Shift</kbd> + <kbd>A</kbd></td>
+                <td>New account (from Accounts page)</td>
+              </tr>
+              <tr>
+                <td><kbd>E</kbd></td>
+                <td>Edit selected account</td>
+              </tr>
+            </table>
+          </section>
+
+          <!-- Next Steps -->
+          <section id="next-steps">
+            <div class="bg-light p-4 rounded">
+              <h5 class="mb-3">Ready to learn more?</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <a
+                    href="{{ url_for('help.guide', topic='transactions') }}"
+                    class="text-decoration-none"
+                  >
+                    <div class="d-flex align-items-center p-2 rounded hover-bg">
+                      <i class="bi bi-arrow-left-right fs-4 me-3 text-primary"></i>
+                      <div>
+                        <strong>Managing Transactions</strong>
+                        <br />
+                        <small class="text-muted">Learn to add and edit transactions</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <a
+                    href="{{ url_for('help.guide', topic='budgets') }}"
+                    class="text-decoration-none"
+                  >
+                    <div class="d-flex align-items-center p-2 rounded hover-bg">
+                      <i class="bi bi-pie-chart fs-4 me-3 text-success"></i>
+                      <div>
+                        <strong>Budget Planning</strong>
+                        <br />
+                        <small class="text-muted">Set spending limits and track progress</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .step-content {
+    flex-grow: 1;
+  }
+
+  .hover-bg:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+  }
+
+  .table-bordered {
+    border-color: #dee2e6;
+  }
+
+  [data-theme='dark'] .table-bordered {
+    border-color: #495057;
+  }
+
+  [data-theme='dark'] .table-light {
+    background-color: #2b3035;
+    color: #fff;
+  }
+</style>
+
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'accounts',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop() + 100;
+
+    $('section').each(function () {
+      var currentSection = $(this);
+      var sectionTop = currentSection.offset().top;
+
+      if (scrollPosition >= sectionTop) {
+        var id = currentSection.attr('id');
+        $('.nav-link').removeClass('active');
+        $('.nav-link[href="#' + id + '"]').addClass('active');
+      }
+    });
+  });
+</script>
+{% endblock %}

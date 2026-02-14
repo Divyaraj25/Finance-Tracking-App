@@ -1,0 +1,28 @@
+<!-- app/templates/errors/500.html -->
+{% extends "base.html" %} {% block title %}Server Error - {{ super() }}{%
+endblock %} {% block content %}
+<div
+  class="error-page min-vh-100 d-flex align-items-center justify-content-center"
+>
+  <div class="text-center">
+    <div class="display-1 text-danger mb-4">500</div>
+    <h1 class="h2 mb-3">Internal Server Error</h1>
+    <p class="text-muted mb-4">
+      Something went wrong on our end. Please try again later.
+    </p>
+    <div class="d-flex gap-3 justify-content-center">
+      <a href="{{ url_for('main.index') }}" class="btn btn-primary">
+        <i class="bi bi-house-door"></i> Go Home
+      </a>
+      <button onclick="location.reload()" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-clockwise"></i> Try Again
+      </button>
+    </div>
+    <div class="mt-4">
+      <small class="text-muted">
+        Error ID: {{ request.id if request.id else 'N/A' }}
+      </small>
+    </div>
+  </div>
+</div>
+{% endblock %}

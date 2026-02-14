@@ -1,0 +1,995 @@
+<!-- app/templates/help/guides/transactions.html -->
+{% extends "base.html" %} {% block title %}Managing Transactions - {{ super() }}{% endblock %} {%
+block content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Managing Transactions</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction</a>
+            <a class="nav-link" href="#transaction-types">2. Transaction Types</a>
+            <a class="nav-link" href="#add-transaction">3. Adding Transactions</a>
+            <a class="nav-link" href="#edit-transaction">4. Editing Transactions</a>
+            <a class="nav-link" href="#delete-transaction">5. Deleting Transactions</a>
+            <a class="nav-link" href="#filters">6. Filtering Transactions</a>
+            <a class="nav-link" href="#bulk-operations">7. Bulk Operations</a>
+            <a class="nav-link" href="#tags">8. Using Tags</a>
+            <a class="nav-link" href="#reconciliation">9. Reconciliation</a>
+            <a class="nav-link" href="#best-practices">10. Best Practices</a>
+          </nav>
+
+          <hr class="my-3" />
+
+          <div class="bg-light p-3 rounded">
+            <i class="bi bi-clock-history"></i>
+            <small class="d-block mt-2"> <strong>Estimated time:</strong> 8 minutes </small>
+            <small class="d-block"> <strong>Difficulty:</strong> Beginner </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Managing Transactions</h1>
+
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>Core Concept:</strong> Transactions are the building blocks of your financial
+            tracking. Every income, expense, and transfer is recorded as a transaction.
+          </div>
+
+          <!-- Introduction -->
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction to Transactions</h2>
+            <p>
+              Transactions represent any movement of money in your financial life. The Expense
+              Tracker system supports three main types of transactions, each with its own behavior
+              and impact on your accounts.
+            </p>
+            <div class="row g-3 mt-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <i class="bi bi-arrow-down-circle text-success fs-1"></i>
+                  <h6 class="mt-2">Income</h6>
+                  <small class="text-muted">Money received</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <i class="bi bi-arrow-up-circle text-danger fs-1"></i>
+                  <h6 class="mt-2">Expense</h6>
+                  <small class="text-muted">Money spent</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded">
+                  <i class="bi bi-arrow-left-right text-primary fs-1"></i>
+                  <h6 class="mt-2">Transfer</h6>
+                  <small class="text-muted">Move between accounts</small>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Transaction Types -->
+          <section id="transaction-types" class="mb-5">
+            <h2 class="h4 mb-3">2. Understanding Transaction Types</h2>
+
+            <div class="transaction-type mb-4">
+              <h5 class="text-success">💰 Income</h5>
+              <p>Income transactions increase your account balance.</p>
+              <table class="table table-sm">
+                <tr>
+                  <th style="width: 120px">Examples:</th>
+                  <td>Salary, Freelance payment, Gift, Interest, Dividend</td>
+                </tr>
+                <tr>
+                  <th>Account Impact:</th>
+                  <td><span class="text-success">+ Amount</span> to destination account</td>
+                </tr>
+                <tr>
+                  <th>Required Fields:</th>
+                  <td>Amount, Description, Date, Category, To Account</td>
+                </tr>
+              </table>
+              <div class="bg-light p-3 rounded">
+                <strong>Example:</strong> Monthly salary of $3,000 deposited to Checking Account
+                <pre class="mt-2 mb-0"><code>Type: Income
+Amount: $3,000.00
+Description: "Monthly salary - January 2024"
+Category: Salary
+To Account: Checking Account</code></pre>
+              </div>
+            </div>
+
+            <div class="transaction-type mb-4">
+              <h5 class="text-danger">💸 Expense</h5>
+              <p>Expense transactions decrease your account balance.</p>
+              <table class="table table-sm">
+                <tr>
+                  <th style="width: 120px">Examples:</th>
+                  <td>Groceries, Rent, Utilities, Dining out, Shopping</td>
+                </tr>
+                <tr>
+                  <th>Account Impact:</th>
+                  <td><span class="text-danger">- Amount</span> from source account</td>
+                </tr>
+                <tr>
+                  <th>Required Fields:</th>
+                  <td>Amount, Description, Date, Category, From Account</td>
+                </tr>
+              </table>
+              <div class="bg-light p-3 rounded">
+                <strong>Example:</strong> Grocery shopping of $75.50 from Checking Account
+                <pre class="mt-2 mb-0"><code>Type: Expense
+Amount: $75.50
+Description: "Walmart - Groceries"
+Category: Food & Dining
+From Account: Checking Account</code></pre>
+              </div>
+            </div>
+
+            <div class="transaction-type mb-4">
+              <h5 class="text-primary">🔄 Transfer</h5>
+              <p>Transfer transactions move money between your accounts.</p>
+              <table class="table table-sm">
+                <tr>
+                  <th style="width: 120px">Examples:</th>
+                  <td>Savings transfer, Credit card payment, Account funding</td>
+                </tr>
+                <tr>
+                  <th>Account Impact:</th>
+                  <td>
+                    <span class="text-danger">- Amount</span> from source,
+                    <span class="text-success">+ Amount</span> to destination
+                  </td>
+                </tr>
+                <tr>
+                  <th>Required Fields:</th>
+                  <td>Amount, Description, Date, From Account, To Account</td>
+                </tr>
+              </table>
+              <div class="bg-light p-3 rounded">
+                <strong>Example:</strong> Transfer $500 from Checking to Savings
+                <pre class="mt-2 mb-0"><code>Type: Transfer
+Amount: $500.00
+Description: "Monthly savings transfer"
+From Account: Checking Account
+To Account: Savings Account</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Adding Transactions -->
+          <section id="add-transaction" class="mb-5">
+            <h2 class="h4 mb-3">3. Adding Transactions</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Navigate to Transactions Page</h6>
+                <p>
+                  Click on "Transactions" in the main navigation menu, or click "Add Transaction"
+                  from the dashboard.
+                </p>
+                <div class="alert alert-light border">
+                  <i class="bi bi-cursor"></i> <strong>Quick Action:</strong> Press
+                  <kbd>Ctrl</kbd> + <kbd>N</kbd> to open the add transaction modal from anywhere.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Click "Add Transaction" Button</h6>
+                <p>The button is located at the top right corner of the Transactions page.</p>
+                <img
+                  src="{{ url_for('static', filename='img/guides/add-transaction-button.png') }}"
+                  alt="Add Transaction Button"
+                  class="img-fluid rounded border mt-2"
+                  onerror="this.style.display='none'"
+                />
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Fill the Transaction Form</h6>
+                <div class="row mt-2">
+                  <div class="col-md-6">
+                    <div class="border rounded p-3">
+                      <strong>Required Fields:</strong>
+                      <ul class="mb-0 mt-2">
+                        <li>Transaction Type</li>
+                        <li>Amount</li>
+                        <li>Description</li>
+                        <li>Date</li>
+                        <li>Category</li>
+                        <li>Account(s)</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="border rounded p-3">
+                      <strong>Optional Fields:</strong>
+                      <ul class="mb-0 mt-2">
+                        <li>Tags</li>
+                        <li>Notes</li>
+                        <li>Reconciliation Status</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Select the Appropriate Category</h6>
+                <p>
+                  Choose a category that best describes this transaction. Categories help with
+                  budgeting and reporting.
+                </p>
+                <div class="bg-warning bg-opacity-10 p-3 rounded">
+                  <i class="bi bi-lightbulb text-warning"></i>
+                  <strong>Pro Tip:</strong> Create custom categories in the Categories page to
+                  better organize your transactions.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h6>Click "Save Transaction"</h6>
+                <p>
+                  Your transaction will be saved and account balances will be updated immediately.
+                </p>
+                <div class="alert alert-success mt-2">
+                  <i class="bi bi-check-circle"></i>
+                  A success message will appear confirming your transaction has been added.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Editing Transactions -->
+          <section id="edit-transaction" class="mb-5">
+            <h2 class="h4 mb-3">4. Editing Transactions</h2>
+
+            <div class="alert alert-warning">
+              <i class="bi bi-exclamation-triangle"></i>
+              <strong>Note:</strong> Editing a transaction will automatically recalculate account
+              balances and update budget spending.
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Find the Transaction</h6>
+                <p>Use the search and filters to locate the transaction you want to edit.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Click the Edit Button</h6>
+                <p>
+                  Click the <i class="bi bi-pencil"></i> icon in the Actions column of the
+                  transaction table.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Modify the Fields</h6>
+                <p>Update any field as needed. All fields except Transaction ID can be modified.</p>
+                <table class="table table-sm mt-2">
+                  <tr>
+                    <th>Field</th>
+                    <th>Can Edit?</th>
+                    <th>Notes</th>
+                  </tr>
+                  <tr>
+                    <td>Date</td>
+                    <td><span class="text-success">✓ Yes</span></td>
+                    <td>Changes budget period calculations</td>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td><span class="text-success">✓ Yes</span></td>
+                    <td>Recalculates account balances</td>
+                  </tr>
+                  <tr>
+                    <td>Category</td>
+                    <td><span class="text-success">✓ Yes</span></td>
+                    <td>Moves transaction to different budget</td>
+                  </tr>
+                  <tr>
+                    <td>Account</td>
+                    <td><span class="text-success">✓ Yes</span></td>
+                    <td>Transfers money between accounts</td>
+                  </tr>
+                  <tr>
+                    <td>Transaction ID</td>
+                    <td><span class="text-danger">✗ No</span></td>
+                    <td>Auto-generated, cannot be changed</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Changes</h6>
+                <p>
+                  Click "Update Transaction" to save your changes. The system will automatically
+                  adjust all affected balances and budgets.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Deleting Transactions -->
+          <section id="delete-transaction" class="mb-5">
+            <h2 class="h4 mb-3">5. Deleting Transactions</h2>
+
+            <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              <strong>Warning:</strong> Deleting a transaction is permanent and cannot be undone.
+              Account balances and budget spending will be automatically adjusted.
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Locate the Transaction</h6>
+                <p>Find the transaction you want to delete.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Click Delete Button</h6>
+                <p>Click the <i class="bi bi-trash"></i> icon in the Actions column.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Confirm Deletion</h6>
+                <p>
+                  A confirmation dialog will appear. Click "Delete" to confirm or "Cancel" to abort.
+                </p>
+                <div class="bg-light p-3 rounded mt-2">
+                  <strong>Confirmation Message:</strong>
+                  <p class="mb-0 text-muted">
+                    "Are you sure you want to delete this transaction? This action cannot be
+                    undone."
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Filtering Transactions -->
+          <section id="filters" class="mb-5">
+            <h2 class="h4 mb-3">6. Filtering Transactions</h2>
+
+            <p>
+              The Expense Tracker system includes powerful filtering capabilities to help you find
+              exactly what you're looking for.
+            </p>
+
+            <div class="card mb-4">
+              <div class="card-header bg-light">
+                <h6 class="mb-0">Available Filters</h6>
+              </div>
+              <div class="card-body">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Filter</th>
+                      <th>Description</th>
+                      <th>Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="badge bg-primary">Date Range</span></td>
+                      <td>Filter transactions between specific dates</td>
+                      <td><code>Jan 1, 2024 - Jan 31, 2024</code></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-success">Transaction Type</span></td>
+                      <td>Show only Income, Expense, or Transfer</td>
+                      <td><code>Income only</code></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-info">Category</span></td>
+                      <td>Filter by specific category</td>
+                      <td><code>Food & Dining</code></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-warning">Account</span></td>
+                      <td>Show transactions from specific account</td>
+                      <td><code>Checking Account</code></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-secondary">Amount Range</span></td>
+                      <td>Filter by minimum and/or maximum amount</td>
+                      <td><code>$10 - $100</code></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-dark">Search</span></td>
+                      <td>Text search in description</td>
+                      <td><code>grocery</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Open Filters Panel</h6>
+                <p>Click the "Filters" button at the top of the Transactions page.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Select Your Filters</h6>
+                <p>Choose the criteria you want to filter by. You can combine multiple filters.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Apply Filters</h6>
+                <p>
+                  Click "Apply Filters" to see the filtered results. The table will update
+                  automatically.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Filter Presets</h6>
+                <p>
+                  For frequently used filter combinations, you can save them as presets for quick
+                  access.
+                </p>
+                <div class="bg-success bg-opacity-10 p-3 rounded mt-2">
+                  <i class="bi bi-star-fill text-success"></i>
+                  <strong>Pro Feature:</strong> Saved filters appear in the dropdown for one-click
+                  access.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bulk Operations -->
+          <section id="bulk-operations" class="mb-5">
+            <h2 class="h4 mb-3">7. Bulk Operations</h2>
+
+            <p>Save time by performing actions on multiple transactions at once.</p>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <h6><i class="bi bi-check2-square"></i> Bulk Delete</h6>
+                  <ol class="small">
+                    <li>Select transactions using checkboxes</li>
+                    <li>Click "Bulk Delete" button</li>
+                    <li>Confirm deletion</li>
+                  </ol>
+                  <div class="text-muted small mt-2">
+                    <i class="bi bi-info-circle"></i>
+                    All selected transactions will be deleted permanently.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <h6><i class="bi bi-pencil-square"></i> Bulk Edit</h6>
+                  <ol class="small">
+                    <li>Select transactions using checkboxes</li>
+                    <li>Click "Bulk Edit" button</li>
+                    <li>Choose fields to update</li>
+                    <li>Apply changes to all selected</li>
+                  </ol>
+                  <div class="text-muted small mt-2">
+                    <i class="bi bi-info-circle"></i>
+                    Useful for re-categorizing multiple transactions.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <h6><i class="bi bi-tags"></i> Bulk Tag</h6>
+                  <ol class="small">
+                    <li>Select transactions</li>
+                    <li>Click "Add Tags"</li>
+                    <li>Enter comma-separated tags</li>
+                    <li>Apply to all selected</li>
+                  </ol>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <h6><i class="bi bi-download"></i> Bulk Export</h6>
+                  <ol class="small">
+                    <li>Select transactions</li>
+                    <li>Click "Export Selected"</li>
+                    <li>Choose export format</li>
+                    <li>Download file</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Using Tags -->
+          <section id="tags" class="mb-5">
+            <h2 class="h4 mb-3">8. Using Tags</h2>
+
+            <p>Tags provide an additional layer of organization beyond categories.</p>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <h6 class="card-title">Tag Examples:</h6>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                  <span class="badge bg-primary">vacation</span>
+                  <span class="badge bg-success">tax-deductible</span>
+                  <span class="badge bg-danger">urgent</span>
+                  <span class="badge bg-warning">business</span>
+                  <span class="badge bg-info">personal</span>
+                  <span class="badge bg-secondary">gift</span>
+                </div>
+
+                <h6 class="mt-4">How to Add Tags:</h6>
+                <ol>
+                  <li>In the transaction form, find the "Tags" field</li>
+                  <li>Enter comma-separated tags (e.g., "work, travel, hotel")</li>
+                  <li>Save the transaction</li>
+                </ol>
+
+                <h6 class="mt-4">Benefits of Tags:</h6>
+                <ul>
+                  <li>
+                    <strong>Cross-category tracking:</strong> Find all tax-deductible items across
+                    categories
+                  </li>
+                  <li><strong>Project tracking:</strong> Tag transactions by project or client</li>
+                  <li>
+                    <strong>Event tracking:</strong> Tag all expenses for a specific vacation or
+                    event
+                  </li>
+                  <li>
+                    <strong>Advanced filtering:</strong> Filter transactions by any combination of
+                    tags
+                  </li>
+                </ul>
+
+                <div class="bg-primary bg-opacity-10 p-3 rounded mt-3">
+                  <i class="bi bi-search"></i>
+                  <strong>Tag Search:</strong> Use the search bar with "tag:vacation" to find all
+                  transactions tagged with "vacation".
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Reconciliation -->
+          <section id="reconciliation" class="mb-5">
+            <h2 class="h4 mb-3">9. Transaction Reconciliation</h2>
+
+            <p>
+              Reconciliation is the process of matching your recorded transactions with your bank
+              statements to ensure accuracy.
+            </p>
+
+            <div class="alert alert-primary">
+              <i class="bi bi-check-circle"></i>
+              <strong>Reconciled transactions</strong> are marked with a green badge and are
+              considered verified.
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Download Bank Statement</h6>
+                <p>Get your statement from your bank (PDF, CSV, or OFX format).</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Compare Transactions</h6>
+                <p>Review each transaction against your bank statement.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Mark as Reconciled</h6>
+                <p>
+                  Click the reconcile button <i class="bi bi-check-circle"></i> on verified
+                  transactions.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Investigate Discrepancies</h6>
+                <p>If amounts don't match, check for missing or incorrect transactions.</p>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h6>Reconciliation Tips:</h6>
+              <ul>
+                <li>Reconcile accounts monthly</li>
+                <li>Start with accounts that have fewer transactions</li>
+                <li>Use filters to show only unreconciled transactions</li>
+                <li>Keep all receipts until reconciliation is complete</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Best Practices -->
+          <section id="best-practices" class="mb-5">
+            <h2 class="h4 mb-3">10. Best Practices</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">1</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Record Transactions Immediately</h6>
+                    <p class="small text-muted">
+                      Enter transactions as soon as they occur to maintain accurate balances.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">2</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Use Descriptive Descriptions</h6>
+                    <p class="small text-muted">
+                      Include merchant names and details for easier searching.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">3</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Regular Reconciliation</h6>
+                    <p class="small text-muted">
+                      Reconcile accounts monthly to catch errors early.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">4</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Consistent Categorization</h6>
+                    <p class="small text-muted">
+                      Use the same categories for similar transactions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">5</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Use Tags Strategically</h6>
+                    <p class="small text-muted">Create a tagging system for additional insights.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex">
+                  <div class="flex-shrink-0">
+                    <span class="badge bg-success rounded-circle p-2">6</span>
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6>Export Regularly</h6>
+                    <p class="small text-muted">Backup your data monthly via export.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Common Issues -->
+          <section id="common-issues" class="mb-5">
+            <h2 class="h4 mb-3">Common Issues & Solutions</h2>
+
+            <div class="accordion" id="transactionFaq">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    Transaction won't save - "Invalid amount"
+                  </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#transactionFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Amount must be a positive number. Check that you're
+                    not using commas or currency symbols.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    Incorrect balance after editing transaction
+                  </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#transactionFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> The system automatically recalculates balances. If
+                    balances appear incorrect, try refreshing the page or checking for duplicate
+                    transactions.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Can't find a transaction I just added
+                  </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#transactionFaq">
+                  <div class="accordion-body">
+                    <strong>Solution:</strong> Check your filters - they might be hiding recent
+                    transactions. Click "Clear" to reset all filters.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Keyboard Shortcuts -->
+          <section id="shortcuts" class="mb-5">
+            <h2 class="h4 mb-3">Keyboard Shortcuts</h2>
+            <table class="table table-sm">
+              <tr>
+                <td><kbd>Ctrl</kbd> + <kbd>N</kbd></td>
+                <td>New transaction</td>
+              </tr>
+              <tr>
+                <td><kbd>/</kbd></td>
+                <td>Focus search box</td>
+              </tr>
+              <tr>
+                <td><kbd>F</kbd></td>
+                <td>Toggle filters panel</td>
+              </tr>
+              <tr>
+                <td><kbd>E</kbd></td>
+                <td>Export current view</td>
+              </tr>
+            </table>
+          </section>
+
+          <!-- Next Steps -->
+          <section id="next-steps">
+            <div class="bg-light p-4 rounded">
+              <h5 class="mb-3">Ready to learn more?</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <a
+                    href="{{ url_for('help.guide', topic='budgets') }}"
+                    class="text-decoration-none"
+                  >
+                    <div class="d-flex align-items-center p-2 rounded hover-bg">
+                      <i class="bi bi-pie-chart fs-4 me-3 text-primary"></i>
+                      <div>
+                        <strong>Budget Planning</strong>
+                        <br />
+                        <small class="text-muted">Learn to set and track budgets</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <a
+                    href="{{ url_for('help.guide', topic='accounts') }}"
+                    class="text-decoration-none"
+                  >
+                    <div class="d-flex align-items-center p-2 rounded hover-bg">
+                      <i class="bi bi-wallet2 fs-4 me-3 text-success"></i>
+                      <div>
+                        <strong>Account Management</strong>
+                        <br />
+                        <small class="text-muted">Manage your financial accounts</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Feedback -->
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Guides
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .transaction-type {
+    padding: 1rem;
+    border-left: 4px solid;
+    border-radius: 0.5rem;
+    background-color: #f8f9fa;
+  }
+
+  .transaction-type h5 {
+    margin-bottom: 0.5rem;
+  }
+
+  [data-theme='dark'] .transaction-type {
+    background-color: #2b3035;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .step-content {
+    flex-grow: 1;
+  }
+
+  .hover-bg:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+
+  kbd {
+    background-color: #212529;
+    color: white;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+  }
+</style>
+
+<script>
+  function feedback(helpful) {
+    fetch('/help/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guide: 'transactions',
+        rating: helpful ? 'yes' : 'no'
+      })
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop() + 100;
+
+    $('section').each(function () {
+      var currentSection = $(this);
+      var sectionTop = currentSection.offset().top;
+
+      if (scrollPosition >= sectionTop) {
+        var id = currentSection.attr('id');
+        $('.nav-link').removeClass('active');
+        $('.nav-link[href="#' + id + '"]').addClass('active');
+      }
+    });
+  });
+</script>
+{% endblock %}

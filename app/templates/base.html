@@ -1,0 +1,345 @@
+<!-- app/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes"
+    />
+    <meta
+      name="description"
+      content="Expense Tracker System - Complete Financial Management Solution"
+    />
+    <meta name="keywords" content="expense, tracker, finance, budget, personal finance" />
+    <meta name="author" content="ExpenseTracker" />
+
+    <title>{% block title %}{{ app_name }} v{{ app_version }}{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}" />
+
+    <!-- CSS Dependencies -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.45.2/dist/apexcharts.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="32" height="32" rx="8" fill="white" />
+            <path
+              d="M8 10C8 8.89543 8.89543 8 10 8H22C23.1046 8 24 8.89543 24 10V22C24 23.1046 23.1046 24 22 24H10C8.89543 24 8 23.1046 8 22V10Z"
+              fill="url(#gradient)"
+            />
+            <path d="M12 12H20V14H12V12Z" fill="white" />
+            <path d="M12 16H18V18H12V16Z" fill="white" />
+            <path d="M12 20H16V22H12V20Z" fill="white" />
+            <defs>
+              <linearGradient
+                id="gradient"
+                x1="8"
+                y1="8"
+                x2="24"
+                y2="24"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#4361EE" />
+                <stop offset="1" stop-color="#3F37C9" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="ms-2">{{ app_name }}</span>
+          <span class="badge bg-warning text-dark ms-2">v{{ app_version }}</span>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarMain"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}"
+                href="{{ url_for('main.index') }}"
+              >
+                <i class="bi bi-speedometer2"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('transactions') %}active{% endif %}"
+                href="{{ url_for('transactions.index') }}"
+              >
+                <i class="bi bi-arrow-left-right"></i> Transactions
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('accounts') %}active{% endif %}"
+                href="{{ url_for('accounts.index') }}"
+              >
+                <i class="bi bi-wallet2"></i> Accounts
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('budgets') %}active{% endif %}"
+                href="{{ url_for('budgets.index') }}"
+              >
+                <i class="bi bi-pie-chart"></i> Budgets
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('categories') %}active{% endif %}"
+                href="{{ url_for('categories.index') }}"
+              >
+                <i class="bi bi-tags"></i> Categories
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('logs') %}active{% endif %}"
+                href="{{ url_for('logs.index') }}"
+              >
+                <i class="bi bi-journal-text"></i> Logs
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('help') %}active{% endif %}"
+                href="{{ url_for('help.index') }}"
+              >
+                <i class="bi bi-question-circle"></i> Help
+              </a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="bi bi-download"></i> Export
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="#" onclick="exportData('csv')">
+                    <i class="bi bi-filetype-csv"></i> CSV
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" onclick="exportData('json')">
+                    <i class="bi bi-filetype-json"></i> JSON
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" onclick="exportData('excel')">
+                    <i class="bi bi-file-earmark-excel"></i> Excel
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="toggleTheme()">
+                <i class="bi bi-sun-fill" id="theme-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint and request.endpoint.startswith('profile') %}active{% endif %}"
+                href="{{ url_for('profile.index') }}"
+              >
+                <i class="bi bi-person-circle"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container-fluid py-4">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for
+        category, message in messages %}
+        <div
+          class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show"
+          role="alert"
+        >
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <!-- Page Content -->
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <span class="text-muted">
+              &copy; {{ company_year }} {{ company_name }}. All rights reserved.
+            </span>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <span class="text-muted">
+              Version {{ app_version }} |
+              <a
+                href="#"
+                onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+                class="text-decoration-none"
+              >
+                <i class="bi bi-arrow-up-circle"></i> Back to Top
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.2/dist/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% block extra_js %}{% endblock %}
+
+    <script>
+      // Initialize theme
+      function initTheme() {
+        // Check localStorage first, then default to light
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        updateThemeIcon(theme);
+
+        // Save to cookie for server-side
+        document.cookie = `theme=${theme}; path=/; max-age=31536000`;
+      }
+
+      // Toggle theme
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        updateThemeIcon(newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Save to cookie for server-side
+        document.cookie = `theme=${newTheme}; path=/; max-age=31536000`;
+
+        // Refresh charts if they exist
+        if (typeof window.refreshCharts === 'function') {
+          window.refreshCharts();
+        } else {
+          // Simple reload for charts
+          location.reload();
+        }
+      }
+
+      function updateThemeIcon(theme) {
+        const icon = document.getElementById('theme-icon');
+        if (icon) {
+          icon.className = theme === 'dark' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+        }
+      }
+
+      // Export data
+      function exportData(format) {
+        const params = new URLSearchParams(window.location.search);
+        const startDate = params.get('start_date') || '';
+        const endDate = params.get('end_date') || '';
+
+        let url = `/api/v1/export/${format}?type=all`;
+        if (startDate) url += `&start_date=${startDate}`;
+        if (endDate) url += `&end_date=${endDate}`;
+
+        window.location.href = url;
+      }
+
+      // Initialize on load
+      document.addEventListener('DOMContentLoaded', function () {
+        initTheme();
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Initialize popovers
+        var popoverTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="popover"]')
+        );
+        popoverTriggerList.map(function (popoverTriggerEl) {
+          return new bootstrap.Popover(popoverTriggerEl);
+        });
+      });
+    </script>
+  </body>
+</html>

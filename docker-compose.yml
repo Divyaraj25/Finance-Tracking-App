@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_DB=expense_tracker
+      - SECRET_KEY=${SECRET_KEY:-change-this-in-production}
+    depends_on:
+      - mongo
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=expense_tracker
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - expense-tracker-network
+
+volumes:
+  mongo-data:
+
+networks:
+  expense-tracker-network:
+    driver: bridge

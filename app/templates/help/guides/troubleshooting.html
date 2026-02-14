@@ -1,0 +1,172 @@
+<!-- app/templates/help/guides/troubleshooting.html -->
+{% extends "base.html" %} {% block title %}Troubleshooting - {{ super() }}{% endblock %} {% block
+content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Guides</a></li>
+      <li class="breadcrumb-item active">Troubleshooting</li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <div class="card-body p-4">
+      <h1 class="display-6 mb-4">Common Issues & Solutions</h1>
+
+      <div class="accordion" id="troubleshootingAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#trouble1"
+            >
+              ❌ Transaction won't save - "Invalid amount"
+            </button>
+          </h2>
+          <div
+            id="trouble1"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#troubleshootingAccordion"
+          >
+            <div class="accordion-body">
+              <strong>Solution:</strong> Amount must be a positive number. Remove commas, currency
+              symbols, and ensure you're not using letters.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#trouble2"
+            >
+              💳 Credit card balance shows positive instead of negative
+            </button>
+          </h2>
+          <div
+            id="trouble2"
+            class="accordion-collapse collapse"
+            data-bs-parent="#troubleshootingAccordion"
+          >
+            <div class="accordion-body">
+              <strong>Solution:</strong> Credit cards should have negative balances (debt). Edit the
+              account and set a negative balance, or add a payment transaction.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#trouble3"
+            >
+              📊 Budget spent amount is incorrect
+            </button>
+          </h2>
+          <div
+            id="trouble3"
+            class="accordion-collapse collapse"
+            data-bs-parent="#troubleshootingAccordion"
+          >
+            <div class="accordion-body">
+              <strong>Solution:</strong> Click the budget menu (⋮) and select "Recalculate". This
+              will recount all transactions in the period.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#trouble4"
+            >
+              🗑️ Can't delete an account
+            </button>
+          </h2>
+          <div
+            id="trouble4"
+            class="accordion-collapse collapse"
+            data-bs-parent="#troubleshootingAccordion"
+          >
+            <div class="accordion-body">
+              <strong>Solution:</strong> Accounts with transaction history are "deactivated"
+              (hidden), not deleted. This preserves your data. Accounts without transactions can be
+              permanently deleted.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#trouble5"
+            >
+              🔍 Can't find a transaction
+            </button>
+          </h2>
+          <div
+            id="trouble5"
+            class="accordion-collapse collapse"
+            data-bs-parent="#troubleshootingAccordion"
+          >
+            <div class="accordion-body">
+              <strong>Solution:</strong> Clear all filters by clicking "Clear" or "Reset". Check if
+              you're on the correct page. Use the search box to find by description.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#trouble6"
+            >
+              📥 Export file won't download
+            </button>
+          </h2>
+          <div
+            id="trouble6"
+            class="accordion-collapse collapse"
+            data-bs-parent="#troubleshootingAccordion"
+          >
+            <div class="accordion-body">
+              <strong>Solution:</strong> Check your browser's download settings and pop-up blocker.
+              Try a different export format. If using API, ensure the endpoint is correct.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger mt-4">
+        <i class="bi bi-bug"></i>
+        <strong>Still having issues?</strong>
+        <a href="{{ url_for('help.contact') }}" class="alert-link">Contact Support</a> with:
+        <ul class="mb-0 mt-2">
+          <li>Screenshots of the issue</li>
+          <li>Steps to reproduce</li>
+          <li>Your browser and version</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

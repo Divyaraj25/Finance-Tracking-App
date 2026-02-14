@@ -1,0 +1,428 @@
+<!-- app/templates/help/guides/getting-started.html -->
+{% extends "base.html" %} {% block title %}Getting Started - Expense Tracker Guide{% endblock %} {%
+block content %}
+<div class="guide-page">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('help.index') }}">Help Center</a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 mb-4">
+      <div class="card sticky-top" style="top: 80px">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">In This Guide</h6>
+          <nav id="guide-nav" class="nav flex-column">
+            <a class="nav-link" href="#introduction">1. Introduction</a>
+            <a class="nav-link" href="#first-account">2. Create Your First Account</a>
+            <a class="nav-link" href="#first-transaction">3. Add Your First Transaction</a>
+            <a class="nav-link" href="#dashboard">4. Understanding the Dashboard</a>
+            <a class="nav-link" href="#budgets">5. Setting Up Budgets</a>
+            <a class="nav-link" href="#next-steps">6. Next Steps</a>
+          </nav>
+
+          <hr class="my-3" />
+
+          <div class="bg-light p-3 rounded">
+            <i class="bi bi-clock-history"></i>
+            <small class="d-block mt-2"> <strong>Estimated time:</strong> 10 minutes </small>
+            <small class="d-block"> <strong>Difficulty:</strong> Beginner </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">Getting Started with Expense Tracker</h1>
+
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            Welcome to Expense Tracker! This guide will help you set up your account and start
+            tracking your finances in less than 10 minutes.
+          </div>
+
+          <!-- Introduction -->
+          <section id="introduction" class="mb-5">
+            <h2 class="h4 mb-3">1. Introduction</h2>
+            <p>Expense Tracker is a comprehensive financial management system that helps you:</p>
+            <ul>
+              <li>Track all your accounts in one place</li>
+              <li>Monitor your spending habits</li>
+              <li>Set and achieve budget goals</li>
+              <li>Generate financial reports</li>
+              <li>Export data for tax purposes</li>
+            </ul>
+            <div class="bg-light p-3 rounded">
+              <strong>Pro Tip:</strong> The system is designed to be intuitive, but following this
+              guide will help you avoid common mistakes.
+            </div>
+          </section>
+
+          <!-- First Account -->
+          <section id="first-account" class="mb-5">
+            <h2 class="h4 mb-3">2. Create Your First Account</h2>
+            <p>Before adding transactions, you need to create at least one account:</p>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Click "Create Account"</h6>
+                <p>Navigate to Accounts page and click the "Add Account" button</p>
+                <img
+                  src="{{ url_for('static', filename='img/guides/create-account.png') }}"
+                  class="img-fluid rounded border mt-2"
+                  alt="Create Account"
+                />
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Choose Account Type</h6>
+                <p>
+                  Select from: <strong>Bank Account</strong> (checking/savings),
+                  <strong>Credit Card</strong>, <strong>Cash</strong>, <strong>Asset</strong>, or
+                  <strong>Liability</strong>
+                </p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Enter Initial Balance</h6>
+                <p>Start with your current account balance. You can adjust this later.</p>
+              </div>
+            </div>
+
+            <div class="bg-warning bg-opacity-10 p-3 rounded mt-3">
+              <i class="bi bi-exclamation-triangle text-warning"></i>
+              <strong>Important:</strong> Credit card accounts should have a
+              <strong>negative</strong> balance to represent debt.
+            </div>
+          </section>
+
+          <!-- First Transaction -->
+          <section id="first-transaction" class="mb-5">
+            <h2 class="h4 mb-3">3. Add Your First Transaction</h2>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Click "Add Transaction"</h6>
+                <p>Found on both Dashboard and Transactions pages</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Select Transaction Type</h6>
+                <ul>
+                  <li><strong>Income</strong> - Money received (salary, gifts)</li>
+                  <li><strong>Expense</strong> - Money spent (groceries, bills)</li>
+                  <li><strong>Transfer</strong> - Move money between accounts</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Fill in the Details</h6>
+                <p>Enter amount, description, category, and accounts</p>
+                <table class="table table-sm">
+                  <tr>
+                    <th>Field</th>
+                    <th>Example</th>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td>$50.00</td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td>Grocery shopping at Walmart</td>
+                  </tr>
+                  <tr>
+                    <td>Category</td>
+                    <td>Food & Dining</td>
+                  </tr>
+                  <tr>
+                    <td>Account</td>
+                    <td>Checking Account</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Save Transaction</h6>
+                <p>Click "Save" and watch your account balance update instantly</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Dashboard -->
+          <section id="dashboard" class="mb-5">
+            <h2 class="h4 mb-3">4. Understanding the Dashboard</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6>Summary Cards</h6>
+                    <p class="small">At-a-glance view of:</p>
+                    <ul class="small">
+                      <li>Total balance across all accounts</li>
+                      <li>Monthly income & expenses</li>
+                      <li>Budget status</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6>Charts</h6>
+                    <p class="small">Visual representation of:</p>
+                    <ul class="small">
+                      <li>Income vs Expense trends</li>
+                      <li>Spending by category</li>
+                      <li>Account distribution</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6>Recent Transactions</h6>
+                    <p class="small">Your latest 5 transactions with:</p>
+                    <ul class="small">
+                      <li>Date and description</li>
+                      <li>Amount and category</li>
+                      <li>Account name</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6>Quick Actions</h6>
+                    <p class="small">Buttons to:</p>
+                    <ul class="small">
+                      <li>Add new transaction</li>
+                      <li>Refresh data</li>
+                      <li>Apply filters</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Budgets -->
+          <section id="budgets" class="mb-5">
+            <h2 class="h4 mb-3">5. Setting Up Budgets</h2>
+
+            <div class="bg-success bg-opacity-10 p-3 rounded mb-3">
+              <i class="bi bi-lightbulb text-success"></i>
+              <strong>Why budget?</strong> Budgets help you control spending and save money.
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h6>Go to Budgets Page</h6>
+                <p>Click "Budgets" in the main navigation</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h6>Create a Budget</h6>
+                <p>Click "Create Budget" and select:</p>
+                <ul>
+                  <li><strong>Category</strong> - What you want to track</li>
+                  <li><strong>Amount</strong> - Your spending limit</li>
+                  <li><strong>Period</strong> - Weekly, Monthly, or Yearly</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h6>Monitor Progress</h6>
+                <p>Each budget shows:</p>
+                <ul>
+                  <li>Spent amount and remaining</li>
+                  <li>Progress bar with color coding</li>
+                  <li>Warning when nearing limit</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h6>Adjust as Needed</h6>
+                <p>
+                  Edit budget amount or period anytime. Recalculate if transactions were added
+                  before budget creation.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Next Steps -->
+          <section id="next-steps" class="mb-5">
+            <h2 class="h4 mb-3">6. Next Steps</h2>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="d-flex align-items-center p-3 border rounded">
+                  <i class="bi bi-tags fs-3 text-primary me-3"></i>
+                  <div>
+                    <h6 class="mb-1">Create Categories</h6>
+                    <small class="text-muted">Organize transactions your way</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center p-3 border rounded">
+                  <i class="bi bi-credit-card fs-3 text-warning me-3"></i>
+                  <div>
+                    <h6 class="mb-1">Add Credit Cards</h6>
+                    <small class="text-muted">Track credit card debt</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center p-3 border rounded">
+                  <i class="bi bi-download fs-3 text-success me-3"></i>
+                  <div>
+                    <h6 class="mb-1">Export Data</h6>
+                    <small class="text-muted">Backup or analyze in Excel</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center p-3 border rounded">
+                  <i class="bi bi-code-slash fs-3 text-info me-3"></i>
+                  <div>
+                    <h6 class="mb-1">Use the API</h6>
+                    <small class="text-muted">Build your own tools</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Helpful Links -->
+          <hr class="my-4" />
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('help.index') }}" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Help Center
+            </a>
+            <div>
+              <span class="text-muted me-2">Was this guide helpful?</span>
+              <button class="btn btn-sm btn-outline-success" onclick="feedback(true)">
+                <i class="bi bi-hand-thumbs-up"></i> Yes
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="feedback(false)">
+                <i class="bi bi-hand-thumbs-down"></i> No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .step-content {
+    flex-grow: 1;
+  }
+
+  .guide-page .nav-link {
+    padding: 0.25rem 0.5rem;
+    color: #6c757d;
+    border-left: 2px solid transparent;
+  }
+
+  .guide-page .nav-link.active {
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: 500;
+  }
+
+  [data-theme='dark'] .bg-light {
+    background-color: #2b3035 !important;
+  }
+</style>
+
+<script>
+  // Highlight active section on scroll
+  $(window).scroll(function () {
+    var scrollPosition = $(window).scrollTop();
+
+    $('#guide-nav a').each(function () {
+      var sectionId = $(this).attr('href');
+      var section = $(sectionId);
+
+      if (
+        section.position().top <= scrollPosition + 100 &&
+        section.position().top + section.height() > scrollPosition + 100
+      ) {
+        $('#guide-nav a').removeClass('active');
+        $(this).addClass('active');
+      }
+    });
+  });
+
+  function feedback(helpful) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank You!',
+      text: helpful ? "We're glad this helped!" : "We'll work to improve this guide.",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+</script>
+{% endblock %}
