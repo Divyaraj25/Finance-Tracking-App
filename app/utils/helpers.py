@@ -10,6 +10,7 @@ import hashlib
 import json
 from app.models import Settings
 import pytz
+import pandas as pd
 
 def generate_id():
     """Generate unique ID"""
@@ -184,18 +185,57 @@ def parse_date_from_request(date_str, end_of_day=False):
         return None
     
     try:
-        # Parse the date string
-        dt = datetime.fromisoformat(date_str)
+        # Handle different input types
+        if isinstance(date_str, datetime):
+            dt = date_str
+        else:
+            # Convert to string if it's not already
+            date_str = str(date_str)
+            
+            # Remove any timezone indicators that might cause issues
+            date_str = date_str.replace('Z', '+00:00')
+            
+            # Handle different date formats
+            try:
+                # Try parsing as full ISO format first
+                dt = datetime.fromisoformat(date_str)
+            except ValueError:
+                # If that fails, try common formats
+                if len(date_str) == 10 and date_str.count('-') == 2:
+                    # YYYY-MM-DD format
+                    year, month, day = map(int, date_str.split('-'))
+                    dt = datetime(year, month, day)
+                elif len(date_str) == 10 and date_str.count('/') == 2:
+                    # MM/DD/YYYY or DD/MM/YYYY format
+                    parts = date_str.split('/')
+                    if len(parts) == 3:
+                        # Assume YYYY-MM-DD for simplicity
+                        # In a real app, you'd use user preferences here
+                        if len(parts[2]) == 4:  # Assuming year is last
+                            year = int(parts[2])
+                            month = int(parts[0])
+                            day = int(parts[1])
+                            dt = datetime(year, month, day)
+                        else:
+                            raise ValueError(f"Unrecognized date format: {date_str}")
+                else:
+                    # Try pandas to_datetime as fallback
+                    import pandas as pd
+                    dt = pd.to_datetime(date_str).to_pydatetime()
         
-        # If it's just a date (no time), add appropriate time
-        if len(date_str) == 10:  # YYYY-MM-DD format
+        # Ensure we have a datetime object
+        if not isinstance(dt, datetime):
+            raise ValueError(f"Could not parse date: {date_str}")
+        
+        # If it's just a date (no time component), add appropriate time
+        if dt.hour == 0 and dt.minute == 0 and dt.second == 0 and dt.microsecond == 0:
             if end_of_day:
                 dt = dt.replace(hour=23, minute=59, second=59, microsecond=999999)
-            else:
-                dt = dt.replace(hour=0, minute=0, second=0, microsecond=0)
+            # else keep as start of day (already 00:00:00)
         
         # Assume the date is in user's local timezone and convert to UTC
         return local_to_utc(dt)
+        
     except Exception as e:
-        print(f"Error parsing date: {e}")
+        print(f"Error parsing date '{date_str}': {e}")
         return None

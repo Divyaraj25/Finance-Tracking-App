@@ -624,6 +624,12 @@ content %}
       data.tags = [];
     }
 
+    if (data.amount) {
+      // Remove any non-numeric characters except decimal point
+      const amountStr = data.amount.toString().replace(/[^0-9.-]/g, '');
+      data.amount = parseFloat(amountStr);
+    }
+
     // Remove empty fields
     if (!data.from_account_id) delete data.from_account_id;
     if (!data.to_account_id) delete data.to_account_id;

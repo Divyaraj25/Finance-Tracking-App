@@ -6,6 +6,7 @@ from datetime import datetime
 from bson import ObjectId
 from flask import current_app
 from app import mongo
+import pytz
 
 class BaseModel:
     """Base model with common methods"""
@@ -44,7 +45,7 @@ class Transaction(BaseModel):
         # Ensure date is timezone-aware UTC
         if 'date' in data and isinstance(data['date'], datetime):
             if data['date'].tzinfo is None:
-                import pytz
+                # REMOVED the duplicate import - pytz is already imported at top
                 data['date'] = pytz.UTC.localize(data['date'])
         
         data['created_at'] = datetime.now(pytz.UTC)
@@ -60,7 +61,7 @@ class Transaction(BaseModel):
         # Ensure date is timezone-aware UTC if being updated
         if 'date' in data and isinstance(data['date'], datetime):
             if data['date'].tzinfo is None:
-                import pytz
+                # REMOVED the duplicate import - pytz is already imported at top
                 data['date'] = pytz.UTC.localize(data['date'])
         
         data['updated_at'] = datetime.now(pytz.UTC)
